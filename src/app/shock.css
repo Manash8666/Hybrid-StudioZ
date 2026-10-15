@@ -1,0 +1,461 @@
+/* ==============================================================================
+   HYBRID STUDIOZ — SHOCK THEME ENGINE (Codings Shock Home-6 Reproduction)
+   True black color grading, outlined text, arrow buttons, radial progress bars,
+   fullscreen menu grid, and magnetic micro-interactions.
+   ============================================================================== */
+
+:root {
+  --shock-black: #000000;
+  --shock-dark: #02040a;
+  --shock-card: #1e1e24;
+  --shock-card-hover: #25252d;
+  --shock-tertiary: #0055ff;
+  --shock-tertiary-hover: #1a66ff;
+  --shock-tertiary-glow: rgba(0, 85, 255, 0.45);
+  --shock-cyan: #1fb6e8;
+  --shock-gray: #8a919e;
+  --shock-gray-10: rgba(255, 255, 255, 0.08);
+  --shock-gray-25: rgba(255, 255, 255, 0.25);
+  --shock-gray-50: rgba(255, 255, 255, 0.50);
+  --shock-gray-75: rgba(255, 255, 255, 0.75);
+}
+
+/* ==============================================================================
+   1. OUTLINE & EDITORIAL TYPOGRAPHY
+   ============================================================================== */
+
+.text-outline {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.75);
+  color: transparent !important;
+  font-family: var(--font-display), 'DM Sans', sans-serif;
+  font-weight: 800;
+}
+
+.text-outline.white-75 {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.75);
+  color: transparent !important;
+}
+
+.text-outline.gray-75 {
+  -webkit-text-stroke: 1.2px rgba(255, 255, 255, 0.45);
+  color: transparent !important;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+/* Animated Underline on Mark */
+.animated-underline {
+  position: relative;
+  background: transparent;
+  color: #ffffff;
+  padding-bottom: 2px;
+}
+
+.animated-underline.tertiary::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 3px;
+  background-color: var(--shock-tertiary);
+  box-shadow: 0 0 12px var(--shock-tertiary-glow);
+  border-radius: 2px;
+  animation: shockUnderlinePulse 3s ease-in-out infinite;
+}
+
+@keyframes shockUnderlinePulse {
+  0%, 100% {
+    opacity: 0.85;
+    transform: scaleX(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1.04);
+  }
+}
+
+/* ==============================================================================
+   2. SHOCK ARROW BUTTONS (.arrow-button)
+   ============================================================================== */
+
+.arrow-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.arrow-button .text {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.arrow-button .line {
+  display: block;
+  width: 32px;
+  height: 2px;
+  background-color: var(--shock-tertiary);
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  border-radius: 1px;
+}
+
+.arrow-button .arrow {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.arrow-button.next .arrow .item:nth-child(1) {
+  position: absolute;
+  right: 0;
+  width: 8px;
+  height: 2px;
+  background-color: var(--shock-tertiary);
+  transform: rotate(45deg);
+  transform-origin: right center;
+  border-radius: 1px;
+}
+
+.arrow-button.next .arrow .item:nth-child(2) {
+  position: absolute;
+  right: 0;
+  width: 8px;
+  height: 2px;
+  background-color: var(--shock-tertiary);
+  transform: rotate(-45deg);
+  transform-origin: right center;
+  border-radius: 1px;
+}
+
+.arrow-button:hover .line {
+  width: 48px;
+  background-color: #3b82f6;
+  box-shadow: 0 0 10px rgba(0, 85, 255, 0.6);
+}
+
+.arrow-button:hover .arrow {
+  transform: translateX(4px);
+}
+
+.arrow-button:hover .text {
+  color: #ffffff;
+  letter-spacing: 0.18em;
+}
+
+/* Cross / Toggle Variant */
+.arrow-button.cross .arrow {
+  width: 14px;
+  height: 14px;
+}
+
+.arrow-button.cross .arrow .item:nth-child(1) {
+  position: absolute;
+  width: 14px;
+  height: 2px;
+  background-color: var(--shock-tertiary);
+  left: 0;
+  top: 6px;
+  transition: transform 0.3s ease;
+}
+
+.arrow-button.cross .arrow .item:nth-child(2) {
+  position: absolute;
+  width: 14px;
+  height: 2px;
+  background-color: var(--shock-tertiary);
+  left: 0;
+  top: 6px;
+  transform: rotate(90deg);
+  transition: transform 0.3s ease;
+}
+
+.arrow-button.cross.active .arrow .item:nth-child(2) {
+  transform: rotate(0deg);
+}
+
+/* ==============================================================================
+   3. OUTLINE BUTTON WITH MAGNETIC HOVER (.button.outline)
+   ============================================================================== */
+
+.shock-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 34px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background-color: transparent;
+  color: #ffffff;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.shock-btn-outline:hover {
+  background-color: var(--shock-tertiary);
+  border-color: var(--shock-tertiary);
+  color: #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 85, 255, 0.45);
+  transform: translateY(-2px);
+}
+
+.shock-btn-outline .button-icon {
+  font-size: 0.875rem;
+  transition: transform 0.3s ease;
+}
+
+.shock-btn-outline:hover .button-icon {
+  transform: translateX(4px);
+}
+
+/* ==============================================================================
+   4. RADIAL PROGRESS BAR WITH SVG CIRCLE & ANIMATED STROKE
+   ============================================================================== */
+
+.radial-progress-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.radial-progress-circle {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radial-progress-circle svg {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+}
+
+.radial-progress-circle .circle-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 4px;
+}
+
+.radial-progress-circle .circle-bar {
+  fill: none;
+  stroke: var(--shock-tertiary);
+  stroke-width: 5px;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 2.5s cubic-bezier(0.2, 1, 0.2, 1);
+  filter: drop-shadow(0 0 6px var(--shock-tertiary-glow));
+}
+
+.radial-progress-circle .counter-text {
+  position: absolute;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+/* ==============================================================================
+   5. SHOCK OUTLINE CARD & HOVER REVEAL
+   ============================================================================== */
+
+.shock-card-outline {
+  position: relative;
+  background-color: var(--shock-card);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 40px 32px;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow: hidden;
+}
+
+.shock-card-outline:hover {
+  border-color: rgba(0, 85, 255, 0.5);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 85, 255, 0.15);
+  transform: translateY(-4px);
+}
+
+.shock-card-outline .card-overlay-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(0, 85, 255, 0.12) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.shock-card-outline:hover .card-overlay-glow {
+  opacity: 1;
+}
+
+/* Vertical Ribbons / Badges */
+.label-vertical-ribbon {
+  position: absolute;
+  top: 24px;
+  left: -20px;
+  transform: rotate(-90deg);
+  transform-origin: center center;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--shock-gray);
+  pointer-events: none;
+}
+
+.label-vertical-ribbon .line {
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background-color: var(--shock-gray);
+}
+
+/* ==============================================================================
+   6. FLOATING FORM INPUTS
+   ============================================================================== */
+
+.shock-form-floating {
+  position: relative;
+  width: 100%;
+}
+
+.shock-form-floating input,
+.shock-form-floating textarea {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 20px 18px 8px 18px;
+  color: #ffffff;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.9375rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.shock-form-floating input:focus,
+.shock-form-floating textarea:focus {
+  border-color: var(--shock-tertiary);
+  background-color: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 0 3px rgba(0, 85, 255, 0.25);
+}
+
+.shock-form-floating label {
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.875rem;
+  color: var(--shock-gray);
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform-origin: left top;
+}
+
+.shock-form-floating input:focus ~ label,
+.shock-form-floating input:not(:placeholder-shown) ~ label,
+.shock-form-floating textarea:focus ~ label,
+.shock-form-floating textarea:not(:placeholder-shown) ~ label {
+  transform: translateY(-8px) scale(0.78);
+  color: var(--shock-tertiary);
+  font-weight: 600;
+}
+
+/* ==============================================================================
+   7. DESKTOP SIDE WIDGETS
+   ============================================================================== */
+
+.shock-side-widget {
+  position: fixed;
+  z-index: 40;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  mix-blend-mode: difference;
+  pointer-events: auto;
+}
+
+.shock-side-widget.to-left {
+  left: 28px;
+}
+
+.shock-side-widget.to-right {
+  right: 28px;
+}
+
+.shock-side-widget .widget-line {
+  width: 1px;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.6);
+  margin-top: 16px;
+}
+
+.shock-side-widget .scroll-top-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.3s ease;
+}
+
+.shock-side-widget .scroll-top-text:hover {
+  color: var(--shock-tertiary);
+}
+
+/* ==============================================================================
+   8. HERO SLIDE DRAWER (.slide-info)
+   ============================================================================== */
+
+.shock-slide-info-drawer {
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.2, 1, 0.2, 1), opacity 0.4s ease;
+}
+
+.shock-slide-info-drawer.closed {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.shock-slide-info-drawer.open {
+  max-height: 800px;
+  opacity: 1;
+  pointer-events: auto;
+}

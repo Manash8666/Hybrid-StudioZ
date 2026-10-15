@@ -55,6 +55,10 @@ export default function Header() {
 
   const isLight = navTone === 'light';
 
+  if (pathname === '/tsukiflow') {
+    return null;
+  }
+
   return (
     <>
       <header
