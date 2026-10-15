@@ -3,7 +3,6 @@
 @import "swiper/css";
 @import "swiper/css/navigation";
 @import "swiper/css/pagination";
-@import "./shock.css";
 
 :root {
   /* Exact Hybrid Studioz (hybridstudioz.framer.ai) Design Tokens */
@@ -206,6 +205,310 @@ html.lenis, html.lenis body {
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+/* ==============================================================================
+   SHOCK THEME ENGINE (home-6.html Exact Replication)
+   ============================================================================== */
+
+:root {
+  --shock-bg: #19191e;
+  --shock-card: #212127;
+  --tertiary-color: #ff1791;
+  --tertiary-glow: rgba(255, 23, 145, 0.45);
+  --gray-color: #8f93a5;
+}
+
+.shock-body {
+  background-color: #19191e !important;
+  color: #8f93a5 !important;
+}
+
+.text-outline,
+.text-outline.white-75 {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.75) !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  font-family: var(--font-display), 'DM Sans', sans-serif !important;
+  font-weight: 800 !important;
+}
+
+.text-outline.gray-75 {
+  -webkit-text-stroke: 1.2px rgba(255, 255, 255, 0.45) !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+}
+
+.text-italic {
+  font-style: italic !important;
+}
+
+mark, .mark {
+  background-color: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+}
+
+mark.animated-underline,
+.animated-underline {
+  background-color: transparent !important;
+  color: #ffffff !important;
+  position: relative !important;
+  display: inline-block !important;
+  z-index: 1 !important;
+}
+
+mark.animated-underline::before,
+.animated-underline::before {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 4px !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 38% !important;
+  background-color: #ff1791 !important;
+  box-shadow: 0 0 16px rgba(255, 23, 145, 0.5) !important;
+  z-index: -1 !important;
+}
+
+.shock-zzz {
+  display: block !important;
+  width: 100% !important;
+  height: 14px !important;
+  background: linear-gradient(45deg, #8f93a5 35%, transparent 0) 0 0 / 14px 100%,
+              linear-gradient(-45deg, #8f93a5 35%, transparent 0) 0 0 / 14px 100% !important;
+  opacity: 0.5 !important;
+  margin: 12px 0 20px 0 !important;
+}
+
+.shock-card {
+  position: relative;
+  background-color: #212127 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 4px !important;
+  padding: 36px 32px !important;
+  transition: all 0.35s ease !important;
+}
+
+.shock-card.has-price {
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.shock-card.has-price:hover {
+  border-color: #ff1791 !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 23, 145, 0.2) !important;
+}
+
+.shock-label-vertical {
+  position: absolute !important;
+  top: 50% !important;
+  left: -52px !important;
+  transform: translateY(-50%) rotate(-90deg) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  font-family: var(--font-mono), monospace !important;
+  font-size: 0.6875rem !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase !important;
+  color: #8f93a5 !important;
+  pointer-events: none !important;
+}
+
+.shock-label-vertical .line {
+  display: inline-block !important;
+  width: 30px !important;
+  height: 1px !important;
+  background-color: #8f93a5 !important;
+}
+
+.shock-arrow-btn {
+  display: inline-flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  transition: all 0.3s ease !important;
+}
+
+.shock-arrow-btn .arrow-shape {
+  position: relative !important;
+  width: 80px !important;
+  height: 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  transition: width 0.3s ease !important;
+}
+
+.shock-arrow-btn .arrow-line {
+  display: block !important;
+  width: 100% !important;
+  height: 2px !important;
+  background-color: #ffffff !important;
+  transition: background-color 0.3s ease, width 0.3s ease !important;
+}
+
+.shock-arrow-btn .arrow-head {
+  position: absolute !important;
+  right: 0 !important;
+  top: 1px !important;
+  width: 11px !important;
+  height: 11px !important;
+  border-top: 2px solid #ffffff !important;
+  border-right: 2px solid #ffffff !important;
+  transform: rotate(45deg) !important;
+  transition: transform 0.3s ease, border-color 0.3s ease !important;
+}
+
+.shock-arrow-btn .text {
+  font-family: var(--font-sans), sans-serif !important;
+  font-size: 0.8125rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+  margin-top: 6px !important;
+  transition: color 0.3s ease !important;
+}
+
+.shock-arrow-btn:hover .arrow-shape {
+  width: 100px !important;
+}
+
+.shock-arrow-btn:hover .arrow-line {
+  background-color: #ff1791 !important;
+}
+
+.shock-arrow-btn:hover .arrow-head {
+  border-color: #ff1791 !important;
+  transform: translateX(4px) rotate(45deg) !important;
+}
+
+.shock-arrow-btn:hover .text {
+  color: #ff1791 !important;
+}
+
+.shock-btn-rect {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  padding: 12px 28px !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  background-color: transparent !important;
+  color: #ffffff !important;
+  font-family: var(--font-sans), sans-serif !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+}
+
+.shock-btn-rect:hover {
+  background-color: #ff1791 !important;
+  border-color: #ff1791 !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 25px rgba(255, 23, 145, 0.45) !important;
+}
+
+.shock-form-col {
+  position: relative !important;
+  width: 100% !important;
+}
+
+.shock-form-col input,
+.shock-form-col textarea {
+  width: 100% !important;
+  background-color: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 4px !important;
+  padding: 22px 16px 8px 16px !important;
+  color: #ffffff !important;
+  font-family: var(--font-sans), sans-serif !important;
+  font-size: 0.9375rem !important;
+  transition: all 0.3s ease !important;
+  outline: none !important;
+}
+
+.shock-form-col input:focus,
+.shock-form-col textarea:focus {
+  border-color: #ff1791 !important;
+  background-color: rgba(255, 255, 255, 0.07) !important;
+  box-shadow: 0 0 0 2px rgba(255, 23, 145, 0.35) !important;
+}
+
+.shock-form-col label {
+  position: absolute !important;
+  top: 15px !important;
+  left: 16px !important;
+  font-family: var(--font-sans), sans-serif !important;
+  font-size: 0.875rem !important;
+  color: #8f93a5 !important;
+  pointer-events: none !important;
+  transition: all 0.25s ease !important;
+  transform-origin: left top !important;
+}
+
+.shock-form-col input:focus ~ label,
+.shock-form-col input:not(:placeholder-shown) ~ label,
+.shock-form-col textarea:focus ~ label,
+.shock-form-col textarea:not(:placeholder-shown) ~ label {
+  transform: translateY(-8px) scale(0.75) !important;
+  color: #ff1791 !important;
+  font-weight: 600 !important;
+}
+
+.shock-fixed-side {
+  position: fixed !important;
+  z-index: 40 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  mix-blend-mode: difference !important;
+  pointer-events: auto !important;
+}
+
+.shock-fixed-side.to-left {
+  left: 24px !important;
+}
+
+.shock-fixed-side.to-right {
+  right: 24px !important;
+}
+
+.shock-fixed-side .widget-line {
+  width: 1px !important;
+  height: 50px !important;
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  margin-top: 14px !important;
+}
+
+.shock-fixed-side .scroll-top-link {
+  writing-mode: vertical-rl !important;
+  transform: rotate(180deg) !important;
+  font-family: var(--font-mono), monospace !important;
+  font-size: 0.6875rem !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  transition: color 0.3s ease !important;
+  cursor: pointer !important;
+  background: none !important;
+  border: none !important;
+}
+
+.shock-fixed-side .scroll-top-link:hover {
+  color: #ff1791 !important;
 }
 
 
