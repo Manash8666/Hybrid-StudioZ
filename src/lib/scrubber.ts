@@ -189,15 +189,8 @@ export class VideoScrubber {
       ctx.scale(scale, scale);
       ctx.drawImage(this.posterImg, -w / 2, -h / 2, w, h);
       ctx.restore();
-    } else {
-      // Fallback gradient background if poster is still loading
-      const grad = ctx.createLinearGradient(0, 0, w, h);
-      grad.addColorStop(0, '#070913');
-      grad.addColorStop(0.5, '#0f1424');
-      grad.addColorStop(1, '#070913');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, w, h);
     }
+    // If posterImg is loading, leave canvas transparent so underlying <img> is visible
 
     // Layer subtle procedural fluid light rays over the canvas
     const time = progress * Math.PI * 2;

@@ -39,11 +39,8 @@ export default function CinematicSection({
       st = ScrollTrigger.create({
         trigger: containerRef.current,
         start: 'top top',
-        end: `+=${scrollVh}vh`,
-        pin: pinRef.current,
-        pinSpacing: true,
-        scrub: 0.2,
-        anticipatePin: 1,
+        end: 'bottom bottom',
+        scrub: 0.1,
         onUpdate: (self) => {
           setProgress(self.progress);
         },
@@ -68,7 +65,7 @@ export default function CinematicSection({
       data-nav-tone={navTone}
       className={`relative w-full ${className}`}
       style={{
-        height: scrollVh > 0 ? `${scrollVh + 100}vh` : 'auto',
+        height: scrollVh > 0 ? `${scrollVh}vh` : 'auto',
       }}
     >
       <div

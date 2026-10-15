@@ -37,8 +37,8 @@ export default function HomePage() {
       {/* ==================================================================== */}
       <ScrollSequence
         name="hero"
-        scrollVh={480}
-        tail={160}
+        scrollVh={260}
+        tail={100}
         focal={[0.66, 0.5]}
         eager
         id="seq-hero"
@@ -149,15 +149,15 @@ export default function HomePage() {
       {/* ==================================================================== */}
       {/* HAND-OFF 01 -> 02: THE CONTINUOUS GALLERY PAN                        */}
       {/* ==================================================================== */}
-      <Pan scrollVh={160} />
+      <Pan scrollVh={120} />
 
       {/* ==================================================================== */}
       {/* SCENE 02: STORY (Model in Couture Wireframe + 4-Beat Narrative)       */}
       {/* ==================================================================== */}
       <ScrollSequence
         name="story"
-        scrollVh={960}
-        lead={160}
+        scrollVh={360}
+        lead={100}
         focal={[0.57, 0.5]}
         id="seq-story"
       >
@@ -216,17 +216,6 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-
-              {/* Hand-off 02 -> 03: Expanding Orange Circle at > 90% */}
-              {progress > 0.88 && (
-                <div
-                  className="pointer-events-none absolute inset-0 z-50 flex items-center justify-center transition-all duration-300"
-                  style={{
-                    clipPath: `circle(${(progress - 0.88) * 900}% at ${HAND_OFF_POINTS.storyOrangeFocal.x * 100}% ${HAND_OFF_POINTS.storyOrangeFocal.y * 100}%)`,
-                    backgroundColor: '#ff5e1a',
-                  }}
-                />
-              )}
             </div>
           );
         }}
@@ -235,7 +224,7 @@ export default function HomePage() {
       {/* ==================================================================== */}
       {/* SCENE 03: BUILD & SERVICES PREVIEW (Orange Smoke & Kinetic Words)   */}
       {/* ==================================================================== */}
-      <CinematicSection id="build" scrollVh={280} navTone="dark">
+      <CinematicSection id="build" scrollVh={200} navTone="dark">
         {(progress) => {
           // Word sequence index
           const wordIndex = Math.min(
@@ -300,16 +289,6 @@ export default function HomePage() {
                   ))}
                 </div>
               </div>
-
-              {/* Hand-Off 03 -> 04: Letter "D" swallowing viewport at progress > 94% */}
-              {progress > 0.94 && (
-                <div
-                  className="pointer-events-none absolute inset-0 z-50 bg-[#070913] transition-opacity duration-300"
-                  style={{
-                    opacity: (progress - 0.94) / 0.06,
-                  }}
-                />
-              )}
             </div>
           );
         }}
@@ -320,7 +299,7 @@ export default function HomePage() {
       {/* ==================================================================== */}
       <ScrollSequence
         name="organism"
-        scrollVh={520}
+        scrollVh={260}
         focal={[0.5, 0.5]}
         id="seq-organism"
       >
@@ -394,20 +373,6 @@ export default function HomePage() {
                 ))}
               </div>
             </div>
-
-            {/* Hand-Off 04 -> 05: Black SVG/CSS eyelids closing at > 92% */}
-            {progress > 0.90 && (
-              <div className="pointer-events-none absolute inset-0 z-50 flex flex-col justify-between">
-                <div
-                  className="w-full bg-[#070913] transition-all duration-200"
-                  style={{ height: `${(progress - 0.90) * 10 * 50}%` }}
-                />
-                <div
-                  className="w-full bg-[#070913] transition-all duration-200"
-                  style={{ height: `${(progress - 0.90) * 10 * 50}%` }}
-                />
-              </div>
-            )}
           </div>
         )}
       </ScrollSequence>
@@ -417,7 +382,7 @@ export default function HomePage() {
       {/* ==================================================================== */}
       <ScrollSequence
         name="eye"
-        scrollVh={420}
+        scrollVh={220}
         focal={[0.5, 0.5]}
         id="seq-eye"
       >
@@ -462,16 +427,6 @@ export default function HomePage() {
                 <span>05 // MACRO GAZE</span>
                 <span>FOCAL: [0.50, 0.50]</span>
               </div>
-
-              {/* Hand-Off 05 -> 06: Camera dives into dark pupil at > 92% */}
-              {progress > 0.92 && (
-                <div
-                  className="pointer-events-none absolute inset-0 z-50 bg-[#070913] transition-opacity duration-300"
-                  style={{
-                    opacity: (progress - 0.92) / 0.08,
-                  }}
-                />
-              )}
             </div>
           );
         }}
@@ -480,7 +435,7 @@ export default function HomePage() {
       {/* ==================================================================== */}
       {/* SCENE 06: CREATOR & STUDIO DNA (Swiss Bauhaus Grid Snap)             */}
       {/* ==================================================================== */}
-      <CinematicSection id="creator" scrollVh={240} navTone="light">
+      <CinematicSection id="creator" scrollVh={160} navTone="light">
         {(progress) => (
           <div className="relative h-full w-full bg-[#f8f3e7] text-[#0b1020] overflow-hidden flex flex-col justify-between p-6 sm:p-12 md:p-20">
             {/* Background Swiss Bauhaus Grid Cells */}
@@ -579,7 +534,7 @@ export default function HomePage() {
       {/* ==================================================================== */}
       {/* SCENE 09: CAPABILITIES UNIVERSE & PRICING MATRIX                     */}
       {/* ==================================================================== */}
-      <CinematicSection id="capabilities" scrollVh={280} navTone="dark">
+      <CinematicSection id="capabilities" scrollVh={200} navTone="dark">
         {(progress) => (
           <div className="relative h-full w-full bg-[#070913] text-white flex flex-col justify-between p-6 sm:p-12 md:p-20 overflow-hidden">
             {/* Top Bar with Tab Switcher (Capabilities vs Pricing) */}
@@ -676,7 +631,7 @@ export default function HomePage() {
       {/* ==================================================================== */}
       {/* SCENE 10: CONTACT FINALE (Closing Cobalt Petal & Rising Headline)     */}
       {/* ==================================================================== */}
-      <CinematicSection id="contact" scrollVh={180} navTone="dark">
+      <CinematicSection id="contact" scrollVh={140} navTone="dark">
         {(_progress) => (
           <div className="relative h-full w-full bg-[#023a74] text-white flex flex-col justify-between p-6 sm:p-12 md:p-20 overflow-hidden">
             {/* Background Minimalist Cobalt Petal Visual */}

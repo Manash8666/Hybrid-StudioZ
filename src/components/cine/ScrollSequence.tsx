@@ -79,18 +79,15 @@ export default function ScrollSequence({
     });
     scrubberRef.current = scrubber;
 
-    // Pinning and ScrollTrigger setup
+    // Pinning via CSS sticky with exact boundary ScrollTrigger
     let st: ScrollTrigger | null = null;
 
     if (!reduced) {
       st = ScrollTrigger.create({
         trigger: containerRef.current,
         start: 'top top',
-        end: `+=${config.scrollVh}vh`,
-        pin: pinRef.current,
-        pinSpacing: true,
+        end: 'bottom bottom',
         scrub: 0.1,
-        anticipatePin: 1,
         onUpdate: (self) => {
           setProgress(self.progress);
           scrubber.seek(self.progress);
@@ -110,16 +107,22 @@ export default function ScrollSequence({
       id={id || `seq-${name}`}
       className={`relative w-full ${className}`}
       style={{
-        // Height equals viewport + extra scroll distance for scrubbing
-        height: `${config.scrollVh + 100}vh`,
+        // Height equals exact scroll distance for scrubbing
+        height: `${config.scrollVh}vh`,
       }}
     >
       <div
         ref={pinRef}
         className="sticky top-0 left-0 w-full h-screen overflow-hidden select-none"
       >
-        {/* Scrubbed media canvas and video */}
+        {/* Scrubbed media canvas, base poster, and video */}
         <div className="absolute inset-0 w-full h-full pointer-events-none">
+          {/* Base pre-painted SSR still prevents any momentary black canvas */}
+          <img
+            src={posterUrl}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+          />
           <video
             ref={videoRef}
             className="absolute inset-0 w-full h-full object-cover hidden"

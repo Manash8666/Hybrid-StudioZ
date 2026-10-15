@@ -31,10 +31,8 @@ export default function Pan({ scrollVh = 160 }: PanProps) {
       scrollTrigger: {
         trigger: containerRef.current,
         start: 'top top',
-        end: `+=${scrollVh}vh`,
-        pin: true,
+        end: 'bottom bottom',
         scrub: 0.2,
-        anticipatePin: 1,
       },
     });
 
@@ -86,7 +84,7 @@ export default function Pan({ scrollVh = 160 }: PanProps) {
     <div
       ref={containerRef}
       className="relative w-full overflow-hidden bg-[#eef2f7]"
-      style={{ height: `${scrollVh + 100}vh` }}
+      style={{ height: `${scrollVh}vh` }}
     >
       <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex items-center bg-[#eef2f7]">
         {/* Horizontal moving studio corridor track */}

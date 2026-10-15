@@ -34,15 +34,18 @@ export default function VideoAsset({
     () => false
   );
 
+  const [videoError, setVideoError] = React.useState(false);
+
   return (
     <div className={`relative w-full h-full overflow-hidden ${className}`}>
-      {reduced ? (
-        <img
-          src={poster}
-          alt="Visual Still"
-          className="w-full h-full object-cover"
-        />
-      ) : (
+      {/* Underlying poster is always pre-rendered so there is zero black frame */}
+      <img
+        src={poster}
+        alt="Visual Still"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+
+      {!reduced && !videoError && (
         <video
           ref={videoRef}
           src={src}
@@ -52,7 +55,8 @@ export default function VideoAsset({
           muted
           playsInline
           preload="auto"
-          className="w-full h-full object-cover"
+          onError={() => setVideoError(true)}
+          className="absolute inset-0 w-full h-full object-cover"
         />
       )}
 
