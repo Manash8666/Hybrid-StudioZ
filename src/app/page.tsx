@@ -1,751 +1,1294 @@
 'use client';
 
 // ==============================================================================
-// HYBRID STUDIOZ — FLAGSHIP 8-SCENE CINEMATIC HOME (HOME-5 & HOME-6 FUSION)
-// Continuous single-clock scroll film featuring zero cuts and All-Intra scrubbing
+// HYBRID STUDIOZ — OFFICIAL HOMEPAGE
+// 100% Visual and Structural Fidelity matching hybridstudioz.framer.ai
+// AI SaaS & Web Development & Services, Digital Marketing, Branding
 // ==============================================================================
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import ScrollSequence from '@/components/cine/ScrollSequence';
-import CinematicSection from '@/components/cine/CinematicSection';
-import Pan from '@/components/cine/Pan';
-import VideoAsset from '@/components/cine/VideoAsset';
-import CircularText from '@/components/shock/CircularText';
-import PricingMatrix from '@/components/shock/PricingMatrix';
 import DirectModal from '@/components/shock/DirectModal';
-import EyebrowBadge from '@/components/layout/EyebrowBadge';
 import { SITE_CONFIG } from '@/content/site';
-import { generateBauhausGrid } from '@/lib/cine';
-import { HAND_OFF_POINTS } from '@/lib/points';
 
 export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalService, setModalService] = useState<string | undefined>(undefined);
-  const [activeTab, setActiveTab] = useState<'capabilities' | 'pricing'>('capabilities');
+  const [activeFaq, setActiveFaq] = useState<string | null>('faq-1');
 
   const openModal = (service?: string) => {
     setModalService(service);
     setIsModalOpen(true);
   };
 
-  const bauhausCells = generateBauhausGrid(8, 6, 2026);
+  const toggleFaq = (id: string) => {
+    setActiveFaq(activeFaq === id ? null : id);
+  };
+
+  const benefitsList = [
+    'Enhanced UX',
+    'Boosted Conversions',
+    'Fast Loading',
+    'SEO Optimized',
+    'Customizable',
+    'Scalable',
+    'Increased Engagement',
+    'Expandable',
+    'Secure',
+    'User-Friendly',
+  ];
+
+  const galleryRow1 = [
+    { src: '/assets/framer/gallery-1.jpg', alt: 'Street Culture' },
+    { src: '/assets/framer/gallery-2.jpg', alt: 'Automotive Precision' },
+    { src: '/assets/framer/gallery-3.jpg', alt: 'Neon Architecture' },
+    { src: '/assets/framer/gallery-4.jpg', alt: 'Deep Oceanic Blue' },
+    { src: '/assets/framer/gallery-5.jpg', alt: 'Digital Studio' },
+    { src: '/assets/framer/gallery-6.jpg', alt: 'Organic Motion' },
+  ];
+
+  const testimonials = [
+    {
+      avatar: '/assets/framer/avatar-1.png',
+      quote:
+        'Hybrid StudioZ transformed our project management process! Their custom solution perfectly fits our needs. We’re not just operating; we’re thriving!',
+      company: 'HorizonBeam',
+      role: 'Innovate Solutions',
+    },
+    {
+      avatar: '/assets/framer/avatar-2.png',
+      quote:
+        'The team understood our complex requirements and provided a user-friendly, high-performing service that stands out in the market.',
+      company: 'DAPL',
+      role: 'Product Manager, SAAS Development',
+    },
+    {
+      avatar: '/assets/framer/avatar-3.png',
+      quote:
+        'As a startup, we needed a partner who could help us optimize our processes without overwhelming us with complexity. They provided us with a intuitive CRM solution.',
+      company: 'OTMS',
+      role: 'Founder, CRM Platforms',
+    },
+    {
+      avatar: '/assets/framer/avatar-4.png',
+      quote:
+        'We were blown away by the creative approach and attention to detail. The team understood our problems and provided tailored solutions.',
+      company: 'Devforge Technologies',
+      role: 'Creative Director',
+    },
+    {
+      avatar: '/assets/framer/avatar-5.png',
+      quote:
+        'They delivered a customized solution that addressed all of our business needs. The website is sleek, functional, and improved our customer experience.',
+      company: 'Nova Hub',
+      role: 'Brian Clark · Team Lead',
+    },
+    {
+      avatar: '/assets/framer/avatar-6.png',
+      quote:
+        'The team’s dedication and attention to detail are unmatched. They understood our requirements and delivered exactly what we were looking for.',
+      company: 'Fusion Studios',
+      role: 'Daniel Carter · Founder',
+    },
+  ];
 
   return (
-    <div className="relative w-full bg-[#070913] text-white">
-      {/* ==================================================================== */}
-      {/* SCENE 01: HERO (Negative Space on Right, Liquid Cloud on Left)       */}
-      {/* ==================================================================== */}
-      <ScrollSequence
-        name="hero"
-        scrollVh={260}
-        tail={100}
-        focal={[0.66, 0.5]}
-        eager
-        id="seq-hero"
-      >
-        {(progress) => (
-          <div className="relative flex h-full w-full flex-col justify-between px-6 sm:px-12 md:px-20 py-24 select-none">
-            {/* Top Eyebrow & Rotating Circular Badge */}
-            <div className="flex items-start justify-between">
-              <div className="flex flex-col">
-                <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ff5e1a] font-bold">
-                  Flagship Experience // 01
-                </span>
-                <span className="text-[11px] font-mono text-white/50 uppercase mt-1">
-                  Single-Clock All-Intra Pipeline
-                </span>
-              </div>
+    <div className="relative min-h-screen w-full bg-[#02040a] text-white overflow-hidden font-sans">
+      {/* Background Volumetric Cobalt Light Bleeds */}
+      <div className="pointer-events-none fixed inset-0 z-0">
+        <div className="absolute top-0 right-0 w-[650px] h-[650px] bg-[radial-gradient(circle,rgba(0,85,255,0.25)_0%,rgba(5,38,136,0.1)_45%,transparent_70%)] blur-3xl" />
+        <div className="absolute top-[40%] left-[-150px] w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(0,85,255,0.15)_0%,transparent_65%)] blur-3xl" />
+        <div className="absolute bottom-[10%] right-[-100px] w-[550px] h-[550px] bg-[radial-gradient(circle,rgba(0,85,255,0.18)_0%,transparent_70%)] blur-3xl" />
+      </div>
 
-              <CircularText
-                text="HYBRID STUDIOZ • SMART TOOLS & DIGITAL EXPERIENCES • "
-                size={130}
-                className="hidden sm:inline-flex text-white/80"
-              />
-            </div>
-
-            {/* Negative Space Right Typography Overlay */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center my-auto">
-              <div className="lg:col-span-6 pointer-events-none hidden lg:block" />
-
-              <div
-                className="lg:col-span-6 flex flex-col items-start bg-black/40 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-0 p-6 lg:p-0 rounded-2xl"
-                style={{
-                  opacity: Math.max(0, 1 - progress * 2.2),
-                  transform: `translateY(${progress * -50}px)`,
-                }}
-              >
-                {/* Official 2025 Eyebrow Badge */}
-                <EyebrowBadge
-                  year="2025"
-                  label="AI SaaS & Bespoke Web Development"
-                  className="mb-4"
-                />
-
-                <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight leading-[1.05] text-white">
-                  We build AI SaaS platforms.{' '}
-                  <span className="text-silver-fade font-normal">
-                    We engineer bespoke web experiences.
-                  </span>
-                </h1>
-
-                <p className="mt-6 max-w-lg font-sans text-sm sm:text-base text-[#8a919e] leading-relaxed">
-                  Hybrid Studioz is your partner for innovative AI SaaS solutions, modern web engineering, iconic brand identity systems, and scalable digital marketing.
-                </p>
-
-                {/* Dual CTAs matching exact palette */}
-                <div className="mt-8 flex flex-wrap items-center gap-4">
-                  <button
-                    onClick={() => openModal()}
-                    className="px-8 py-3.5 rounded-xl bg-[#0055ff] hover:bg-[#1a66ff] font-sans text-sm font-semibold tracking-wide text-white shadow-[0_8px_30px_rgba(0,85,255,0.45)] hover:scale-105 active:scale-95 transition-all"
-                  >
-                    Get In Touch
-                  </button>
-
-                  <Link
-                    href="/portfolio"
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.08] font-sans text-sm font-medium text-white transition-all"
-                  >
-                    <span>Explore Our Portfolio</span>
-                    <svg className="w-3.5 h-3.5 text-[#8a919e]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Home-6 Animated Bottom Counters */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-white/10 bg-black/30 backdrop-blur-md rounded-2xl px-6 py-4">
-              <div className="flex flex-col">
-                <span className="font-display text-2xl sm:text-3xl font-black text-white">
-                  74+
-                </span>
-                <span className="font-mono text-[10px] uppercase tracking-widest text-[#1fb6e8]">
-                  Digital Products Shipped
-                </span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-display text-2xl sm:text-3xl font-black text-white">
-                  99%
-                </span>
-                <span className="font-mono text-[10px] uppercase tracking-widest text-[#ff5e1a]">
-                  Enterprise Client Retention
-                </span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-display text-2xl sm:text-3xl font-black text-white">
-                  12x
-                </span>
-                <span className="font-mono text-[10px] uppercase tracking-widest text-[#6f4bff]">
-                  Faster AI-Augmented Pipelines
-                </span>
-              </div>
-            </div>
+      <div className="relative z-10">
+        {/* ==================================================================== */}
+        {/* 1. HERO SECTION (Exact Framer Loop & Floating Showcase Card)         */}
+        {/* ==================================================================== */}
+        <section className="relative w-full min-h-[92vh] flex items-center pt-28 pb-16 md:pt-36 md:pb-24 px-6 sm:px-8 overflow-hidden">
+          {/* Framer Hero Loop MP4 Background Video */}
+          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              className="w-full h-full object-cover opacity-70"
+            >
+              <source src="/assets/framer/hero-loop.mp4" type="video/mp4" />
+            </video>
+            {/* Vignette Gradients */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#02040a] via-[#02040a]/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#02040a] via-[#02040a]/60 to-transparent" />
           </div>
-        )}
-      </ScrollSequence>
 
-      {/* ==================================================================== */}
-      {/* HAND-OFF 01 -> 02: THE CONTINUOUS GALLERY PAN                        */}
-      {/* ==================================================================== */}
-      <Pan scrollVh={120} />
-
-      {/* ==================================================================== */}
-      {/* SCENE 02: STORY (Model in Couture Wireframe + 4-Beat Narrative)       */}
-      {/* ==================================================================== */}
-      <ScrollSequence
-        name="story"
-        scrollVh={360}
-        lead={100}
-        focal={[0.57, 0.5]}
-        id="seq-story"
-      >
-        {(progress) => {
-          // Calculate active beat (0 to 3) based on scroll progress
-          const beatIndex = Math.min(3, Math.floor(progress * 4));
-          const currentBeat = SITE_CONFIG.storyBeats[beatIndex];
-
-          return (
-            <div className="relative flex h-full w-full flex-col justify-between px-6 sm:px-12 md:px-20 py-24 select-none">
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ff5e1a] font-bold">
-                  Sequence 02 // Narrative Choreography
+          <div className="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-end">
+            {/* Left Column: Headline, Copy & CTAs */}
+            <div className="lg:col-span-8 flex flex-col items-start text-left">
+              {/* Highlight Pill Badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-[8px] bg-white/[0.04] border border-white/[0.08] backdrop-blur-md mb-8">
+                <span className="px-2 py-0.5 rounded-[5px] bg-[#0055ff] text-white text-[11px] font-bold uppercase tracking-wider">
+                  NEW
                 </span>
-                <span className="font-mono text-xs text-white/50">
-                  {currentBeat.index}
+                <span className="text-white/90 text-xs font-medium">
+                  SaaS Solution
                 </span>
               </div>
 
-              {/* Synchronized 4-Beat Timeline Card */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center my-auto">
-                <div className="lg:col-span-6 pointer-events-none hidden lg:block" />
+              {/* Main Headline (DM Sans 400 with -3.8px tracking) */}
+              <h1 className="text-5xl sm:text-7xl lg:text-[84px] font-normal tracking-[-0.04em] text-white leading-[1.05]">
+                Hybrid Studioz – <br />
+                <span className="text-white">Shaping the Future</span>
+              </h1>
 
-                <div className="lg:col-span-6">
-                  <div className="p-8 sm:p-10 rounded-3xl bg-[#070913]/85 border border-white/15 backdrop-blur-2xl shadow-2xl transition-all duration-300">
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#1fb6e8]">
-                        Beat {currentBeat.index}
-                      </span>
-                      <span className="h-1 w-8 rounded-full bg-gradient-to-r from-[#1fb6e8] to-[#ff5e1a]" />
-                    </div>
-
-                    <h2 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-white mb-4">
-                      {currentBeat.heading}
-                    </h2>
-
-                    <p className="font-sans text-base sm:text-lg text-white/80 leading-relaxed">
-                      {currentBeat.copy}
-                    </p>
-
-                    {/* Progress Dots */}
-                    <div className="flex items-center gap-3 mt-8 pt-6 border-t border-white/10">
-                      {SITE_CONFIG.storyBeats.map((beat, idx) => (
-                        <div
-                          key={beat.index}
-                          className={`h-2 rounded-full transition-all duration-300 ${
-                            idx === beatIndex
-                              ? 'w-8 bg-[#ff5e1a]'
-                              : idx < beatIndex
-                              ? 'w-2 bg-white/40'
-                              : 'w-2 bg-white/10'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        }}
-      </ScrollSequence>
-
-      {/* ==================================================================== */}
-      {/* SCENE 03: BUILD & SERVICES PREVIEW (Orange Smoke & Kinetic Words)   */}
-      {/* ==================================================================== */}
-      <CinematicSection id="build" scrollVh={200} navTone="dark">
-        {(progress) => {
-          // Word sequence index
-          const wordIndex = Math.min(
-            SITE_CONFIG.kineticWords.length - 1,
-            Math.floor(progress * SITE_CONFIG.kineticWords.length)
-          );
-          const currentWord = SITE_CONFIG.kineticWords[wordIndex];
-
-          return (
-            <div className="relative h-full w-full overflow-hidden bg-[#070913]">
-              {/* Looping creator background video */}
-              <div className="absolute inset-0 z-0">
-                <VideoAsset
-                  src="/assets/services/build.mp4"
-                  poster="/assets/services/build.webp"
-                  overlayOpacity={0.35}
-                />
-              </div>
-
-              {/* Giant Kinetic Word Overlay (Disappears behind dark clothing via blend) */}
-              <div className="relative z-10 flex h-full w-full flex-col justify-between p-6 sm:p-12 md:p-20">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ff5e1a] font-bold">
-                    Sequence 03 // Engineering Core
-                  </span>
-                  <Link
-                    href="/services"
-                    className="font-mono text-xs uppercase tracking-widest text-white/70 hover:text-white underline underline-offset-4"
-                  >
-                    View All Capabilities →
-                  </Link>
-                </div>
-
-                {/* Giant Kinetic Word passing across screen */}
-                <div className="my-auto text-center select-none">
-                  <span className="block font-mono text-xs uppercase tracking-widest text-[#ff5e1a] font-bold mb-3">
-                    0{wordIndex + 1} {'//'} Kinetic Manifesto
-                  </span>
-                  <h2
-                    key={currentWord}
-                    className="font-display text-5xl sm:text-7xl md:text-9xl font-black uppercase tracking-tight text-white drop-shadow-2xl animate-in zoom-in-95 duration-200"
-                  >
-                    {currentWord}
-                  </h2>
-                </div>
-
-                {/* Home-5 Glassmorphic Capability Bars */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-6 rounded-2xl bg-[#070913]/70 backdrop-blur-xl border border-white/10">
-                  {SITE_CONFIG.capabilityMetrics.map((cap) => (
-                    <div key={cap.label} className="space-y-1.5">
-                      <div className="flex justify-between text-xs font-mono">
-                        <span className="text-white/80">{cap.label}</span>
-                        <span className="text-[#ff5e1a] font-bold">{cap.value}%</span>
-                      </div>
-                      <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-[#1fb6e8] to-[#ff5e1a] rounded-full"
-                          style={{ width: `${cap.value}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          );
-        }}
-      </CinematicSection>
-
-      {/* ==================================================================== */}
-      {/* SCENE 04: EXPERIENCES (Organism Vortex + Featured Work Preview)      */}
-      {/* ==================================================================== */}
-      <ScrollSequence
-        name="organism"
-        scrollVh={260}
-        focal={[0.5, 0.5]}
-        id="seq-organism"
-      >
-        {(progress) => (
-          <div className="relative flex h-full w-full flex-col justify-between px-6 sm:px-12 md:px-20 py-24 select-none">
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#1fb6e8] font-bold">
-                Sequence 04 // Living Architecture
-              </span>
-              <span className="font-mono text-xs text-white/50">
-                Deep Core Scrubbing
-              </span>
-            </div>
-
-            {/* Kinetic Letter Scale Outward: CREATIVE -> DIGITAL -> EXPERIENCES */}
-            <div className="my-auto text-center select-none pointer-events-none">
-              <div
-                className="font-display font-black uppercase text-white/90 leading-none tracking-tighter"
-                style={{
-                  transform: `scale(${1 + progress * 0.4})`,
-                  opacity: Math.max(0.3, 1 - progress * 0.8),
-                }}
-              >
-                <span className="block text-4xl sm:text-7xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-white via-[#1fb6e8] to-white">
-                  Creative
-                </span>
-                <span className="block text-4xl sm:text-7xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-[#1fb6e8] via-[#6f4bff] to-[#e9449a]">
-                  Digital
-                </span>
-                <span className="block text-4xl sm:text-7xl md:text-8xl text-white">
-                  Experiences
-                </span>
-              </div>
-            </div>
-
-            {/* Featured 3-Card Selected Works Showcase Overlay */}
-            <div className="p-6 sm:p-8 rounded-3xl bg-[#070913]/80 backdrop-blur-2xl border border-white/15">
-              <div className="flex items-center justify-between mb-4">
-                <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#ff5e1a]">
-                  Selected Works Preview
-                </span>
-                <Link
-                  href="/work"
-                  className="font-mono text-xs uppercase tracking-wider text-white hover:text-[#1fb6e8] transition-colors"
-                >
-                  View All Projects (6) →
-                </Link>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {SITE_CONFIG.projects.slice(0, 3).map((proj) => (
-                  <Link
-                    key={proj.slug}
-                    href={`/work/${proj.slug}`}
-                    className="group relative block overflow-hidden rounded-xl border border-white/10 bg-white/5 p-4 hover:border-[#1fb6e8]/50 transition-all"
-                  >
-                    <div className="aspect-video w-full overflow-hidden rounded-lg mb-3 bg-black">
-                      <img
-                        src={proj.heroImage}
-                        alt={proj.title}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    </div>
-                    <span className="block font-display text-base font-bold text-white group-hover:text-[#1fb6e8] transition-colors">
-                      {proj.title}
-                    </span>
-                    <span className="block font-mono text-[10px] text-white/50 uppercase mt-0.5">
-                      {proj.category}
-                    </span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-      </ScrollSequence>
-
-      {/* ==================================================================== */}
-      {/* SCENE 05: GAZE & HIGH CONVERSION (Macro Eye + Blink "Don't blink.")   */}
-      {/* ==================================================================== */}
-      <ScrollSequence
-        name="eye"
-        scrollVh={220}
-        focal={[0.5, 0.5]}
-        id="seq-eye"
-      >
-        {(progress) => {
-          const isBlinkFrame = progress > 0.48 && progress < 0.62;
-
-          return (
-            <div className="relative flex h-full w-full flex-col justify-between px-6 sm:px-12 md:px-20 py-24 select-none">
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ff5e1a] font-bold">
-                  Sequence 05 // Cognitive Attention
-                </span>
-                <span className="font-mono text-xs text-white/50">
-                  Gaze Scrubber
-                </span>
-              </div>
-
-              {/* Center Typography Reveal */}
-              <div className="my-auto text-center select-none max-w-3xl mx-auto">
-                {isBlinkFrame ? (
-                  <div className="p-8 rounded-3xl bg-black/80 backdrop-blur-2xl border border-[#ff5e1a]/40 shadow-2xl animate-in zoom-in-95 duration-200">
-                    <h2 className="font-display text-5xl sm:text-7xl md:text-8xl font-black uppercase tracking-tight text-white">
-                      Don&apos;t blink.
-                    </h2>
-                  </div>
-                ) : (
-                  <div className="p-8 rounded-3xl bg-[#070913]/70 backdrop-blur-xl border border-white/10 shadow-2xl">
-                    <span className="block font-mono text-xs font-bold uppercase tracking-widest text-[#1fb6e8] mb-3">
-                      Attention By Design
-                    </span>
-                    <h2 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-white leading-tight">
-                      We build digital ecosystems people can&apos;t look away from.
-                    </h2>
-                    <p className="mt-4 font-sans text-sm sm:text-base text-white/70 max-w-xl mx-auto">
-                      Engineered down to the sub-millisecond frame tick. Visual retention that converts passive scrollers into committed enterprise champions.
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              <div className="flex justify-between items-center text-xs font-mono text-white/40">
-                <span>05 // MACRO GAZE</span>
-                <span>FOCAL: [0.50, 0.50]</span>
-              </div>
-            </div>
-          );
-        }}
-      </ScrollSequence>
-
-      {/* ==================================================================== */}
-      {/* SCENE 06: CREATOR & STUDIO DNA (Swiss Bauhaus Grid Snap)             */}
-      {/* ==================================================================== */}
-      <CinematicSection id="creator" scrollVh={160} navTone="light">
-        {(progress) => (
-          <div className="relative h-full w-full bg-[#f8f3e7] text-[#0b1020] overflow-hidden flex flex-col justify-between p-6 sm:p-12 md:p-20">
-            {/* Background Swiss Bauhaus Grid Cells */}
-            <div className="absolute inset-0 grid grid-cols-8 grid-rows-6 gap-1 p-4 pointer-events-none opacity-20">
-              {bauhausCells.map((cell, idx) => (
-                <div
-                  key={idx}
-                  className="rounded-sm transition-all duration-700"
-                  style={{
-                    gridColumn: `${cell.x + 1} / span ${cell.w}`,
-                    gridRow: `${cell.y + 1} / span ${cell.h}`,
-                    backgroundColor: cell.bg,
-                    transform: `scale(${Math.min(1, progress * 2 + cell.delay)})`,
-                  }}
-                />
-              ))}
-            </div>
-
-            {/* Header Lockup */}
-            <div className="relative z-10 flex items-center justify-between">
-              <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#2b74d4] font-bold">
-                Sequence 06 // Studio DNA & Manifesto
-              </span>
-              <span className="font-mono text-xs text-[#0b1020]/50">
-                Swiss Bauhaus Grid
-              </span>
-            </div>
-
-            {/* Creator Mosaic & Architecture Statement */}
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center my-auto">
-              <div className="lg:col-span-5">
-                <div className="relative overflow-hidden rounded-2xl border-2 border-[#0b1020] bg-white p-3 shadow-2xl">
-                  <div className="aspect-[4/3] w-full overflow-hidden rounded-lg bg-[#eef2f7]">
-                    <img
-                      src="/assets/about/portrait.webp"
-                      alt="Studio Architect Portrait"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                  <div className="p-4 flex items-center justify-between">
-                    <div>
-                      <span className="block font-display text-base font-black uppercase text-[#0b1020]">
-                        Julian Thorne & Squad
-                      </span>
-                      <span className="font-mono text-[10px] uppercase text-[#0b1020]/60">
-                        Design & Tech Architecture
-                      </span>
-                    </div>
-                    <span className="font-mono text-xs font-bold text-[#e8231c]">
-                      EST 2026
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="lg:col-span-7 space-y-6">
-                <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#e8231c]">
-                  The Architecture Behind Hybrid Studioz
-                </span>
-
-                <h2 className="font-display text-4xl sm:text-6xl font-black uppercase tracking-tight text-[#0b1020] leading-[0.95]">
-                  Built for creators. Engineered for scale.
-                </h2>
-
-                <blockquote className="border-l-4 border-[#2b74d4] pl-6 py-2">
-                  <p className="font-sans text-lg sm:text-xl font-medium text-[#0b1020]/80 italic leading-relaxed">
-                    &ldquo;Ensuring human insight works in harmony with autonomous AI, iconic brand aesthetics, and high-velocity production code.&rdquo;
-                  </p>
-                </blockquote>
-
-                <div className="flex flex-wrap gap-3 pt-2">
-                  <span className="px-4 py-2 rounded-full border border-[#0b1020]/20 font-mono text-xs font-bold uppercase">
-                    San Francisco
-                  </span>
-                  <span className="px-4 py-2 rounded-full border border-[#0b1020]/20 font-mono text-xs font-bold uppercase">
-                    London
-                  </span>
-                  <span className="px-4 py-2 rounded-full border border-[#0b1020]/20 font-mono text-xs font-bold uppercase">
-                    Tokyo
-                  </span>
-                  <span className="px-4 py-2 rounded-full border border-[#0b1020]/20 font-mono text-xs font-bold uppercase">
-                    Zurich
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative z-10 flex items-center justify-between text-xs font-mono text-[#0b1020]/50">
-              <span>SWISS GRID ALIGNED</span>
-              <span>100% TYPOGRAPHIC MASTERY</span>
-            </div>
-          </div>
-        )}
-      </CinematicSection>
-
-      {/* ==================================================================== */}
-      {/* ==================================================================== */}
-      {/* SCENE 09: CAPABILITIES UNIVERSE & PRICING MATRIX                     */}
-      {/* ==================================================================== */}
-      <CinematicSection id="capabilities" scrollVh={220} navTone="dark">
-        {(progress) => {
-          // Calculate zoom scale for transition into Scene 10 (#hybrid-s-curve focus)
-          const zoomProgress = Math.max(0, Math.min(1, (progress - 0.65) / 0.35));
-          const emblemScale = 1 + zoomProgress * 14;
-          const emblemOpacity = zoomProgress > 0 ? Math.min(1, zoomProgress * 2.5) : 0;
-
-          return (
-            <div className="relative h-full w-full bg-[#02040a] text-white flex flex-col justify-between p-6 sm:p-12 md:p-20 overflow-hidden">
-              {/* Ambient Cobalt Mesh Glow */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(0,85,255,0.18)_0%,transparent_60%)] pointer-events-none" />
-
-              {/* Top Bar with Tab Switcher (Capabilities vs Pricing) */}
-              <div className="relative z-20 flex flex-wrap items-center justify-between gap-4">
-                <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#0055ff] font-bold">
-                  Sequence 09 // Spatial Capabilities
-                </span>
-
-                {/* Tab Switcher */}
-                <div className="inline-flex rounded-full bg-white/5 p-1 border border-white/10">
-                  <button
-                    onClick={() => setActiveTab('capabilities')}
-                    className={`px-5 py-2 rounded-full font-display text-xs font-black uppercase tracking-wider transition-all ${
-                      activeTab === 'capabilities'
-                        ? 'bg-white text-[#02040a] shadow-md'
-                        : 'text-white/70 hover:text-white'
-                    }`}
-                  >
-                    3D Universe
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('pricing')}
-                    className={`px-5 py-2 rounded-full font-display text-xs font-black uppercase tracking-wider transition-all ${
-                      activeTab === 'pricing'
-                        ? 'bg-[#0055ff] text-white shadow-md'
-                        : 'text-white/70 hover:text-white'
-                    }`}
-                  >
-                    Engagement Tiers
-                  </button>
-                </div>
-              </div>
-
-              {/* Main Area: Dynamic Tab Switch */}
-              <div className="relative z-10 my-auto w-full">
-                {activeTab === 'capabilities' ? (
-                  <div className="relative h-[65vh] w-full overflow-hidden rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl">
-                    {/* Spatial Universe Nodes */}
-                    {SITE_CONFIG.capabilityNodes.map((node) => {
-                      const parallaxY = (progress - 0.5) * node.depth * 90;
-                      return (
-                        <div
-                          key={node.label}
-                          className="absolute select-none pointer-events-none transition-transform duration-200"
-                          style={{
-                            left: `${node.left}%`,
-                            top: `${node.top}%`,
-                            transform: `translate3d(0, ${parallaxY}px, 0)`,
-                            opacity: (1 - zoomProgress) * (0.2 + (node.depth / 1.8) * 0.8),
-                          }}
-                        >
-                          <span
-                            className={`block font-display uppercase tracking-tight whitespace-nowrap transition-colors duration-300 ${
-                              node.category === 'eng'
-                                ? 'text-white/90 hover:text-[#0055ff]'
-                                : node.category === 'motion'
-                                ? 'text-white/80 hover:text-[#1a66ff]'
-                                : node.category === 'ai'
-                                ? 'text-white/95 text-gradient font-black'
-                                : 'text-white/70'
-                            }`}
-                            style={{
-                              fontSize: `clamp(1rem, ${node.sizeVw}vw, 3.5rem)`,
-                              fontWeight: node.weight,
-                            }}
-                          >
-                            {node.label}
-                          </span>
-                        </div>
-                      );
-                    })}
-
-                    <div
-                      className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300"
-                      style={{ opacity: 1 - zoomProgress * 2 }}
-                    >
-                      <span className="font-mono text-xs uppercase tracking-widest text-white/40 bg-black/60 px-4 py-2 rounded-full border border-white/10 backdrop-blur-md">
-                        Scroll Wheel Controls Spatial Parallax
-                      </span>
-                    </div>
-
-                    {/* Camera Zoom into #hybrid-s-curve Emblem */}
-                    {zoomProgress > 0 && (
-                      <div
-                        className="absolute inset-0 flex items-center justify-center pointer-events-none transition-transform duration-100 ease-out"
-                        style={{
-                          transform: `scale(${emblemScale})`,
-                          opacity: emblemOpacity,
-                        }}
-                      >
-                        <div className="relative p-8 rounded-full bg-[radial-gradient(circle,rgba(0,85,255,0.4)_0%,transparent_70%)]">
-                          <svg
-                            viewBox="0 0 110 120"
-                            className="h-28 w-28 filter drop-shadow-[0_0_40px_rgba(0,85,255,0.9)]"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M46 6C24 14 8 30 4 46C12 56 20 62 28 66C32 44 40 24 46 6Z"
-                              fill="#f4f6f9"
-                            />
-                            <path
-                              d="M58 68C62 86 58 102 52 116C72 108 86 92 90 78C82 66 70 62 58 68Z"
-                              fill="#686e7a"
-                            />
-                            <path
-                              id="hybrid-s-curve"
-                              d="M78 10C48 16 28 38 28 58C28 74 44 76 62 74C78 72 90 80 86 98C98 84 102 62 86 50C72 40 52 44 48 32C44 22 58 14 78 10Z"
-                              fill="#ffffff"
-                            />
-                          </svg>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <div className="max-h-[65vh] overflow-y-auto px-2 py-4">
-                    <PricingMatrix onSelectTier={(tier) => openModal(tier)} />
-                  </div>
-                )}
-              </div>
-
-              <div className="relative z-20 flex items-center justify-between text-xs font-mono text-white/40">
-                <span>22 CORE ARCHITECTURAL CAPABILITIES</span>
-                <span>HOME-6 HIGH-CONVERSION PRICING</span>
-              </div>
-            </div>
-          );
-        }}
-      </CinematicSection>
-
-      {/* ==================================================================== */}
-      {/* SCENE 10: CONTACT FINALE (Monumental Cobalt Emblem & Rising Headline)  */}
-      {/* ==================================================================== */}
-      <CinematicSection id="contact" scrollVh={140} navTone="dark">
-        {(_progress) => (
-          <div className="relative h-full w-full bg-[#02040a] text-white flex flex-col justify-between p-6 sm:p-12 md:p-20 overflow-hidden">
-            {/* Background Minimalist Cobalt Mesh & Volumetric Bleed */}
-            <div className="absolute right-0 top-0 bottom-0 w-full lg:w-3/5 pointer-events-none">
-              <img
-                src="/assets/about/closing-muse.webp"
-                alt="Hybrid Studioz Emblem Finale"
-                className="h-full w-full object-cover object-right filter brightness-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#02040a] via-[#02040a]/70 to-transparent lg:block" />
-            </div>
-
-            {/* Top Bar */}
-            <div className="relative z-10 flex items-center justify-between">
-              <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#0055ff] font-bold">
-                Sequence 10 // The Finale
-              </span>
-              <span className="font-mono text-xs text-white/60">
-                Studio Direct Channel
-              </span>
-            </div>
-
-            {/* Left Negative Space: Line-by-Line Rising Monumental Headline */}
-            <div className="relative z-10 max-w-2xl my-auto select-none">
-              <span className="font-mono text-xs uppercase tracking-widest text-[#0055ff] font-bold block mb-4">
-                Have an ambitious vision in mind?
-              </span>
-
-              <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight leading-[0.98] text-white">
-                <span className="block">Let&apos;s build</span>
-                <span className="block">something</span>
-                <span className="block text-silver-fade font-normal">the internet</span>
-                <span className="block text-[#0055ff]">remembers.</span>
-              </h2>
-
-              <p className="mt-6 text-sm sm:text-base text-[#8a919e] font-sans max-w-lg leading-relaxed">
-                Whether scaling an AI SaaS multi-agent platform, architecting a bespoke web flagship, or deploying high-conversion growth marketing, our team is ready to engineer your vision.
+              {/* Subcopy */}
+              <p className="mt-6 text-base sm:text-lg text-[#8a919e] max-w-lg leading-relaxed font-sans font-normal">
+                At Hybrid StudioZ, we specialize in providing innovative SaaS solutions that help modern businesses streamline their operations.
               </p>
 
-              {/* Action Hub matching exact SaaS palette */}
+              {/* Action Buttons */}
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <button
-                  onClick={() => openModal()}
-                  className="px-8 py-4 rounded-xl bg-[#0055ff] hover:bg-[#1a66ff] font-sans text-sm font-semibold tracking-wide text-white shadow-[0_8px_30px_rgba(0,85,255,0.45)] hover:scale-105 active:scale-95 transition-all"
+                  onClick={() => openModal('Connect With Us')}
+                  className="px-6 py-3 rounded-[10px] bg-[#efeeec] hover:bg-white text-[#050814] font-sans text-xs font-semibold tracking-normal transition-all shadow-[0_4px_20px_rgba(255,255,255,0.15)] active:scale-95"
                 >
-                  Book a Discovery Call
+                  Connect With Us
                 </button>
 
                 <a
-                  href={`mailto:${SITE_CONFIG.brand.email}`}
-                  className="px-7 py-4 rounded-xl bg-[#f2f4f8] hover:bg-white text-[#08090c] font-sans text-sm font-semibold tracking-wide transition-all hover:scale-105 active:scale-95"
+                  href="#about"
+                  className="px-6 py-3 rounded-[10px] bg-white/[0.12] hover:bg-white/20 border border-white/10 text-white font-sans text-xs font-medium backdrop-blur-md transition-all"
                 >
-                  Mail Us
+                  What is Hybrid Studioz ?
                 </a>
               </div>
             </div>
 
-            <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-white/10 text-xs font-mono text-white/50">
-              <span>HYBRID STUDIOZ // 2026 ARCHITECTURE</span>
-              <span>GLOBAL ENTERPRISE GRADE</span>
+            {/* Right Column: Floating Video Showcase Card with Centered Play Button */}
+            <div className="lg:col-span-4 flex justify-end">
+              <div className="relative group w-full max-w-[320px]">
+                {/* Thin Hairline Crosshairs */}
+                <div className="absolute -top-6 -left-6 w-12 h-px bg-white/20 pointer-events-none" />
+                <div className="absolute -top-6 -left-6 w-px h-12 bg-white/20 pointer-events-none" />
+
+                <div
+                  onClick={() => openModal('Hero Video Preview')}
+                  className="relative aspect-[16/10] rounded-[10px] overflow-hidden border border-white/[0.15] bg-[#05070e] shadow-[0_20px_50px_rgba(0,85,255,0.3)] cursor-pointer group-hover:border-[#0055ff]/60 transition-all"
+                >
+                  <Image
+                    src="/assets/framer/hero-preview.jpg"
+                    alt="Hybrid Studioz Hero Preview"
+                    fill
+                    priority
+                    className="object-cover opacity-85 group-hover:scale-105 transition-transform duration-500"
+                  />
+                  {/* Subtle radial inner glow */}
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,85,255,0.25)_0%,transparent_70%)] pointer-events-none" />
+
+                  {/* Centered Frosted Play Button Badge */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-14 h-14 rounded-full bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center text-white shadow-xl group-hover:scale-110 group-hover:bg-[#0055ff] transition-all">
+                      <svg className="w-5 h-5 fill-white ml-0.5" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        )}
-      </CinematicSection>
+        </section>
 
-      {/* Global Direct Modal */}
+        {/* ==================================================================== */}
+        {/* 2. ABOUT HYBRID STUDIOZ SECTION (Woman Halo Ring Light Portrait)     */}
+        {/* ==================================================================== */}
+        <section id="about" className="relative w-full py-24 px-6 sm:px-8 border-t border-white/[0.04]">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Left Column: Authentic Framer Portrait Visual Card */}
+            <div className="lg:col-span-5">
+              <div className="relative aspect-square rounded-[22px] overflow-hidden border border-white/[0.10] bg-[#05070e] shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
+                <Image
+                  src="/assets/framer/about-portrait.jpg"
+                  alt="About Hybrid Studioz"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#02040a]/80 via-transparent to-transparent pointer-events-none" />
+              </div>
+            </div>
+
+            {/* Right Column: Narrative & Ratings */}
+            <div className="lg:col-span-7 flex flex-col items-start text-left">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-white mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0055ff]" />
+                <span>About Hybrid Studioz</span>
+              </div>
+
+              <h2 className="text-3xl sm:text-5xl lg:text-[54px] font-normal tracking-[-0.03em] text-white leading-[1.1]">
+                Innovating the Future <br />
+                <span className="text-[#8a919e]">Leaving Impressions!</span>
+              </h2>
+
+              <p className="mt-6 text-base text-[#8a919e] max-w-xl leading-relaxed">
+                Delivering innovative SaaS solutions with precision. Empower your business seamlessly, one step at a time.
+              </p>
+
+              {/* Two Authentic Checklist Items */}
+              <div className="mt-6 space-y-3.5">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#0055ff] text-white">
+                    <svg className="w-3 h-3 stroke-white stroke-[2.5]" fill="none" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <span className="text-sm font-medium text-white/90">
+                    IT software products that boost productivity & operations.
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#0055ff] text-white">
+                    <svg className="w-3 h-3 stroke-white stroke-[2.5]" fill="none" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <span className="text-sm font-medium text-white/90">
+                    50% growth in new customers.
+                  </span>
+                </div>
+              </div>
+
+              {/* Actions & Rating */}
+              <div className="mt-8 flex flex-wrap items-center gap-6 sm:gap-8">
+                <Link
+                  href="/about"
+                  className="px-6 py-3 rounded-[10px] bg-[#0055ff] hover:bg-[#1a66ff] text-white font-sans text-xs font-semibold shadow-[0_8px_32px_rgba(0,85,255,0.5)] transition-all active:scale-95"
+                >
+                  View About Us
+                </Link>
+
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-1 text-amber-400 text-sm">
+                    {'★★★★★'.split('').map((star, i) => (
+                      <span key={i}>{star}</span>
+                    ))}
+                  </div>
+                  <span className="text-xs text-white/80 font-medium mt-1">
+                    150+ Customer Rated
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ==================================================================== */}
+        {/* 3. HOW WE WORK? SECTION (3-Stage Sticky Roadmap + Blue Spiral Light)  */}
+        {/* ==================================================================== */}
+        <section className="relative w-full py-24 px-6 sm:px-8 border-t border-white/[0.04]">
+          <div className="max-w-7xl mx-auto">
+            {/* Section Header */}
+            <div className="max-w-3xl mb-12">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-white mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0055ff]" />
+                <span>How We Work?</span>
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-normal tracking-[-0.03em] text-white leading-tight">
+                Optimizing Your Path. <br />
+                <span className="text-[#8a919e]">From Idea to Execution</span>
+              </h2>
+              <p className="mt-4 text-base text-[#8a919e]">
+                We turn your ideas into reality, guiding you from concept to a fully integrated SaaS solution.
+              </p>
+            </div>
+
+            {/* Stages & Visual Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* Left Column: 3 Stages */}
+              <div className="lg:col-span-7 space-y-4">
+                {/* Stage 1 */}
+                <div className="rounded-2xl border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 hover:border-[#0055ff]/40 transition-colors">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.06] border border-white/[0.08] text-[#0055ff]">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-[#8a919e]">
+                      Stage 1
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-medium text-white mb-2">
+                    Consultation & Research
+                  </h3>
+                  <p className="text-sm text-[#8a919e] leading-relaxed mb-4">
+                    Understand client needs through detailed discussions and market analysis to inform development decisions.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs text-white/80">
+                      Comprehensive Consultation
+                    </span>
+                    <span className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs text-white/80">
+                      Project Roadmap
+                    </span>
+                  </div>
+                </div>
+
+                {/* Stage 2 */}
+                <div className="rounded-2xl border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 hover:border-[#0055ff]/40 transition-colors">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.06] border border-white/[0.08] text-[#0055ff]">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                      </svg>
+                    </div>
+                    <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-[#8a919e]">
+                      Stage 2
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-medium text-white mb-2">
+                    Development & Testing
+                  </h3>
+                  <p className="text-sm text-[#8a919e] leading-relaxed mb-4">
+                    Create customized solutions using agile methodologies, followed by rigorous quality assurance to ensure high standards.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs text-white/80">
+                      Seamless Implementation
+                    </span>
+                    <span className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs text-white/80">
+                      Evaluation
+                    </span>
+                  </div>
+                </div>
+
+                {/* Stage 3 */}
+                <div className="rounded-2xl border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 hover:border-[#0055ff]/40 transition-colors">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.06] border border-white/[0.08] text-[#0055ff]">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                    <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-[#8a919e]">
+                      Stage 3
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-medium text-white mb-2">
+                    Deployment & Support
+                  </h3>
+                  <p className="text-sm text-[#8a919e] leading-relaxed mb-4">
+                    Launch the solution and provide ongoing support to ensure continued success and satisfaction.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs text-white/80">
+                      Completion
+                    </span>
+                    <span className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs text-white/80">
+                      Feedback
+                    </span>
+                    <button
+                      onClick={() => openModal('Stage 3 Deployment')}
+                      className="px-3 py-1 rounded-lg bg-[#0055ff]/20 text-[#0055ff] border border-[#0055ff]/30 text-xs font-semibold hover:bg-[#0055ff] hover:text-white transition-colors"
+                    >
+                      Book an Appointment
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Sticky Spiral Light Card (Authentic Framer Asset) */}
+              <div className="lg:col-span-5 sticky top-28">
+                <div className="relative aspect-[4/5] rounded-[22px] overflow-hidden border border-white/[0.10] bg-[#05070e] shadow-2xl">
+                  <Image
+                    src="/assets/framer/spiral-light.jpg"
+                    alt="How We Work Spiral Light"
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#02040a]/60 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ==================================================================== */}
+        {/* 4. UNLIMITED SAAS SOLUTION (OUR SERVICES)                            */}
+        {/* ==================================================================== */}
+        <section id="services" className="relative w-full py-24 px-6 sm:px-8 border-t border-white/[0.04]">
+          <div className="max-w-7xl mx-auto text-center flex flex-col items-center">
+            {/* Section Header */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-white mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0055ff]" />
+              <span>Features</span>
+            </div>
+
+            <h2 className="text-3xl sm:text-5xl lg:text-[54px] font-normal tracking-[-0.03em] text-white leading-tight">
+              Unlimited SaaS Solution <br />
+              <span className="text-[#8a919e]">Our Services</span>
+            </h2>
+
+            <p className="mt-4 text-base text-[#8a919e] max-w-xl">
+              Get limitless SaaS solutions with HS, empowering you to innovate without boundaries
+            </p>
+
+            <Link
+              href="/about"
+              className="mt-6 px-6 py-3 rounded-[10px] bg-[#0055ff] hover:bg-[#1a66ff] text-white font-sans text-xs font-semibold shadow-[0_8px_32px_rgba(0,85,255,0.5)] transition-all active:scale-95"
+            >
+              View About Hybrid Studioz
+            </Link>
+
+            {/* 6 Services Grid (matching Framer) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-14 w-full text-left">
+              {/* Service 1 */}
+              <div
+                onClick={() => openModal('Custom SaaS Development')}
+                className="group relative rounded-2xl border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 hover:border-[#0055ff]/40 transition-all cursor-pointer flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#ff5e1a] text-white font-bold text-sm shadow-[0_0_15px_rgba(255,94,26,0.4)]">
+                      $
+                    </div>
+                    <svg className="w-4 h-4 text-white/40 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-medium text-white mb-1">
+                    Custom SaaS Development
+                  </h3>
+                  <span className="font-sans text-xs text-[#8a919e] block mb-3">
+                    Solving Challenges
+                  </span>
+                  <p className="text-xs text-[#8a919e] leading-relaxed">
+                    Creating custom software solutions for seamless system integration
+                  </p>
+                </div>
+              </div>
+
+              {/* Service 2 */}
+              <div
+                onClick={() => openModal('Comprehensive IT Software Products')}
+                className="group relative rounded-2xl border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 hover:border-[#0055ff]/40 transition-all cursor-pointer flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-black font-bold text-sm shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                      ⚡
+                    </div>
+                    <svg className="w-4 h-4 text-white/40 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-medium text-white mb-1">
+                    Comprehensive IT Software Products
+                  </h3>
+                  <span className="font-sans text-xs text-[#8a919e] block mb-3">
+                    All-in-One Software Solutions
+                  </span>
+                  <p className="text-xs text-[#8a919e] leading-relaxed">
+                    Offering a diverse portfolio of tools to support key business functions.
+                  </p>
+                </div>
+              </div>
+
+              {/* Service 3 */}
+              <div
+                onClick={() => openModal('Expert Consultation Services')}
+                className="group relative rounded-2xl border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 hover:border-[#0055ff]/40 transition-all cursor-pointer flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0055ff] text-white font-bold text-sm shadow-[0_0_15px_rgba(0,85,255,0.5)]">
+                      💬
+                    </div>
+                    <svg className="w-4 h-4 text-white/40 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-medium text-white mb-1">
+                    Expert Consultation Services
+                  </h3>
+                  <span className="font-sans text-xs text-[#8a919e] block mb-3">
+                    Feedbacks
+                  </span>
+                  <p className="text-xs text-[#8a919e] leading-relaxed">
+                    Offering expert advice to choose the right tech for growth.
+                  </p>
+                </div>
+              </div>
+
+              {/* Service 4 */}
+              <div
+                onClick={() => openModal('Cloud Migration Services')}
+                className="group relative rounded-2xl border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 hover:border-[#0055ff]/40 transition-all cursor-pointer flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#00bcd4] text-white font-bold text-sm shadow-[0_0_15px_rgba(0,188,212,0.4)]">
+                      ☁
+                    </div>
+                    <svg className="w-4 h-4 text-white/40 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-medium text-white mb-1">
+                    Cloud Migration Services
+                  </h3>
+                  <span className="font-sans text-xs text-[#8a919e] block mb-3">
+                    Cloud Onboarding
+                  </span>
+                  <p className="text-xs text-[#8a919e] leading-relaxed">
+                    We helps businesses transition to cloud solutions with minimal disruption.
+                  </p>
+                </div>
+              </div>
+
+              {/* Service 5 */}
+              <div
+                onClick={() => openModal('Ongoing Support & Maintenance')}
+                className="group relative rounded-2xl border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 hover:border-[#0055ff]/40 transition-all cursor-pointer flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#8b5cf6] text-white font-bold text-sm shadow-[0_0_15px_rgba(139,92,246,0.4)]">
+                      🛠
+                    </div>
+                    <svg className="w-4 h-4 text-white/40 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-medium text-white mb-1">
+                    Ongoing Support & Maintenance
+                  </h3>
+                  <span className="font-sans text-xs text-[#8a919e] block mb-3">
+                    Real - Time Feedback
+                  </span>
+                  <p className="text-xs text-[#8a919e] leading-relaxed">
+                    We provide ongoing support, including updates and troubleshooting.
+                  </p>
+                </div>
+              </div>
+
+              {/* Service 6 */}
+              <div
+                onClick={() => openModal('Project Management Software')}
+                className="group relative rounded-2xl border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 hover:border-[#0055ff]/40 transition-all cursor-pointer flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#10b981] text-white font-bold text-sm shadow-[0_0_15px_rgba(16,185,129,0.4)]">
+                      📊
+                    </div>
+                    <svg className="w-4 h-4 text-white/40 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-medium text-white mb-1">
+                    Project Management Software
+                  </h3>
+                  <span className="font-sans text-xs text-[#8a919e] block mb-3">
+                    Responsive
+                  </span>
+                  <p className="text-xs text-[#8a919e] leading-relaxed">
+                    Tools that help teams collaborate effectively, and manage resources efficiently.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ==================================================================== */}
+        {/* 5. BENEFITS SECTION (Pills + 5 Authentic Feature Cards)              */}
+        {/* ==================================================================== */}
+        <section className="relative w-full py-24 px-6 sm:px-8 border-t border-white/[0.04]">
+          <div className="max-w-7xl mx-auto">
+            {/* Header */}
+            <div className="max-w-3xl mb-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-white mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0055ff]" />
+                <span>Hybrid Studioz Benefits</span>
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-normal tracking-[-0.03em] text-white leading-tight">
+                We Just Don’t Develop, We Build. <br />
+                <span className="text-[#8a919e]">If You Can Imagine It, We Can Build It!</span>
+              </h2>
+            </div>
+
+            {/* Pill Badges Matrix + Contact Now button */}
+            <div className="flex flex-wrap items-center gap-2.5 max-w-4xl">
+              {benefitsList.map((benefit) => (
+                <span
+                  key={benefit}
+                  className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-white/90"
+                >
+                  {benefit}
+                </span>
+              ))}
+              <button
+                onClick={() => openModal('Benefits Contact')}
+                className="px-5 py-2 rounded-xl bg-white text-black font-sans text-xs font-semibold hover:bg-neutral-200 transition-colors shadow-sm"
+              >
+                Contact Now
+              </button>
+            </div>
+
+            {/* 5 Showcase Feature Cards (Row 1: 2 cards; Row 2: 3 cards) */}
+            <div className="mt-14 space-y-6">
+              {/* Row 1: 2 Large Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+                {/* Feature 1: User-Friendly Interface */}
+                <div className="md:col-span-7 rounded-2xl border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 flex flex-col justify-between">
+                  <div className="relative aspect-[16/9] rounded-xl overflow-hidden mb-6 bg-black">
+                    <Image
+                      src="/assets/framer/feature-blue3d.jpg"
+                      alt="User-Friendly Interface"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-medium text-white mb-2">
+                      User-Friendly Interface
+                    </h3>
+                    <p className="text-xs text-[#8a919e] leading-relaxed">
+                      We provide a user-friendly interface designed for seamless navigation, ensuring a smooth and intuitive experience for all users.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Feature 2: Customizable Dashboards */}
+                <div className="md:col-span-5 rounded-2xl border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 flex flex-col justify-between">
+                  <div className="relative aspect-[16/9] rounded-xl overflow-hidden mb-6 bg-black">
+                    <Image
+                      src="/assets/framer/feature-stats.jpg"
+                      alt="Customizable Dashboards"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="text-lg font-medium text-white">
+                        Customizable Dashboards
+                      </h3>
+                      <span className="px-2 py-0.5 rounded-full bg-[#0055ff] text-white text-[10px] font-bold uppercase">
+                        NEW
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#8a919e] leading-relaxed">
+                      We offer customizable dashboards that allow users to tailor their view, providing quick access to key insights and improving decision-making.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 2: 3 Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+                {/* Feature 3: Real-Time Data Analytics */}
+                <div className="rounded-2xl border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 flex flex-col justify-between">
+                  <div className="relative aspect-[16/10] rounded-xl overflow-hidden mb-6 bg-black">
+                    <Image
+                      src="/assets/framer/feature-mobile.jpg"
+                      alt="Real-Time Data Analytics"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="text-base font-medium text-white">
+                        Real-Time Data Analytics
+                      </h3>
+                      <span className="px-2 py-0.5 rounded-full bg-[#0055ff] text-white text-[10px] font-bold uppercase">
+                        NEW
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#8a919e] leading-relaxed">
+                      We deliver real-time data analytics, enabling informed decision.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Feature 4: Multi-Platform Compatibility */}
+                <div className="rounded-2xl border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 flex flex-col justify-between">
+                  <div className="relative aspect-[16/10] rounded-xl overflow-hidden mb-6 bg-black">
+                    <Image
+                      src="/assets/framer/feature-ui.png"
+                      alt="Multi-Platform Compatibility"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-medium text-white mb-2">
+                      Multi–Platform Compatibility
+                    </h3>
+                    <p className="text-xs text-[#8a919e] leading-relaxed">
+                      We provide multi – platform compatibility across all devices.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Feature 5: API Integrations */}
+                <div className="rounded-2xl border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 flex flex-col justify-between">
+                  <div className="relative aspect-[16/10] rounded-xl overflow-hidden mb-6 bg-black">
+                    <Image
+                      src="/assets/framer/feature-3dabstract.jpg"
+                      alt="API Integrations"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="text-base font-medium text-white">
+                        API Integrations for Seamless Connectivity
+                      </h3>
+                      <span className="px-2 py-0.5 rounded-full bg-[#0055ff] text-white text-[10px] font-bold uppercase">
+                        NEW
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#8a919e] leading-relaxed">
+                      We provide robust API integrations that ensure seamless connectivity with various systems and tools, enabling smooth data flow.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ==================================================================== */}
+        {/* 6. SELECTED PROJECTS SECTION (Authentic Framer Projects)              */}
+        {/* ==================================================================== */}
+        <section id="portfolio" className="relative w-full py-24 px-6 sm:px-8 border-t border-white/[0.04]">
+          <div className="max-w-7xl mx-auto text-center flex flex-col items-center">
+            {/* Header */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-white mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0055ff]" />
+              <span>Portfolio</span>
+            </div>
+
+            <h2 className="text-3xl sm:text-5xl lg:text-[54px] font-normal tracking-[-0.03em] text-white leading-tight">
+              Our Selected Projects <br />
+              <span className="text-[#8a919e]">That Propel Your Website.</span>
+            </h2>
+
+            <p className="mt-4 text-base text-[#8a919e] max-w-xl">
+              Explore our curated work, showcasing collaborations with visionary clients across diverse industries.
+            </p>
+
+            <Link
+              href="/portfolio"
+              className="mt-6 px-6 py-3 rounded-[10px] bg-[#0055ff] hover:bg-[#1a66ff] text-white font-sans text-xs font-semibold shadow-[0_8px_32px_rgba(0,85,255,0.5)] transition-all active:scale-95"
+            >
+              View Portfolio
+            </Link>
+
+            {/* 3 Authentic Framer Projects Showcase */}
+            <div className="grid grid-cols-1 gap-8 mt-14 w-full text-left max-w-5xl">
+              {/* Project 1: Smart Timepiece Companion (Ultra Watch with Orange Dial) */}
+              <div className="group rounded-[22px] border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 hover:border-[#0055ff]/40 transition-all">
+                <div className="relative aspect-[16/9] rounded-xl overflow-hidden mb-6 bg-black">
+                  <Image
+                    src="/assets/framer/project-watch.jpg"
+                    alt="Project Management Software"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                </div>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div>
+                    <h3 className="text-xl font-medium text-white group-hover:text-[#0055ff] transition-colors">
+                      Project Management Software
+                    </h3>
+                    <span className="text-xs text-[#8a919e] mt-1 block">
+                      Platform, Solution · 2025
+                    </span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs text-white/80">
+                      Platform
+                    </span>
+                    <span className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs text-white/80">
+                      Solution
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Project 2: Concentric Light Loops (Data Analytics Platform) */}
+              <div className="group rounded-[22px] border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 hover:border-[#0055ff]/40 transition-all">
+                <div className="relative aspect-[16/9] rounded-xl overflow-hidden mb-6 bg-black">
+                  <Image
+                    src="/assets/framer/project-cap.jpg"
+                    alt="Data Analytics Platform"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                </div>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div>
+                    <h3 className="text-xl font-medium text-white group-hover:text-[#0055ff] transition-colors">
+                      Data Analytics Platform
+                    </h3>
+                    <span className="text-xs text-[#8a919e] mt-1 block">
+                      Solutions, Data Collection · 2024
+                    </span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs text-white/80">
+                      Solutions
+                    </span>
+                    <span className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs text-white/80">
+                      Data Collection
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Project 3: Aerosol Finishing Suite */}
+              <div className="group rounded-[22px] border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 hover:border-[#0055ff]/40 transition-all">
+                <div className="relative aspect-[16/9] rounded-xl overflow-hidden mb-6 bg-black">
+                  <Image
+                    src="/assets/framer/project-spray.jpg"
+                    alt="Customized CRM System"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                </div>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div>
+                    <h3 className="text-xl font-medium text-white group-hover:text-[#0055ff] transition-colors">
+                      Customized CRM System
+                    </h3>
+                    <span className="text-xs text-[#8a919e] mt-1 block">
+                      Platform, User-Friendly · 2024
+                    </span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs text-white/80">
+                      Platform
+                    </span>
+                    <span className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs text-white/80">
+                      User-Friendly
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ==================================================================== */}
+        {/* 7. MARQUEE IMAGE WALL (2 Infinite Scrolling Authentic Photo Rows)     */}
+        {/* ==================================================================== */}
+        <section className="relative w-full py-20 overflow-hidden border-t border-white/[0.04]">
+          <div className="text-center mb-10">
+            <Link
+              href="/about"
+              className="inline-flex items-center px-6 py-3 rounded-[10px] bg-[#0055ff] hover:bg-[#1a66ff] text-white font-sans text-xs font-semibold shadow-[0_8px_32px_rgba(0,85,255,0.5)] transition-all active:scale-95"
+            >
+              View About Hybrid Studioz
+            </Link>
+          </div>
+
+          <div className="space-y-4">
+            {/* Row 1: Scrolling Left */}
+            <div className="overflow-hidden whitespace-nowrap">
+              <div className="animate-marquee-left flex gap-4">
+                {[...galleryRow1, ...galleryRow1].map((img, i) => (
+                  <div
+                    key={i}
+                    className="relative w-[320px] sm:w-[400px] h-[240px] sm:h-[280px] shrink-0 rounded-[18px] overflow-hidden border border-white/[0.08] bg-[#05070e]"
+                  >
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Row 2: Scrolling Right */}
+            <div className="overflow-hidden whitespace-nowrap">
+              <div className="animate-marquee-right flex gap-4">
+                {[...galleryRow1.slice().reverse(), ...galleryRow1.slice().reverse()].map((img, i) => (
+                  <div
+                    key={i}
+                    className="relative w-[320px] sm:w-[400px] h-[240px] sm:h-[280px] shrink-0 rounded-[18px] overflow-hidden border border-white/[0.08] bg-[#05070e]"
+                  >
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ==================================================================== */}
+        {/* 8. PRICING SECTION (₹15K and ₹30K Cards matching Framer)              */}
+        {/* ==================================================================== */}
+        <section className="relative w-full py-24 px-6 sm:px-8 border-t border-white/[0.04]">
+          <div className="max-w-7xl mx-auto text-center flex flex-col items-center">
+            {/* Header */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-white mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0055ff]" />
+              <span>Pricing</span>
+            </div>
+
+            <h2 className="text-3xl sm:text-5xl lg:text-[54px] font-normal tracking-[-0.03em] text-white leading-tight">
+              Plans for all businesses, Suitable for <br />
+              <span className="text-[#8a919e]">Personal, Agencies, Startups.</span>
+            </h2>
+
+            <p className="mt-4 text-base text-[#8a919e] max-w-xl">
+              Our pricing plans are designed to make getting started as effortless as possible. With flexible options tailored to suit a variety of needs and budgets.
+            </p>
+
+            {/* 2 Pricing Cards (matching Framer ₹15K and ₹30K) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full mt-14 text-left">
+              {/* Basic Plan */}
+              <div className="rounded-3xl border border-white/[0.08] bg-[#05070e] p-8 sm:p-10 flex flex-col justify-between hover:border-white/20 transition-all">
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/[0.06] border border-white/[0.08] text-[#0055ff]">
+                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <span className="px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-white">
+                      Most Pick
+                    </span>
+                  </div>
+
+                  <span className="text-sm font-medium text-[#8a919e] uppercase tracking-wider block mb-1">
+                    Basic
+                  </span>
+
+                  {/* Price */}
+                  <div className="flex items-baseline gap-3 mb-4">
+                    <span className="text-4xl sm:text-5xl font-bold text-white tracking-tight">
+                      ₹15K
+                    </span>
+                    <span className="text-sm text-[#8a919e]">/ Month</span>
+                    <span className="relative text-lg text-white/40 line-through ml-2">
+                      ₹30K
+                      <span className="absolute inset-x-0 top-1/2 h-[2px] bg-[#0055ff] -rotate-12" />
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-[#8a919e] leading-relaxed mb-6">
+                    Our basic pricing plan is designed to offer great value while providing the essential features you need to get started.
+                  </p>
+
+                  {/* Metrics Badges */}
+                  <div className="flex items-center gap-2 mb-6">
+                    <span className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs text-white/90 font-medium">
+                      <strong className="text-white">100+</strong> Projects
+                    </span>
+                    <span className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs text-white/90 font-medium">
+                      <strong className="text-white">75+</strong> Revisions
+                    </span>
+                  </div>
+
+                  {/* Checkmarks */}
+                  <div className="space-y-3 pt-4 border-t border-white/[0.06]">
+                    <div className="flex items-center gap-3 text-xs text-white/80">
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#0055ff] text-white">
+                        ✓
+                      </span>
+                      <span>Custom SaaS development for MSME</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs text-white/80">
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#0055ff] text-white">
+                        ✓
+                      </span>
+                      <span>Up to 10 users</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs text-white/80">
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#0055ff] text-white">
+                        ✓
+                      </span>
+                      <span>Basic integrations with existing systems</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs text-white/80">
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#0055ff] text-white">
+                        ✓
+                      </span>
+                      <span>Dedicated support and training</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs text-white/80">
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#0055ff] text-white">
+                        ✓
+                      </span>
+                      <span>30-Days Money-back Guarantee</span>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => openModal('Basic Plan ₹15K')}
+                  className="mt-8 w-full py-3.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.10] text-white font-sans text-xs font-semibold transition-all active:scale-95"
+                >
+                  Book an Appointment
+                </button>
+              </div>
+
+              {/* Custom Plan (Recommended) */}
+              <div className="relative rounded-3xl border border-[#0055ff]/40 bg-[#05070e] p-8 sm:p-10 flex flex-col justify-between shadow-[0_20px_50px_rgba(0,85,255,0.2)] hover:border-[#0055ff] transition-all">
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0055ff]/20 border border-[#0055ff]/40 text-[#0055ff]">
+                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                      </svg>
+                    </div>
+                    <span className="px-3.5 py-1 rounded-full bg-[#0055ff]/20 border border-[#0055ff]/40 text-xs font-medium text-[#0055ff]">
+                      Recommended
+                    </span>
+                  </div>
+
+                  <span className="text-sm font-medium text-[#8a919e] uppercase tracking-wider block mb-1">
+                    Custom
+                  </span>
+
+                  {/* Price */}
+                  <div className="flex items-baseline gap-3 mb-4">
+                    <span className="text-4xl sm:text-5xl font-bold text-white tracking-tight">
+                      ₹30K
+                    </span>
+                    <span className="text-sm text-[#8a919e]">/ Month</span>
+                  </div>
+
+                  <p className="text-xs text-[#8a919e] leading-relaxed mb-6">
+                    Our custom pricing plan is designed for businesses looking for advanced features and customized solutions
+                  </p>
+
+                  {/* Metrics Badges */}
+                  <div className="flex items-center gap-2 mb-6">
+                    <span className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs text-white/90 font-medium">
+                      <strong className="text-white">650+</strong> Projects
+                    </span>
+                    <span className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs text-white/90 font-medium">
+                      <strong className="text-white">250+</strong> Revisions
+                    </span>
+                  </div>
+
+                  {/* Checkmarks */}
+                  <div className="space-y-3 pt-4 border-t border-white/[0.06]">
+                    <div className="flex items-center gap-3 text-xs text-white/80">
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#0055ff] text-white">
+                        ✓
+                      </span>
+                      <span>Fully tailored SaaS solution based on your business needs</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs text-white/80">
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#0055ff] text-white">
+                        ✓
+                      </span>
+                      <span>Integrations with all existing systems</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs text-white/80">
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#0055ff] text-white">
+                        ✓
+                      </span>
+                      <span>Ongoing updates and feature enhancements</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs text-white/80">
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#0055ff] text-white">
+                        ✓
+                      </span>
+                      <span>Dedicated support and training</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs text-white/80">
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#0055ff] text-white">
+                        ✓
+                      </span>
+                      <span>30-Days Money-back Guarantee</span>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => openModal('Custom Plan ₹30K')}
+                  className="mt-8 w-full py-3.5 rounded-xl bg-[#0055ff] hover:bg-[#1a66ff] text-white font-sans text-xs font-semibold shadow-[0_4px_20px_rgba(0,85,255,0.4)] transition-all active:scale-95"
+                >
+                  Book an Appointment
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ==================================================================== */}
+        {/* 9. TESTIMONIALS SECTION (With 6 Authentic Framer Avatars)             */}
+        {/* ==================================================================== */}
+        <section className="relative w-full py-24 px-6 sm:px-8 border-t border-white/[0.04]">
+          <div className="max-w-7xl mx-auto text-center flex flex-col items-center">
+            {/* Header */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-white mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0055ff]" />
+              <span>Testimonial</span>
+            </div>
+
+            <h2 className="text-3xl sm:text-5xl lg:text-[54px] font-normal tracking-[-0.03em] text-white leading-tight">
+              Customer Reviews About <br />
+              <span className="text-[#8a919e]">Efficiency & Innovation</span>
+            </h2>
+
+            <p className="mt-4 text-base text-[#8a919e] max-w-xl">
+              Hear from our happy clients! See how we’ve helped them achieve their goals and create lasting impact.
+            </p>
+
+            {/* Testimonials Grid (6 cards matching Framer) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-14 w-full text-left">
+              {testimonials.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-2xl border border-white/[0.08] bg-[#05070e] p-6 sm:p-8 flex flex-col justify-between hover:border-white/20 transition-all"
+                >
+                  <div>
+                    {/* Avatar & 5 Stars */}
+                    <div className="flex items-center justify-between mb-5">
+                      <div className="relative w-11 h-11 rounded-full overflow-hidden border border-white/10 bg-white/5">
+                        <Image
+                          src={item.avatar}
+                          alt={item.company}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="flex items-center gap-1 text-amber-400 text-xs">
+                        {'★★★★★'.split('').map((star, i) => (
+                          <span key={i}>{star}</span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <p className="text-sm text-white/90 leading-relaxed mb-6 font-normal">
+                      &ldquo;{item.quote}&rdquo;
+                    </p>
+                  </div>
+
+                  <div className="pt-4 border-t border-white/[0.06]">
+                    <h4 className="text-sm font-semibold text-white">
+                      {item.company}
+                    </h4>
+                    <span className="text-xs text-[#8a919e]">
+                      {item.role}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ==================================================================== */}
+        {/* 10. FREQUENTLY ASKED QUESTIONS (6 Exact Framer Questions)            */}
+        {/* ==================================================================== */}
+        <section id="faq" className="relative w-full py-24 px-6 sm:px-8 border-t border-white/[0.04]">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            {/* Left Column: Heading & Copy */}
+            <div className="lg:col-span-5 text-left">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-white mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0055ff]" />
+                <span>FAQ</span>
+              </div>
+
+              <h2 className="text-3xl sm:text-5xl font-normal tracking-[-0.03em] text-white leading-tight">
+                Frequently <br />
+                <span className="text-[#8a919e]">Asked Questions</span>
+              </h2>
+
+              <p className="mt-4 text-base text-[#8a919e] max-w-md">
+                Have questions? Our FAQ section has you covered with quick answers to the most common inquiries.
+              </p>
+            </div>
+
+            {/* Right Column: Accordion Stack */}
+            <div className="lg:col-span-7 space-y-3">
+              {SITE_CONFIG.faqs?.map((faq) => {
+                const isOpen = activeFaq === faq.id;
+                return (
+                  <div
+                    key={faq.id}
+                    className="rounded-2xl border border-white/[0.08] bg-[#05070e] overflow-hidden transition-colors"
+                  >
+                    <button
+                      onClick={() => toggleFaq(faq.id)}
+                      className="w-full flex items-center justify-between p-6 text-left hover:text-[#0055ff] transition-colors"
+                    >
+                      <span className="text-base font-medium text-white pr-4">
+                        {faq.question}
+                      </span>
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-lg">
+                        {isOpen ? '−' : '+'}
+                      </span>
+                    </button>
+
+                    {isOpen && (
+                      <div className="px-6 pb-6 text-sm text-[#8a919e] leading-relaxed border-t border-white/[0.04] pt-4">
+                        {faq.answer}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ==================================================================== */}
+        {/* 11. JOIN US NOW CTA BANNER                                          */}
+        {/* ==================================================================== */}
+        <section className="relative w-full py-20 px-6 sm:px-8">
+          <div className="max-w-6xl mx-auto rounded-3xl border border-blue-500/20 bg-gradient-to-b from-[#0037c3]/40 via-[#05070e] to-[#02040a] p-10 sm:p-16 text-center relative overflow-hidden shadow-[0_20px_80px_rgba(0,85,255,0.25)]">
+            <div className="relative z-10 flex flex-col items-center">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.10] text-xs font-medium text-white mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0055ff]" />
+                <span>Join Us Now</span>
+              </div>
+
+              <h2 className="text-3xl sm:text-5xl font-normal tracking-[-0.03em] text-white leading-tight max-w-2xl">
+                Each Project we Undertake <br />
+                <span className="text-white">is a Unique Opportunity.</span>
+              </h2>
+
+              <p className="mt-4 text-base text-[#8a919e] max-w-xl">
+                Ready to take the next step? Join us now and start transforming your vision into reality with expert support.
+              </p>
+
+              <button
+                onClick={() => openModal('Join Us Banner Appointment')}
+                className="mt-8 px-8 py-3.5 rounded-[10px] bg-[#0055ff] hover:bg-[#1a66ff] text-white font-sans text-xs font-semibold shadow-[0_4px_25px_rgba(0,85,255,0.45)] transition-all hover:scale-105 active:scale-95"
+              >
+                Book an Appointment
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* Global Direct Consultation Modal */}
       <DirectModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

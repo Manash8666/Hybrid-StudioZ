@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300..900;1,300..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 @import "tailwindcss";
 @import "swiper/css";
 @import "swiper/css/navigation";
@@ -21,8 +21,8 @@
   --text-gradient-muted: #949cb0;
   --text-secondary: #8a919e;
 
-  --btn-light-bg: #f2f4f8;
-  --btn-light-ink: #08090c;
+  --btn-light-bg: #ffffff;
+  --btn-light-ink: #000000;
 
   /* Legacy & Adaptive Tokens */
   --bg-light: #eef2f7;
@@ -34,8 +34,8 @@
   --accent-orange: #ff5e1a;
   --contact-navy: #023a74;
 
-  --font-display: 'Plus Jakarta Sans', 'Archivo', sans-serif;
-  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-display: 'DM Sans', 'Inter', sans-serif;
+  --font-sans: 'DM Sans', 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
 
@@ -139,3 +139,32 @@ html.lenis, html.lenis body {
     scroll-behavior: auto !important;
   }
 }
+
+/* Marquee Image Strip Animations */
+@keyframes marquee-left {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-marquee-left {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 40s linear infinite;
+}
+
+.animate-marquee-right {
+  display: flex;
+  width: max-content;
+  animation: marquee-right 40s linear infinite;
+}
+
+.animate-marquee-left:hover,
+.animate-marquee-right:hover {
+  animation-play-state: paused;
+}
+

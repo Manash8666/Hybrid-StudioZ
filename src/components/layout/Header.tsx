@@ -67,75 +67,57 @@ export default function Header() {
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 sm:px-8">
-          {/* Brand Logo Lockup & 1px Vertical Divider */}
-          <div className="flex items-center">
-            <Link
-              href="/"
-              className="group inline-flex items-center select-none"
-              aria-label="Hybrid Studioz Home"
-            >
-              <HybridLogo tone={navTone} size="md" />
-            </Link>
+          {/* Brand Logo */}
+          <Link
+            href="/"
+            className="group inline-flex items-center select-none"
+            aria-label="Hybrid Studioz Home"
+          >
+            <HybridLogo tone={navTone} size="md" />
+          </Link>
 
-            <div
-              className={`hidden lg:block h-6 w-px mx-6 transition-colors ${
-                isLight ? 'bg-black/15' : 'bg-white/12'
-              }`}
-            />
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-8">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`font-sans text-[13px] font-medium tracking-normal transition-colors duration-200 ${
+                    isActive
+                      ? isLight
+                        ? 'text-[#0b1020] font-semibold'
+                        : 'text-white font-semibold'
+                      : isLight
+                      ? 'text-[#0b1020]/70 hover:text-[#0b1020]'
+                      : 'text-[#8a919e] hover:text-white'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </nav>
 
-            {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`px-3.5 py-1.5 rounded-lg font-sans text-sm font-medium tracking-wide transition-all duration-200 ${
-                      isActive
-                        ? isLight
-                          ? 'text-[#0b1020] font-semibold bg-black/5'
-                          : 'text-white font-semibold bg-white/[0.08]'
-                        : isLight
-                        ? 'text-[#0b1020]/70 hover:text-[#0b1020]'
-                        : 'text-[#8a919e] hover:text-white'
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </nav>
-          </div>
-
-          {/* Action Hub: Solid Electric Blue Button & Grid Menu Trigger */}
+          {/* Action Hub: Solid Electric Blue Button & Mobile Menu Trigger */}
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 font-sans text-sm font-semibold tracking-wide text-white bg-[#0055ff] hover:bg-[#1a66ff] shadow-[0_8px_30px_rgba(0,85,255,0.45)] transition-all hover:scale-105 active:scale-95"
+              className="inline-flex items-center justify-center rounded-[10px] px-4 py-2 font-sans text-xs font-semibold tracking-normal text-white bg-[#0055ff] hover:bg-[#1a66ff] shadow-[0_4px_20px_rgba(0,85,255,0.4)] transition-all hover:scale-[1.02] active:scale-95"
             >
               <span>Get In Touch</span>
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
             </button>
 
-            {/* Mobile & Grid Menu Trigger */}
+            {/* Mobile-Only Menu Trigger */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`flex h-10 w-10 items-center justify-center rounded-xl border transition-all ${
-                isLight
-                  ? 'border-black/10 bg-black/5 text-[#0b1020] hover:bg-black/10'
-                  : 'border-white/15 bg-white/5 text-white hover:bg-white/15'
-              }`}
-              aria-label="Toggle Navigation Matrix"
+              className="lg:hidden flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors"
+              aria-label="Toggle Navigation Menu"
             >
-              <div className="grid grid-cols-2 gap-1 w-4 h-4">
-                <span className={`block w-1.5 h-1.5 rounded-sm ${isLight ? 'bg-[#0b1020]' : 'bg-white'}`} />
-                <span className="block w-1.5 h-1.5 rounded-sm bg-[#ff5e1a]" />
-                <span className="block w-1.5 h-1.5 rounded-sm bg-[#1fb6e8]" />
-                <span className={`block w-1.5 h-1.5 rounded-sm ${isLight ? 'bg-[#0b1020]' : 'bg-white'}`} />
-              </div>
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
             </button>
           </div>
         </div>

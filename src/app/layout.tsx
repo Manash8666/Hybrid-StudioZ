@@ -2,9 +2,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import SmoothScroll from '@/components/layout/SmoothScroll';
 import Grain from '@/components/layout/Grain';
-import Cursor from '@/components/layout/Cursor';
-import Intro from '@/components/layout/Intro';
-import Chapters from '@/components/layout/Chapters';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { SITE_CONFIG } from '@/content/site';
@@ -68,9 +65,6 @@ export default function RootLayout({
       <body className="min-h-screen bg-[#02040a] text-[#f4f7fb] selection:bg-[#0055ff] selection:text-white">
         <SmoothScroll>
           <Grain />
-          <Cursor />
-          <Intro />
-          <Chapters />
           <Header />
           <main className="relative flex-1">{children}</main>
           <Footer />

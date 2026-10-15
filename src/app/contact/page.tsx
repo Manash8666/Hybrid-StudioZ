@@ -1,318 +1,313 @@
 'use client';
 
 // ==============================================================================
-// HYBRID STUDIOZ — CONTACT (PAGE-CONTACT-2)
-// Dark & Direct Interactive Discovery Form + Global Studio Branch Hub
+// HYBRID STUDIOZ — /contact PAGE (100% EXACT FRAMER MIRROR)
+// Reconstructed directly from hybridstudioz.framer.ai/contact
+// Includes authentic Framer form fields, typography, FAQs, and CTA.
 // ==============================================================================
 
 import React, { useState } from 'react';
-import Link from 'next/link';
-import SuperHeading from '@/components/shock/SuperHeading';
-import { SITE_CONFIG } from '@/content/site';
+import Image from 'next/image';
+import EyebrowBadge from '@/components/layout/EyebrowBadge';
+import DirectModal from '@/components/shock/DirectModal';
 
 export default function ContactPage() {
-  const [selectedServices, setSelectedServices] = useState<string[]>(['Cinematic Web & WebGL']);
-  const [budget, setBudget] = useState('$25k - $50k');
-  const [timeline, setTimeline] = useState('Within 1 Month');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    company: '',
-    phone: '',
+    companyType: '',
     message: '',
-    agreed: false,
   });
   const [submitted, setSubmitted] = useState(false);
 
-  const toggleService = (title: string) => {
-    setSelectedServices((prev) =>
-      prev.includes(title) ? prev.filter((t) => t !== title) : [...prev, title]
-    );
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.agreed) return;
-
     setSubmitted(true);
     setTimeout(() => {
       setSubmitted(false);
       setFormData({
-        name: '',
+        firstName: '',
+        lastName: '',
         email: '',
-        company: '',
-        phone: '',
+        companyType: '',
         message: '',
-        agreed: false,
       });
     }, 4000);
   };
 
+  const faqs = [
+    {
+      q: 'What industries do we serve?',
+      a: 'We serve a wide range of industries including eCommerce, Healthcare, Finance, Real Estate, Education, and Logistics. Our SaaS solutions are custom-built to address industry-specific workflows and compliance standards.',
+    },
+    {
+      q: 'Can we customize your software solutions?',
+      a: 'Yes, absolutely. Every solution we deliver is engineered from scratch or tailored modularly to fit your exact business logic, branding guidelines, and integration requirements.',
+    },
+    {
+      q: 'What kind of support do we offer post-launch?',
+      a: 'We provide continuous 24/7 monitoring, zero-downtime maintenance, proactive feature updates, security patches, and dedicated engineering channels.',
+    },
+    {
+      q: 'How long does it take to develop a custom solution?',
+      a: 'Typical MVP development ranges from 2 to 4 weeks, with full enterprise deployments spanning 6 to 12 weeks depending on scale and integrations.',
+    },
+    {
+      q: 'What makes us different from other SaaS providers?',
+      a: 'We bridge bleeding-edge AI multi-agent orchestration, ultra-performant modern web engineering (Next.js, WebGL), and bespoke high-conversion brand design under a single roof.',
+    },
+    {
+      q: 'What is the pricing model for our solutions?',
+      a: 'We offer transparent fixed-price tier packages (₹15K Starter, ₹30K Professional) as well as enterprise retainers tailored to custom scopes.',
+    },
+  ];
+
   return (
-    <div className="relative min-h-screen bg-[#070913] text-white pt-32 pb-24 px-6 sm:px-8 lg:px-12 select-none">
-      {/* Background radial glow */}
-      <div className="pointer-events-none absolute top-20 left-1/4 w-[70vw] h-[500px] bg-gradient-to-b from-[#ff5e1a]/10 via-[#e9449a]/5 to-transparent blur-3xl" />
+    <div className="relative min-h-screen w-full bg-[#02040a] text-white selection:bg-[#0055ff]/30 selection:text-white">
+      {/* ==================================================================== */}
+      {/* 1. HERO SECTION & INTERACTIVE FORM                                  */}
+      {/* ==================================================================== */}
+      <section className="relative w-full pt-36 pb-24 md:pt-44 md:pb-32 px-6 sm:px-12 md:px-20 overflow-hidden flex flex-col items-center text-center">
+        {/* Subtle ambient radial glow */}
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_60%_50%_at_50%_15%,rgba(0,85,255,0.22),transparent_70%)]" />
 
-      <div className="mx-auto max-w-7xl">
-        {/* Breadcrumb Navigation */}
-        <nav className="flex items-center gap-2 font-mono text-xs text-white/50 uppercase tracking-widest mb-8">
-          <Link href="/" className="hover:text-white transition-colors">
-            Home
-          </Link>
-          <span>/</span>
-          <span className="text-[#ff5e1a] font-bold">Contact & Brief</span>
-        </nav>
-
-        {/* Hero Super Heading */}
-        <div className="mb-16">
-          <SuperHeading
-            eyebrow="Direct Architecture Channel // 2026"
-            title="Initiate"
-            highlight="Discovery"
-            subtitle="Submit your project blueprint or contact one of our global studio nodes in San Francisco, London, Tokyo, or Zurich."
-            size="lg"
+        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
+          {/* Eyebrow Badge */}
+          <EyebrowBadge
+            year="24/7"
+            label="Let's Work Together"
+            className="mb-8"
           />
+
+          {/* Heading */}
+          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-normal tracking-[-0.035em] text-white leading-[1.08]">
+            Any Questions <span className="text-[#8a919e]">Rising?</span>
+            <span className="block mt-1 font-semibold text-white">
+              We are All Here.
+            </span>
+          </h1>
+
+          {/* Subcopy */}
+          <p className="mt-6 max-w-xl font-sans text-base sm:text-lg text-[#8a919e] leading-relaxed">
+            Whether you have a question, need assistance, or want to start a new project, our team is here to help.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-          {/* Left Column: Interactive Project Planner (Mode A Inline Form) */}
-          <div className="lg:col-span-7">
-            <div className="rounded-3xl bg-[#0b1020] border border-white/15 p-8 sm:p-10 shadow-2xl backdrop-blur-xl">
-              {submitted ? (
-                <div className="py-16 text-center animate-in zoom-in-95 duration-300">
-                  <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#ff5e1a]/20 border border-[#ff5e1a]">
-                    <svg className="h-8 w-8 text-[#ff5e1a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <h3 className="font-display text-3xl font-black uppercase text-white mb-2">
-                    Transmission Established
-                  </h3>
-                  <p className="font-sans text-sm text-white/70 max-w-md mx-auto">
-                    Your architecture brief has been dispatched to our Principal Technologist. Expect a detailed response within 4 hours.
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-8">
-                  {/* Step 1: Services Selection */}
-                  <div>
-                    <label className="block font-mono text-xs font-bold uppercase tracking-widest text-[#1fb6e8] mb-3">
-                      01 // Required Capabilities (Select All That Apply)
-                    </label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                      {SITE_CONFIG.services.map((svc) => {
-                        const isSelected = selectedServices.includes(svc.title);
-                        return (
-                          <button
-                            key={svc.id}
-                            type="button"
-                            onClick={() => toggleService(svc.title)}
-                            className={`flex items-center gap-2.5 p-3.5 rounded-xl border text-left transition-all ${
-                              isSelected
-                                ? 'border-[#ff5e1a] bg-[#ff5e1a]/15 text-white'
-                                : 'border-white/10 bg-white/5 text-white/70 hover:border-white/20'
-                            }`}
-                          >
-                            <span
-                              className={`h-3.5 w-3.5 rounded-sm border flex items-center justify-center shrink-0 ${
-                                isSelected ? 'bg-[#ff5e1a] border-[#ff5e1a]' : 'border-white/30'
-                              }`}
-                            >
-                              {isSelected && (
-                                <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                                </svg>
-                              )}
-                            </span>
-                            <span className="font-display text-xs font-bold uppercase tracking-wide">
-                              {svc.title}
-                            </span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Step 2: Budget Selector */}
-                  <div>
-                    <label className="block font-mono text-xs font-bold uppercase tracking-widest text-[#6f4bff] mb-3">
-                      02 // Projected Capital Budget
-                    </label>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                      {['$10k - $25k', '$25k - $50k', '$50k - $100k', '$100k+'].map((tier) => (
-                        <button
-                          key={tier}
-                          type="button"
-                          onClick={() => setBudget(tier)}
-                          className={`py-3 px-2 rounded-xl text-center font-mono text-xs font-bold transition-all ${
-                            budget === tier
-                              ? 'bg-white text-[#070913] shadow-md'
-                              : 'bg-white/5 text-white/60 border border-white/10 hover:bg-white/10'
-                          }`}
-                        >
-                          {tier}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Step 3: Contact Inputs */}
-                  <div className="space-y-4">
-                    <label className="block font-mono text-xs font-bold uppercase tracking-widest text-[#e9449a]">
-                      03 // Contact & Stakeholder Details
-                    </label>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <input
-                          required
-                          type="text"
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          placeholder="Your Full Name *"
-                          className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3.5 text-sm text-white placeholder-white/35 focus:border-[#ff5e1a] focus:outline-none"
-                        />
-                      </div>
-                      <div>
-                        <input
-                          required
-                          type="email"
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          placeholder="Work / Corporate Email *"
-                          className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3.5 text-sm text-white placeholder-white/35 focus:border-[#ff5e1a] focus:outline-none"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <input
-                          type="text"
-                          value={formData.company}
-                          onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                          placeholder="Company / Brand"
-                          className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3.5 text-sm text-white placeholder-white/35 focus:border-[#ff5e1a] focus:outline-none"
-                        />
-                      </div>
-                      <div>
-                        <input
-                          type="tel"
-                          value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          placeholder="Direct Phone / WhatsApp"
-                          className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3.5 text-sm text-white placeholder-white/35 focus:border-[#ff5e1a] focus:outline-none"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <textarea
-                        rows={4}
-                        required
-                        value={formData.message}
-                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        placeholder="Tell us about your venture, core challenge, or desired motion / WebGL interactions..."
-                        className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3.5 text-sm text-white placeholder-white/35 focus:border-[#ff5e1a] focus:outline-none"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Terms & Submit Switch */}
-                  <div className="pt-2">
-                    <label className="flex items-start gap-3 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        required
-                        checked={formData.agreed}
-                        onChange={(e) => setFormData({ ...formData, agreed: e.target.checked })}
-                        className="mt-1 h-4 w-4 rounded border-white/20 bg-white/5 text-[#ff5e1a] focus:ring-0"
-                      />
-                      <span className="text-xs text-white/60 font-sans leading-relaxed">
-                        I agree to share project requirements under Hybrid Studioz&apos; zero-data-retention NDA charter.
-                      </span>
-                    </label>
-
-                    <button
-                      type="submit"
-                      disabled={!formData.agreed}
-                      className="mt-6 w-full py-4 rounded-xl bg-gradient-to-r from-[#ff5e1a] via-[#e9449a] to-[#6f4bff] font-display text-xs sm:text-sm font-black uppercase tracking-wider text-white shadow-xl shadow-[#ff5e1a]/25 hover:opacity-90 disabled:opacity-40 transition-opacity flex items-center justify-center gap-2"
-                    >
-                      <span>Transmit Architecture Brief</span>
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </button>
-                  </div>
-                </form>
-              )}
-            </div>
+        {/* Contact Form Card */}
+        <div className="relative z-10 mt-16 w-full max-w-2xl mx-auto rounded-3xl bg-[#05070e] border border-white/[0.08] p-8 sm:p-12 text-left shadow-2xl">
+          <div className="mb-8">
+            <h3 className="font-display text-2xl font-semibold text-white mb-1">
+              Fill The Form Out!
+            </h3>
+            <p className="font-sans text-xs text-[#8a919e]">
+              Tell us about your requirements and we will connect within 24 hours.
+            </p>
           </div>
 
-          {/* Right Column: Global Studio Branches (Shock page-contact-2 style) */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="p-8 rounded-3xl bg-[#0b1020] border border-white/10">
-              <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#ff5e1a] block mb-2">
-                Direct Channels
-              </span>
-              <h3 className="font-display text-2xl font-black uppercase text-white mb-4">
-                Rapid Dispatch Desk
-              </h3>
-              <p className="font-sans text-sm text-white/70 mb-6">
-                Prefer an informal introduction or technical feasibility chat? Reach our leads directly:
+          {submitted ? (
+            <div className="py-12 text-center animate-in zoom-in-95 duration-300">
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#0055ff]/20 border border-[#0055ff]">
+                <svg className="h-6 w-6 text-[#0055ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h4 className="font-display text-xl font-semibold text-white mb-2">
+                Message Dispatched
+              </h4>
+              <p className="font-sans text-sm text-[#8a919e]">
+                Thank you! Our engineering lead will review your message and reply promptly.
               </p>
-              <div className="space-y-2 font-mono text-xs">
-                <div className="flex items-center gap-2 text-white/80">
-                  <span className="text-[#1fb6e8]">Email:</span>
-                  <a href={`mailto:${SITE_CONFIG.brand.email}`} className="hover:underline">
-                    {SITE_CONFIG.brand.email}
-                  </a>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label className="block font-sans text-xs font-medium text-white/80 mb-2">
+                    First name*
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.firstName}
+                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                    placeholder="Jane"
+                    className="w-full px-4 py-3 rounded-[10px] bg-white/[0.04] border border-white/[0.08] text-sm text-white placeholder-white/30 focus:border-[#0055ff] focus:outline-none transition-colors"
+                  />
                 </div>
-                <div className="flex items-center gap-2 text-white/80">
-                  <span className="text-[#1fb6e8]">SLA:</span>
-                  <span>4 Hours Average Response Window</span>
+
+                <div>
+                  <label className="block font-sans text-xs font-medium text-white/80 mb-2">
+                    Last Name*
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.lastName}
+                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                    placeholder="Smith"
+                    className="w-full px-4 py-3 rounded-[10px] bg-white/[0.04] border border-white/[0.08] text-sm text-white placeholder-white/30 focus:border-[#0055ff] focus:outline-none transition-colors"
+                  />
                 </div>
               </div>
-            </div>
 
-            {/* Studio Branches Grid */}
-            <div className="space-y-4">
-              <span className="font-mono text-xs font-bold uppercase tracking-widest text-white/50 block">
-                Global Studio Coordinates
-              </span>
+              <div>
+                <label className="block font-sans text-xs font-medium text-white/80 mb-2">
+                  How can we reach you?*
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="jane@framer.com"
+                  className="w-full px-4 py-3 rounded-[10px] bg-white/[0.04] border border-white/[0.08] text-sm text-white placeholder-white/30 focus:border-[#0055ff] focus:outline-none transition-colors"
+                />
+              </div>
 
-              {SITE_CONFIG.branches.map((b) => (
-                <div
-                  key={b.city}
-                  className="p-6 rounded-2xl bg-[#070913] border border-white/10 hover:border-white/20 transition-colors"
+              <div>
+                <label className="block font-sans text-xs font-medium text-white/80 mb-2">
+                  What&apos;s the type of your company?*
+                </label>
+                <select
+                  required
+                  value={formData.companyType}
+                  onChange={(e) => setFormData({ ...formData, companyType: e.target.value })}
+                  className="w-full px-4 py-3 rounded-[10px] bg-[#05070e] border border-white/[0.08] text-sm text-white focus:border-[#0055ff] focus:outline-none transition-colors"
                 >
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-display text-lg font-black uppercase text-white">
-                      {b.city}
-                    </h4>
-                    <span className="inline-flex items-center gap-1.5 font-mono text-[10px] text-emerald-400">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                      {b.timezone}
-                    </span>
-                  </div>
-                  <span className="block font-mono text-[11px] text-[#ff5e1a] mb-2">
-                    {b.tag}
-                  </span>
-                  <p className="font-sans text-xs text-white/60 mb-2">
-                    {b.address}, {b.zip}
-                  </p>
-                  <a
-                    href={`tel:${b.phone}`}
-                    className="font-mono text-xs text-white/80 hover:text-white"
-                  >
-                    {b.phone}
-                  </a>
-                </div>
-              ))}
+                  <option value="" disabled>Select Category</option>
+                  <option value="Agency">Agency</option>
+                  <option value="SAAS">SAAS</option>
+                  <option value="Banking">Banking</option>
+                  <option value="Business">Business</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block font-sans text-xs font-medium text-white/80 mb-2">
+                  Message*
+                </label>
+                <textarea
+                  required
+                  rows={4}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  placeholder="Type your message..."
+                  className="w-full px-4 py-3 rounded-[10px] bg-white/[0.04] border border-white/[0.08] text-sm text-white placeholder-white/30 focus:border-[#0055ff] focus:outline-none transition-colors resize-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-3.5 rounded-[10px] bg-[#0055ff] hover:bg-[#1a66ff] text-white font-sans text-sm font-semibold shadow-[0_8px_30px_rgba(0,85,255,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all"
+              >
+                Submit Now
+              </button>
+            </form>
+          )}
+        </div>
+      </section>
+
+      {/* ==================================================================== */}
+      {/* 2. FAQ ACCORDION                                                     */}
+      {/* ==================================================================== */}
+      <section className="relative w-full py-24 px-6 sm:px-12 md:px-20 border-t border-white/[0.06] bg-[#02040a]">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-[11px] font-mono uppercase tracking-wider text-white/80 mb-4">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#0055ff]" />
+              How We Work?
             </div>
+            <h2 className="font-display text-3xl sm:text-5xl font-normal tracking-[-0.03em] text-white leading-tight">
+              Frequently <br />
+              <span className="font-semibold text-white">Asked Questions</span>
+            </h2>
+            <p className="mt-4 font-sans text-sm text-[#8a919e] max-w-md mx-auto">
+              Have questions? Our FAQ section has you covered with quick answers to the most common inquiries.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            {faqs.map((faq, idx) => {
+              const isOpen = activeFaq === idx;
+              return (
+                <div
+                  key={faq.q}
+                  className="rounded-2xl bg-[#05070e] border border-white/[0.07] overflow-hidden transition-all"
+                >
+                  <button
+                    onClick={() => setActiveFaq(isOpen ? null : idx)}
+                    className="w-full p-6 text-left flex items-center justify-between gap-4 font-display text-base sm:text-lg font-medium text-white hover:text-[#0055ff] transition-colors"
+                  >
+                    <span>{faq.q}</span>
+                    <span
+                      className={`h-7 w-7 rounded-full bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-sm shrink-0 transition-transform duration-300 ${
+                        isOpen ? 'rotate-45 text-[#0055ff]' : 'text-white/60'
+                      }`}
+                    >
+                      +
+                    </span>
+                  </button>
+
+                  {isOpen && (
+                    <div className="px-6 pb-6 pt-0 font-sans text-sm text-[#8a919e] leading-relaxed border-t border-white/[0.04] mt-2 pt-4 animate-in fade-in duration-200">
+                      {faq.a}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* ==================================================================== */}
+      {/* 3. JOIN US BANNER                                                    */}
+      {/* ==================================================================== */}
+      <section className="relative w-full py-24 px-6 sm:px-12 md:px-20 border-t border-white/[0.06] bg-[#02040a] text-center overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-30 mix-blend-screen pointer-events-none">
+          <Image
+            src="/assets/framer/join-banner.png"
+            alt="Join Banner"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#02040a] via-transparent to-[#02040a]" />
+        </div>
+
+        <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-[11px] font-mono uppercase tracking-wider text-white/80 mb-6">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#0055ff]" />
+            Join Us Now
+          </div>
+
+          <h2 className="font-display text-3xl sm:text-5xl font-normal tracking-[-0.03em] text-white leading-tight">
+            Each Project we Undertake <br />
+            <span className="font-semibold text-white">is a Unique Opportunity.</span>
+          </h2>
+
+          <p className="mt-4 font-sans text-sm sm:text-base text-[#8a919e] max-w-lg mx-auto">
+            Ready to take the next step? Join us now and start transforming your vision into reality with expert support.
+          </p>
+
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="mt-8 px-8 py-3.5 rounded-[10px] bg-[#0055ff] hover:bg-[#1a66ff] text-white font-sans text-sm font-semibold shadow-[0_8px_30px_rgba(0,85,255,0.45)] hover:scale-105 active:scale-95 transition-all"
+          >
+            Book an Appointment
+          </button>
+        </div>
+      </section>
+
+      {/* Global Direct Modal */}
+      <DirectModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        preselectedService="SaaS & Web Engineering"
+      />
     </div>
   );
 }
