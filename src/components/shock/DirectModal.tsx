@@ -246,7 +246,7 @@ export default function DirectModal({
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="elena@echowear.io"
+                    placeholder="founder@enterprise.com"
                     className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm text-white placeholder-white/30 focus:border-[#ff5e1a] focus:outline-none focus:ring-1 focus:ring-[#ff5e1a]"
                   />
                 </div>

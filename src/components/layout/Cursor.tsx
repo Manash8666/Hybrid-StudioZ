@@ -83,14 +83,14 @@ export default function Cursor() {
 
   return (
     <>
-      {/* Central precise dot */}
+      {/* High-Contrast 12px Pure White Circular Dot Cursor */}
       <div
         ref={dotRef}
         className="pointer-events-none fixed top-0 left-0 z-[999] -translate-x-1/2 -translate-y-1/2 will-change-transform"
       >
         <div
-          className={`h-2 w-2 rounded-full bg-[#ff5e1a] transition-transform duration-200 ${
-            label ? 'scale-0' : isPointer ? 'scale-150' : 'scale-100'
+          className={`h-3 w-3 rounded-full bg-white shadow-[0_0_12px_rgba(255,255,255,0.75)] transition-transform duration-150 ${
+            label ? 'scale-0' : isPointer ? 'scale-125 bg-white' : 'scale-100'
           }`}
         />
       </div>
@@ -101,15 +101,15 @@ export default function Cursor() {
         className="pointer-events-none fixed top-0 left-0 z-[998] -translate-x-1/2 -translate-y-1/2 will-change-transform"
       >
         {label ? (
-          <div className="flex items-center justify-center rounded-full bg-white px-4 py-2 font-display text-[10px] font-black uppercase tracking-widest text-[#070913] shadow-2xl shadow-black/50 border border-white/20 whitespace-nowrap animate-in fade-in zoom-in-90 duration-200">
+          <div className="flex items-center justify-center rounded-full bg-[#0055ff] px-4 py-2 font-display text-[10px] font-black uppercase tracking-widest text-white shadow-2xl shadow-[#0055ff]/50 border border-white/20 whitespace-nowrap animate-in fade-in zoom-in-90 duration-200">
             {label}
           </div>
         ) : (
           <div
-            className={`rounded-full border border-white/40 transition-all duration-300 ${
+            className={`rounded-full border transition-all duration-300 ${
               isPointer
-                ? 'h-12 w-12 -ml-6 -mt-6 border-[#ff5e1a] bg-[#ff5e1a]/10 scale-110'
-                : 'h-8 w-8 -ml-4 -mt-4'
+                ? 'h-10 w-10 -ml-5 -mt-5 border-[#0055ff]/60 bg-[#0055ff]/10 scale-110'
+                : 'h-7 w-7 -ml-3.5 -mt-3.5 border-white/20'
             }`}
           />
         )}

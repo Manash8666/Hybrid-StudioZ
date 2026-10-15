@@ -5,16 +5,36 @@
 @import "swiper/css/pagination";
 
 :root {
+  /* Exact Hybrid Studioz (hybridstudioz.framer.ai) Design Tokens */
+  --bg-void: #02040a;
+  --bg-obsidian: #05070e;
+  --bg-surface-pill: rgba(255, 255, 255, 0.05);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+
+  --accent-blue: #0055ff;
+  --accent-blue-hover: #1a66ff;
+  --accent-blue-glow: rgba(0, 85, 255, 0.45);
+  --glow-cobalt: #06288c;
+  --glow-royal: #0a3ce8;
+
+  --text-primary: #ffffff;
+  --text-gradient-muted: #949cb0;
+  --text-secondary: #8a919e;
+
+  --btn-light-bg: #f2f4f8;
+  --btn-light-ink: #08090c;
+
+  /* Legacy & Adaptive Tokens */
   --bg-light: #eef2f7;
-  --bg-dark: #070913;
-  --bg-surface: #0f1424;
+  --bg-dark: #02040a;
+  --bg-surface: #05070e;
   --ink-dark: #0b1020;
   --ink-light: #f4f7fb;
-  --hybrid-gradient: linear-gradient(135deg, #1fb6e8 0%, #6f4bff 50%, #e9449a 100%);
+  --hybrid-gradient: linear-gradient(135deg, #0055ff 0%, #6f4bff 50%, #1fb6e8 100%);
   --accent-orange: #ff5e1a;
   --contact-navy: #023a74;
 
-  --font-display: 'Archivo', sans-serif;
+  --font-display: 'Plus Jakarta Sans', 'Archivo', sans-serif;
   --font-sans: 'Plus Jakarta Sans', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
@@ -25,8 +45,8 @@
 }
 
 [data-theme="dark"] {
-  background-color: var(--bg-dark);
-  color: var(--ink-light);
+  background-color: var(--bg-void);
+  color: var(--text-primary);
 }
 
 body {
@@ -58,11 +78,35 @@ body {
   color: transparent;
 }
 
+.text-silver-fade {
+  background-image: linear-gradient(180deg, #ffffff 40%, #949cb0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .text-gradient-orange {
   background-image: linear-gradient(135deg, #ff5e1a 0%, #e9449a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* Signature Atmospheric Radial Mesh Background (hybridstudioz.framer.ai) */
+.hybrid-hero-bg {
+  background-color: var(--bg-void);
+  background-image: 
+    radial-gradient(circle at 88% 22%, rgba(0, 68, 255, 0.45) 0%, rgba(5, 38, 136, 0.20) 35%, transparent 65%),
+    radial-gradient(circle at 12% 80%, rgba(0, 60, 210, 0.25) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(0, 55, 195, 0.25) 0%, rgba(2, 4, 10, 0.95) 18%, #02040a 100%);
+}
+
+.glow-blue {
+  box-shadow: 0 8px 30px rgba(0, 85, 255, 0.45);
+}
+
+.glow-blue-subtle {
+  box-shadow: 0 4px 20px rgba(0, 85, 255, 0.25);
 }
 
 /* Lenis Recommended CSS */

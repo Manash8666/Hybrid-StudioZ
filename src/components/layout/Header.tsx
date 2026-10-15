@@ -11,6 +11,8 @@ import { usePathname } from 'next/navigation';
 import DirectModal from '../shock/DirectModal';
 import { SITE_CONFIG } from '@/content/site';
 
+import HybridLogo from './HybridLogo';
+
 export default function Header() {
   const pathname = usePathname();
   const [navTone, setNavTone] = useState<'dark' | 'light'>('dark');
@@ -20,15 +22,13 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
+      setIsScrolled(window.scrollY > 30);
 
-      // Read dynamic nav tone set by CinematicSection or ScrollSequence
       const tone = document.documentElement.getAttribute('data-nav-tone') as 'dark' | 'light';
       if (tone) {
         setNavTone(tone);
       } else {
-        // Default based on current route
-        setNavTone(pathname === '/' ? 'dark' : 'dark');
+        setNavTone('dark');
       }
     };
 
@@ -45,12 +45,12 @@ export default function Header() {
   }
 
   const navLinks = [
-    { label: 'Film', href: '/' },
-    { label: 'Services', href: '/services' },
-    { label: 'Work', href: '/work' },
-    { label: 'Insights', href: '/insights' },
-    { label: 'FAQ', href: '/faq' },
+    { label: 'Home', href: '/' },
+    { label: 'About', href: '/about' },
+    { label: 'Portfolio', href: '/portfolio' },
     { label: 'Contact', href: '/contact' },
+    { label: 'FAQ', href: '/faq' },
+    { label: 'TsukiFlow', href: '/tsukiflow' },
   ];
 
   const isLight = navTone === 'light';
@@ -61,85 +61,74 @@ export default function Header() {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
             ? isLight
-              ? 'bg-[#eef2f7]/85 backdrop-blur-xl border-b border-black/5 py-3.5 shadow-sm'
-              : 'bg-[#070913]/85 backdrop-blur-xl border-b border-white/10 py-3.5 shadow-2xl shadow-black/50'
-            : 'bg-transparent py-6'
+              ? 'bg-[#eef2f7]/90 backdrop-blur-xl border-b border-black/5 py-3 shadow-sm'
+              : 'bg-[#02040a]/85 backdrop-blur-xl border-b border-white/[0.08] py-3 shadow-2xl shadow-black/80'
+            : 'bg-transparent py-5'
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 sm:px-8">
-          {/* Brand Logo Lockup */}
-          <Link
-            href="/"
-            className="group flex items-center gap-3 select-none"
-            aria-label="Hybrid Studioz Home"
-          >
-            <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-[#1fb6e8] via-[#6f4bff] to-[#e9449a] p-[1.5px] shadow-lg shadow-[#6f4bff]/25 transition-transform duration-300 group-hover:scale-105">
-              <div className="flex h-full w-full items-center justify-center rounded-[7px] bg-[#070913]">
-                <span className="font-display text-xs font-black text-white">H</span>
-              </div>
-            </div>
+          {/* Brand Logo Lockup & 1px Vertical Divider */}
+          <div className="flex items-center">
+            <Link
+              href="/"
+              className="group inline-flex items-center select-none"
+              aria-label="Hybrid Studioz Home"
+            >
+              <HybridLogo tone={navTone} size="md" />
+            </Link>
 
-            <div className="flex flex-col">
-              <span
-                className={`font-display text-base font-black uppercase tracking-tight transition-colors ${
-                  isLight ? 'text-[#0b1020]' : 'text-white'
-                }`}
-              >
-                Hybrid <span className="text-[#ff5e1a]">Studioz</span>
-              </span>
-              <span
-                className={`font-mono text-[9px] uppercase tracking-widest leading-none ${
-                  isLight ? 'text-[#0b1020]/50' : 'text-white/40'
-                }`}
-              >
-                Creative Tech
-              </span>
-            </div>
-          </Link>
+            <div
+              className={`hidden lg:block h-6 w-px mx-6 transition-colors ${
+                isLight ? 'bg-black/15' : 'bg-white/12'
+              }`}
+            />
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1 rounded-full px-4 py-1.5 border backdrop-blur-md transition-colors bg-white/5 border-white/10">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`px-4 py-1.5 rounded-full font-display text-xs font-black uppercase tracking-wider transition-all duration-200 ${
-                    isActive
-                      ? 'bg-white text-[#070913] shadow-md'
-                      : isLight
-                      ? 'text-[#0b1020]/70 hover:text-[#0b1020] hover:bg-black/5'
-                      : 'text-white/70 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-          </nav>
+            {/* Desktop Navigation Links */}
+            <nav className="hidden lg:flex items-center gap-1">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`px-3.5 py-1.5 rounded-lg font-sans text-sm font-medium tracking-wide transition-all duration-200 ${
+                      isActive
+                        ? isLight
+                          ? 'text-[#0b1020] font-semibold bg-black/5'
+                          : 'text-white font-semibold bg-white/[0.08]'
+                        : isLight
+                        ? 'text-[#0b1020]/70 hover:text-[#0b1020]'
+                        : 'text-[#8a919e] hover:text-white'
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
 
-          {/* Action Hub & Grid Menu Trigger */}
+          {/* Action Hub: Solid Electric Blue Button & Grid Menu Trigger */}
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsModalOpen(true)}
-              className="hidden sm:inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-display text-xs font-black uppercase tracking-wider text-white shadow-lg shadow-[#ff5e1a]/25 bg-gradient-to-r from-[#ff5e1a] to-[#e9449a] hover:opacity-90 transition-opacity"
+              className="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 font-sans text-sm font-semibold tracking-wide text-white bg-[#0055ff] hover:bg-[#1a66ff] shadow-[0_8px_30px_rgba(0,85,255,0.45)] transition-all hover:scale-105 active:scale-95"
             >
-              <span>Start a Project</span>
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              <span>Get In Touch</span>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </button>
 
-            {/* Shock Style Grid Menu Trigger */}
+            {/* Mobile & Grid Menu Trigger */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`flex h-10 w-10 items-center justify-center rounded-full border transition-all ${
+              className={`flex h-10 w-10 items-center justify-center rounded-xl border transition-all ${
                 isLight
                   ? 'border-black/10 bg-black/5 text-[#0b1020] hover:bg-black/10'
                   : 'border-white/15 bg-white/5 text-white hover:bg-white/15'
               }`}
-              aria-label="Toggle Fullscreen Grid Menu"
+              aria-label="Toggle Navigation Matrix"
             >
               <div className="grid grid-cols-2 gap-1 w-4 h-4">
                 <span className={`block w-1.5 h-1.5 rounded-sm ${isLight ? 'bg-[#0b1020]' : 'bg-white'}`} />

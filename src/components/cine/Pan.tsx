@@ -95,15 +95,15 @@ export default function Pan({ scrollVh = 160 }: PanProps) {
           {/* Section connection background gradient */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#eef2f7] via-[#e5ecf5] to-[#eef2f7] pointer-events-none" />
 
-          {/* Liquid pigment connector bridge image */}
+          {/* AI SaaS & Web Development Connector Canvas */}
           <div
             ref={bridgeRef}
-            className="absolute left-[15vw] top-1/2 -translate-y-1/2 w-[90vw] max-w-[1400px] h-[65vh] pointer-events-none select-none"
+            className="absolute left-[15vw] top-1/2 -translate-y-1/2 w-[90vw] max-w-[1400px] h-[65vh] pointer-events-none select-none rounded-2xl overflow-hidden shadow-2xl"
           >
             <img
               src="/assets/hero/paint-bridge.webp"
-              alt="Paint Bridge Connector"
-              className="w-full h-full object-contain filter drop-shadow-[0_20px_50px_rgba(31,182,232,0.25)]"
+              alt="AI SaaS & Web Development Architecture"
+              className="w-full h-full object-cover filter drop-shadow-[0_20px_50px_rgba(0,85,255,0.35)]"
               onError={(e) => {
                 // Fallback graceful procedural SVG gradient if asset is loading
                 (e.target as HTMLElement).style.display = 'none';
@@ -130,15 +130,15 @@ export default function Pan({ scrollVh = 160 }: PanProps) {
           </div>
 
           {/* Studio architectural details & milestone badges */}
-          <div className="absolute left-[70vw] top-[30vh] max-w-md p-8 rounded-2xl bg-white/70 backdrop-blur-xl border border-black/5 shadow-2xl">
-            <span className="text-[11px] font-mono tracking-widest uppercase text-[#ff5e1a] font-bold block mb-2">
+          <div className="absolute left-[70vw] top-[30vh] max-w-md p-8 rounded-2xl bg-white/85 backdrop-blur-xl border border-black/10 shadow-2xl">
+            <span className="text-[11px] font-mono tracking-widest uppercase text-[#0055ff] font-bold block mb-2">
               Sequence 01 → 02 Handoff
             </span>
             <h3 className="font-display text-2xl font-black text-[#0b1020] uppercase tracking-tight mb-3">
-              The Architecture of Zero Cuts
+              Autonomous AI &amp; Web Engineering
             </h3>
-            <p className="text-sm text-[#0b1020]/70 leading-relaxed font-sans">
-              Visual anchors flow unbroken across continuous coordinate space. No abrupt boundary lines; only momentum.
+            <p className="text-sm text-[#0b1020]/75 leading-relaxed font-sans">
+              High-velocity Next.js 15 systems flowing seamlessly into autonomous agent orchestration. No boundary lines; pure momentum.
             </p>
           </div>
         </div>

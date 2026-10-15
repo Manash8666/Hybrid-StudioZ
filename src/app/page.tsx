@@ -14,6 +14,7 @@ import VideoAsset from '@/components/cine/VideoAsset';
 import CircularText from '@/components/shock/CircularText';
 import PricingMatrix from '@/components/shock/PricingMatrix';
 import DirectModal from '@/components/shock/DirectModal';
+import EyebrowBadge from '@/components/layout/EyebrowBadge';
 import { SITE_CONFIG } from '@/content/site';
 import { generateBauhausGrid } from '@/lib/cine';
 import { HAND_OFF_POINTS } from '@/lib/points';
@@ -74,43 +75,42 @@ export default function HomePage() {
                   transform: `translateY(${progress * -50}px)`,
                 }}
               >
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-4">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#1fb6e8] animate-ping" />
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-[#1fb6e8] font-semibold">
-                    Next-Gen Agency Platform
-                  </span>
-                </div>
+                {/* Official 2025 Eyebrow Badge */}
+                <EyebrowBadge
+                  year="2025"
+                  label="AI SaaS & Bespoke Web Development"
+                  className="mb-4"
+                />
 
-                <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight leading-[0.95] text-white">
-                  We build platforms.{' '}
-                  <span className="bg-gradient-to-r from-[#1fb6e8] via-[#6f4bff] to-[#e9449a] bg-clip-text text-transparent">
-                    We build hybrid
-                  </span>{' '}
-                  digital experiences.
+                <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight leading-[1.05] text-white">
+                  We build AI SaaS platforms.{' '}
+                  <span className="text-silver-fade font-normal">
+                    We engineer bespoke web experiences.
+                  </span>
                 </h1>
 
-                <p className="mt-6 max-w-lg font-sans text-sm sm:text-base text-white/70 leading-relaxed">
-                  Where creative technology, generative AI workflows, and single-clock WebGL choreography converge to build category-dominating brand ecosystems.
+                <p className="mt-6 max-w-lg font-sans text-sm sm:text-base text-[#8a919e] leading-relaxed">
+                  Hybrid Studioz is your partner for innovative AI SaaS solutions, modern web engineering, iconic brand identity systems, and scalable digital marketing.
                 </p>
 
-                {/* Dual CTAs */}
+                {/* Dual CTAs matching exact palette */}
                 <div className="mt-8 flex flex-wrap items-center gap-4">
                   <button
                     onClick={() => openModal()}
-                    className="px-8 py-4 rounded-full bg-gradient-to-r from-[#ff5e1a] to-[#e9449a] font-display text-xs font-black uppercase tracking-wider text-white shadow-xl shadow-[#ff5e1a]/30 hover:opacity-90 transition-all hover:scale-105"
+                    className="px-8 py-3.5 rounded-xl bg-[#0055ff] hover:bg-[#1a66ff] font-sans text-sm font-semibold tracking-wide text-white shadow-[0_8px_30px_rgba(0,85,255,0.45)] hover:scale-105 active:scale-95 transition-all"
                   >
-                    Start a Project
+                    Get In Touch
                   </button>
 
-                  <a
-                    href="#seq-story"
-                    className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 font-display text-xs font-black uppercase tracking-wider text-white transition-all"
+                  <Link
+                    href="/portfolio"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.08] font-sans text-sm font-medium text-white transition-all"
                   >
-                    <span>Explore the Film</span>
-                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                    <span>Explore Our Portfolio</span>
+                    <svg className="w-3.5 h-3.5 text-[#8a919e]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -532,121 +532,169 @@ export default function HomePage() {
       </CinematicSection>
 
       {/* ==================================================================== */}
+      {/* ==================================================================== */}
       {/* SCENE 09: CAPABILITIES UNIVERSE & PRICING MATRIX                     */}
       {/* ==================================================================== */}
-      <CinematicSection id="capabilities" scrollVh={200} navTone="dark">
-        {(progress) => (
-          <div className="relative h-full w-full bg-[#070913] text-white flex flex-col justify-between p-6 sm:p-12 md:p-20 overflow-hidden">
-            {/* Top Bar with Tab Switcher (Capabilities vs Pricing) */}
-            <div className="relative z-20 flex flex-wrap items-center justify-between gap-4">
-              <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ff5e1a] font-bold">
-                Sequence 09 // Spatial Capabilities
-              </span>
+      <CinematicSection id="capabilities" scrollVh={220} navTone="dark">
+        {(progress) => {
+          // Calculate zoom scale for transition into Scene 10 (#hybrid-s-curve focus)
+          const zoomProgress = Math.max(0, Math.min(1, (progress - 0.65) / 0.35));
+          const emblemScale = 1 + zoomProgress * 14;
+          const emblemOpacity = zoomProgress > 0 ? Math.min(1, zoomProgress * 2.5) : 0;
 
-              {/* Tab Switcher */}
-              <div className="inline-flex rounded-full bg-white/5 p-1 border border-white/10">
-                <button
-                  onClick={() => setActiveTab('capabilities')}
-                  className={`px-5 py-2 rounded-full font-display text-xs font-black uppercase tracking-wider transition-all ${
-                    activeTab === 'capabilities'
-                      ? 'bg-white text-[#070913] shadow-md'
-                      : 'text-white/70 hover:text-white'
-                  }`}
-                >
-                  3D Universe
-                </button>
-                <button
-                  onClick={() => setActiveTab('pricing')}
-                  className={`px-5 py-2 rounded-full font-display text-xs font-black uppercase tracking-wider transition-all ${
-                    activeTab === 'pricing'
-                      ? 'bg-[#ff5e1a] text-white shadow-md'
-                      : 'text-white/70 hover:text-white'
-                  }`}
-                >
-                  Engagement Tiers
-                </button>
+          return (
+            <div className="relative h-full w-full bg-[#02040a] text-white flex flex-col justify-between p-6 sm:p-12 md:p-20 overflow-hidden">
+              {/* Ambient Cobalt Mesh Glow */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(0,85,255,0.18)_0%,transparent_60%)] pointer-events-none" />
+
+              {/* Top Bar with Tab Switcher (Capabilities vs Pricing) */}
+              <div className="relative z-20 flex flex-wrap items-center justify-between gap-4">
+                <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#0055ff] font-bold">
+                  Sequence 09 // Spatial Capabilities
+                </span>
+
+                {/* Tab Switcher */}
+                <div className="inline-flex rounded-full bg-white/5 p-1 border border-white/10">
+                  <button
+                    onClick={() => setActiveTab('capabilities')}
+                    className={`px-5 py-2 rounded-full font-display text-xs font-black uppercase tracking-wider transition-all ${
+                      activeTab === 'capabilities'
+                        ? 'bg-white text-[#02040a] shadow-md'
+                        : 'text-white/70 hover:text-white'
+                    }`}
+                  >
+                    3D Universe
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('pricing')}
+                    className={`px-5 py-2 rounded-full font-display text-xs font-black uppercase tracking-wider transition-all ${
+                      activeTab === 'pricing'
+                        ? 'bg-[#0055ff] text-white shadow-md'
+                        : 'text-white/70 hover:text-white'
+                    }`}
+                  >
+                    Engagement Tiers
+                  </button>
+                </div>
               </div>
-            </div>
 
-            {/* Main Area: Dynamic Tab Switch */}
-            <div className="relative z-10 my-auto w-full">
-              {activeTab === 'capabilities' ? (
-                <div className="relative h-[65vh] w-full overflow-hidden rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl">
-                  {/* Spatial Universe Nodes */}
-                  {SITE_CONFIG.capabilityNodes.map((node) => {
-                    const parallaxY = (progress - 0.5) * node.depth * 90;
-                    return (
-                      <div
-                        key={node.label}
-                        className="absolute select-none pointer-events-none transition-transform duration-200"
-                        style={{
-                          left: `${node.left}%`,
-                          top: `${node.top}%`,
-                          transform: `translate3d(0, ${parallaxY}px, 0)`,
-                        }}
-                      >
-                        <span
-                          className={`block font-display uppercase tracking-tight whitespace-nowrap transition-colors duration-300 ${
-                            node.category === 'eng'
-                              ? 'text-white/90 hover:text-[#1fb6e8]'
-                              : node.category === 'motion'
-                              ? 'text-white/80 hover:text-[#ff5e1a]'
-                              : node.category === 'ai'
-                              ? 'text-white/95 text-gradient font-black'
-                              : 'text-white/70'
-                          }`}
+              {/* Main Area: Dynamic Tab Switch */}
+              <div className="relative z-10 my-auto w-full">
+                {activeTab === 'capabilities' ? (
+                  <div className="relative h-[65vh] w-full overflow-hidden rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl">
+                    {/* Spatial Universe Nodes */}
+                    {SITE_CONFIG.capabilityNodes.map((node) => {
+                      const parallaxY = (progress - 0.5) * node.depth * 90;
+                      return (
+                        <div
+                          key={node.label}
+                          className="absolute select-none pointer-events-none transition-transform duration-200"
                           style={{
-                            fontSize: `clamp(1rem, ${node.sizeVw}vw, 3.5rem)`,
-                            fontWeight: node.weight,
-                            opacity: 0.2 + (node.depth / 1.8) * 0.8,
+                            left: `${node.left}%`,
+                            top: `${node.top}%`,
+                            transform: `translate3d(0, ${parallaxY}px, 0)`,
+                            opacity: (1 - zoomProgress) * (0.2 + (node.depth / 1.8) * 0.8),
                           }}
                         >
-                          {node.label}
-                        </span>
+                          <span
+                            className={`block font-display uppercase tracking-tight whitespace-nowrap transition-colors duration-300 ${
+                              node.category === 'eng'
+                                ? 'text-white/90 hover:text-[#0055ff]'
+                                : node.category === 'motion'
+                                ? 'text-white/80 hover:text-[#1a66ff]'
+                                : node.category === 'ai'
+                                ? 'text-white/95 text-gradient font-black'
+                                : 'text-white/70'
+                            }`}
+                            style={{
+                              fontSize: `clamp(1rem, ${node.sizeVw}vw, 3.5rem)`,
+                              fontWeight: node.weight,
+                            }}
+                          >
+                            {node.label}
+                          </span>
+                        </div>
+                      );
+                    })}
+
+                    <div
+                      className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300"
+                      style={{ opacity: 1 - zoomProgress * 2 }}
+                    >
+                      <span className="font-mono text-xs uppercase tracking-widest text-white/40 bg-black/60 px-4 py-2 rounded-full border border-white/10 backdrop-blur-md">
+                        Scroll Wheel Controls Spatial Parallax
+                      </span>
+                    </div>
+
+                    {/* Camera Zoom into #hybrid-s-curve Emblem */}
+                    {zoomProgress > 0 && (
+                      <div
+                        className="absolute inset-0 flex items-center justify-center pointer-events-none transition-transform duration-100 ease-out"
+                        style={{
+                          transform: `scale(${emblemScale})`,
+                          opacity: emblemOpacity,
+                        }}
+                      >
+                        <div className="relative p-8 rounded-full bg-[radial-gradient(circle,rgba(0,85,255,0.4)_0%,transparent_70%)]">
+                          <svg
+                            viewBox="0 0 110 120"
+                            className="h-28 w-28 filter drop-shadow-[0_0_40px_rgba(0,85,255,0.9)]"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M46 6C24 14 8 30 4 46C12 56 20 62 28 66C32 44 40 24 46 6Z"
+                              fill="#f4f6f9"
+                            />
+                            <path
+                              d="M58 68C62 86 58 102 52 116C72 108 86 92 90 78C82 66 70 62 58 68Z"
+                              fill="#686e7a"
+                            />
+                            <path
+                              id="hybrid-s-curve"
+                              d="M78 10C48 16 28 38 28 58C28 74 44 76 62 74C78 72 90 80 86 98C98 84 102 62 86 50C72 40 52 44 48 32C44 22 58 14 78 10Z"
+                              fill="#ffffff"
+                            />
+                          </svg>
+                        </div>
                       </div>
-                    );
-                  })}
-
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <span className="font-mono text-xs uppercase tracking-widest text-white/30 bg-black/60 px-4 py-2 rounded-full border border-white/10 backdrop-blur-md">
-                      Scroll Wheel Controls Spatial Parallax
-                    </span>
+                    )}
                   </div>
-                </div>
-              ) : (
-                <div className="max-h-[65vh] overflow-y-auto px-2 py-4">
-                  <PricingMatrix onSelectTier={(tier) => openModal(tier)} />
-                </div>
-              )}
-            </div>
+                ) : (
+                  <div className="max-h-[65vh] overflow-y-auto px-2 py-4">
+                    <PricingMatrix onSelectTier={(tier) => openModal(tier)} />
+                  </div>
+                )}
+              </div>
 
-            <div className="relative z-20 flex items-center justify-between text-xs font-mono text-white/40">
-              <span>22 CORE ARCHITECTURAL CAPABILITIES</span>
-              <span>HOME-6 HIGH-CONVERSION PRICING</span>
+              <div className="relative z-20 flex items-center justify-between text-xs font-mono text-white/40">
+                <span>22 CORE ARCHITECTURAL CAPABILITIES</span>
+                <span>HOME-6 HIGH-CONVERSION PRICING</span>
+              </div>
             </div>
-          </div>
-        )}
+          );
+        }}
       </CinematicSection>
 
       {/* ==================================================================== */}
-      {/* SCENE 10: CONTACT FINALE (Closing Cobalt Petal & Rising Headline)     */}
+      {/* SCENE 10: CONTACT FINALE (Monumental Cobalt Emblem & Rising Headline)  */}
       {/* ==================================================================== */}
       <CinematicSection id="contact" scrollVh={140} navTone="dark">
         {(_progress) => (
-          <div className="relative h-full w-full bg-[#023a74] text-white flex flex-col justify-between p-6 sm:p-12 md:p-20 overflow-hidden">
-            {/* Background Minimalist Cobalt Petal Visual */}
+          <div className="relative h-full w-full bg-[#02040a] text-white flex flex-col justify-between p-6 sm:p-12 md:p-20 overflow-hidden">
+            {/* Background Minimalist Cobalt Mesh & Volumetric Bleed */}
             <div className="absolute right-0 top-0 bottom-0 w-full lg:w-3/5 pointer-events-none">
               <img
                 src="/assets/about/closing-muse.webp"
-                alt="Closing Petal Muse"
-                className="h-full w-full object-cover object-right filter brightness-95"
+                alt="Hybrid Studioz Emblem Finale"
+                className="h-full w-full object-cover object-right filter brightness-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#023a74] via-[#023a74]/60 to-transparent lg:block" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#02040a] via-[#02040a]/70 to-transparent lg:block" />
             </div>
 
             {/* Top Bar */}
             <div className="relative z-10 flex items-center justify-between">
-              <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ff5e1a] font-bold">
+              <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#0055ff] font-bold">
                 Sequence 10 // The Finale
               </span>
               <span className="font-mono text-xs text-white/60">
@@ -656,43 +704,42 @@ export default function HomePage() {
 
             {/* Left Negative Space: Line-by-Line Rising Monumental Headline */}
             <div className="relative z-10 max-w-2xl my-auto select-none">
-              <span className="font-mono text-xs uppercase tracking-widest text-[#ff5e1a] font-bold block mb-4">
+              <span className="font-mono text-xs uppercase tracking-widest text-[#0055ff] font-bold block mb-4">
                 Have an ambitious vision in mind?
               </span>
 
-              <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight leading-[0.92] text-white">
+              <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight leading-[0.98] text-white">
                 <span className="block">Let&apos;s build</span>
                 <span className="block">something</span>
-                <span className="block text-white/80">the internet</span>
-                <span className="block text-[#ff5e1a]">remembers.</span>
+                <span className="block text-silver-fade font-normal">the internet</span>
+                <span className="block text-[#0055ff]">remembers.</span>
               </h2>
 
-              <p className="mt-6 text-sm sm:text-base text-white/70 font-sans max-w-lg leading-relaxed">
-                Whether scaling an AI multi-agent platform, architecting a luxury 3D flagship, or overhauling your brand system, our team is ready to deploy.
+              <p className="mt-6 text-sm sm:text-base text-[#8a919e] font-sans max-w-lg leading-relaxed">
+                Whether scaling an AI SaaS multi-agent platform, architecting a bespoke web flagship, or deploying high-conversion growth marketing, our team is ready to engineer your vision.
               </p>
 
-              {/* Action Hub */}
+              {/* Action Hub matching exact SaaS palette */}
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <button
                   onClick={() => openModal()}
-                  className="px-8 py-4 rounded-full bg-gradient-to-r from-[#ff5e1a] to-[#e9449a] font-display text-xs font-black uppercase tracking-wider text-white shadow-2xl shadow-[#ff5e1a]/40 hover:opacity-90 hover:scale-105 transition-all"
+                  className="px-8 py-4 rounded-xl bg-[#0055ff] hover:bg-[#1a66ff] font-sans text-sm font-semibold tracking-wide text-white shadow-[0_8px_30px_rgba(0,85,255,0.45)] hover:scale-105 active:scale-95 transition-all"
                 >
                   Book a Discovery Call
                 </button>
 
                 <a
                   href={`mailto:${SITE_CONFIG.brand.email}`}
-                  className="px-7 py-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 font-display text-xs font-black uppercase tracking-wider text-white transition-colors"
+                  className="px-7 py-4 rounded-xl bg-[#f2f4f8] hover:bg-white text-[#08090c] font-sans text-sm font-semibold tracking-wide transition-all hover:scale-105 active:scale-95"
                 >
-                  Direct Email Dispatch
+                  Mail Us
                 </a>
               </div>
             </div>
 
-            {/* Footer Connection Coordinates */}
-            <div className="relative z-10 flex items-center justify-between text-xs font-mono text-white/40 pt-4 border-t border-white/10">
-              <span>SAMPLE COBALT PETAL // #023a74</span>
-              <span>TRANSMISSION READY</span>
+            <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-white/10 text-xs font-mono text-white/50">
+              <span>HYBRID STUDIOZ // 2026 ARCHITECTURE</span>
+              <span>GLOBAL ENTERPRISE GRADE</span>
             </div>
           </div>
         )}
