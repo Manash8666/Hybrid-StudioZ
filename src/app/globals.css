@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300..900;1,300..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
+
+:root {
+  --bg-light: #eef2f7;
+  --bg-dark: #070913;
+  --bg-surface: #0f1424;
+  --ink-dark: #0b1020;
+  --ink-light: #f4f7fb;
+  --hybrid-gradient: linear-gradient(135deg, #1fb6e8 0%, #6f4bff 50%, #e9449a 100%);
+  --accent-orange: #ff5e1a;
+  --contact-navy: #023a74;
+
+  --font-display: 'Archivo', sans-serif;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+[data-theme="light"] {
+  background-color: var(--bg-light);
+  color: var(--ink-dark);
+}
+
+[data-theme="dark"] {
+  background-color: var(--bg-dark);
+  color: var(--ink-light);
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--ink-light);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.04em;
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.text-gradient {
+  background-image: var(--hybrid-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-orange {
+  background-image: linear-gradient(135deg, #ff5e1a 0%, #e9449a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Lenis Recommended CSS */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Accessibility Reduced Motion Rule */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

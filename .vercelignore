@@ -1,0 +1,10 @@
+# Vercel deployment ignore rules
+/image-sources/
+/video-sources/
+/*.mp4
+.git
+.claude
+README.md
+AGENTS.md
+CLAUDE.md
+ASSETS.md
