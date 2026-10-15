@@ -156,6 +156,36 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Global Regional Authority Hubs (International AEO & Crawl Equity) */}
+        <div className="mt-12 pt-8 border-t border-white/[0.06]">
+          <h5 className="font-mono text-xs uppercase tracking-wider text-[#0055ff] font-semibold mb-4">
+            Global Engineering & Regional Authority Hubs
+          </h5>
+          <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs font-sans text-[#8a919e]">
+            <Link href="/regions/india" className="hover:text-white transition-colors">
+              🇮🇳 India (Bengaluru, Ahmedabad, Mumbai)
+            </Link>
+            <Link href="/regions/japan" className="hover:text-white transition-colors">
+              🇯🇵 Japan (Tokyo, Osaka, Fukuoka — TsukiFlow)
+            </Link>
+            <Link href="/regions/europe-west" className="hover:text-white transition-colors">
+              🇪🇺 Western Europe (Paris, Berlin, Amsterdam, Milan)
+            </Link>
+            <Link href="/regions/europe-med-east" className="hover:text-white transition-colors">
+              🇲🇹 Mediterranean & CEE (Malta, Greece, Romania, Poland)
+            </Link>
+            <Link href="/regions/oceania" className="hover:text-white transition-colors">
+              🇦🇺 Oceania (Sydney, Melbourne, Auckland)
+            </Link>
+            <Link href="/regions/africa" className="hover:text-white transition-colors">
+              🌍 Pan-Africa (Lagos, Nairobi, Cape Town, Cairo)
+            </Link>
+            <Link href="/regions/south-america" className="hover:text-white transition-colors">
+              🇧🇷 South America (São Paulo, Buenos Aires, Bogotá)
+            </Link>
+          </div>
+        </div>
+
         {/* Bottom Bar */}
         <div className="mt-16 pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 font-sans text-xs text-[#8a919e]">
           <p>© 2024 Hybrid Studioz</p>

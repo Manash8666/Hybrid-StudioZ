@@ -34,9 +34,10 @@
   --accent-orange: #ff5e1a;
   --contact-navy: #023a74;
 
-  --font-display: 'DM Sans', 'Inter', sans-serif;
-  --font-sans: 'DM Sans', 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: var(--font-jakarta), 'DM Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-archivo), 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-mono), 'JetBrains Mono', monospace;
+  --font-code: var(--font-mono), 'JetBrains Mono', monospace;
 }
 
 [data-theme="light"] {
@@ -167,4 +168,43 @@ html.lenis, html.lenis body {
 .animate-marquee-right:hover {
   animation-play-state: paused;
 }
+
+/* 1. Framer SaaS Hero Headline (Matches /about & /portfolio screenshots) */
+.heading-framer-hero {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(2.75rem, 5.5vw, 4.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 55%, #8e96aa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 2. Cinematic Scroll Kinetic Display (Matches SlaqAI Scenes 01, 03, 04, 09, 10) */
+.heading-cine-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(3.5rem, 10vw, 10.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+/* 3. Eyebrow Pill & Chapter Index */
+.label-pill-meta {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: -0.01em;
+}
+
+.label-chapter-mono {
+  font-family: var(--font-code);
+  font-weight: 400;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 

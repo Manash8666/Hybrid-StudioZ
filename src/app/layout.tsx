@@ -1,54 +1,89 @@
 import type { Metadata } from 'next';
+import { Plus_Jakarta_Sans, Archivo, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import SmoothScroll from '@/components/layout/SmoothScroll';
 import Grain from '@/components/layout/Grain';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import JsonLdGraph from '@/components/seo/JsonLdGraph';
 import { SITE_CONFIG } from '@/content/site';
 
+// 3-Font Variable Typography System (Google Fonts via Next.js)
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-jakarta',
+  display: 'swap',
+});
+
+const archivo = Archivo({
+  subsets: ['latin'],
+  weight: ['300', '500', '700', '800', '900'],
+  variable: '--font-archivo',
+  display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-mono',
+  display: 'swap',
+});
+
+const siteUrl = SITE_CONFIG.brand.url || 'https://hybridstudioz.com';
+
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_CONFIG.brand.url),
+  metadataBase: new URL(siteUrl),
   title: {
-    default: 'Hybrid Studioz — AI SaaS & Bespoke Web Development',
+    default: 'Hybrid Studioz — Global SaaS, AI Workflows & Cinematic Web Engineering Studio',
     template: '%s | Hybrid Studioz',
   },
   description:
-    'Hybrid Studioz is your partner for innovative AI SaaS solutions, specializing in custom, scalable software, bespoke web development, branding, and digital marketing that drives business growth.',
+    'Hybrid Studioz is a global Creative Technology and Custom SaaS Engineering Studio. Pioneers of the 60fps All-Intra (-g 1) scroll-driven video engine and creator of TsukiFlow. Operating across India, Japan, Europe, Africa, Oceania, and the Americas.',
   keywords: [
-    'AI SaaS Solutions',
-    'Bespoke Web Development',
-    'Custom Scalable Software',
-    'Digital Marketing Agency',
-    'Brand Identity Systems',
-    'Next.js Web Applications',
+    'Custom SaaS Development',
+    'Next.js 16 Web Agency',
     'Autonomous AI Agents',
-    'Digital Creativity',
+    'TsukiFlow Creative Operations',
+    'Scroll-Driven Cinematic Websites',
+    'All-Intra Video Scrubbing',
+    'WebGL Three.js Studio',
+    'Digital Marketing & Growth',
+    'Full-Stack Cloud Architecture',
+    'SaaS Engineering Studio India',
+    'SaaS UI/UX Design Tokyo Japan',
+    'GDPR Compliant Web Agency Europe',
+    'iGaming FinTech Portals Malta',
   ],
   authors: [{ name: 'Hybrid Studioz Engineering Team' }],
   creator: 'Hybrid Studioz',
+  publisher: 'Hybrid Studioz',
+  alternates: {
+    canonical: siteUrl,
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: SITE_CONFIG.brand.url,
-    title: 'Hybrid Studioz — AI SaaS & Bespoke Web Development',
+    url: siteUrl,
+    title: 'Hybrid Studioz — Global SaaS, AI Workflows & Cinematic Web Engineering Studio',
     description:
-      'Innovative AI SaaS solutions, custom scalable software, bespoke web development, branding, and digital marketing.',
+      'We partner with startups and enterprises to build custom scalable SaaS, autonomous AI workflows (TsukiFlow), and 60fps scroll-driven interactive experiences.',
     siteName: 'Hybrid Studioz',
     images: [
       {
-        url: '/assets/about/closing-muse.webp',
-        width: 1920,
-        height: 1080,
-        alt: 'Hybrid Studioz AI SaaS & Web Development',
+        url: '/assets/framer/about-portrait.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Hybrid Studioz — Global SaaS & Cinematic Web Engineering',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Hybrid Studioz — AI SaaS & Bespoke Web Development',
+    title: 'Hybrid Studioz — Global SaaS, AI Workflows & Cinematic Web Engineering Studio',
     description:
-      'Innovative AI SaaS solutions, custom scalable software, bespoke web development, branding, and digital marketing.',
-    images: ['/assets/about/closing-muse.webp'],
+      'Custom scalable SaaS platforms, autonomous AI workflows (TsukiFlow), and 60fps scroll-driven digital experiences.',
+    images: ['/assets/framer/about-portrait.jpg'],
   },
   icons: {
     icon: '/icon.svg',
@@ -61,8 +96,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark scroll-smooth" data-theme="dark">
-      <body className="min-h-screen bg-[#02040a] text-[#f4f7fb] selection:bg-[#0055ff] selection:text-white">
+    <html
+      lang="en"
+      className={`dark scroll-smooth ${jakarta.variable} ${archivo.variable} ${jetbrainsMono.variable}`}
+      data-theme="dark"
+    >
+      <body className="min-h-screen bg-[#02040a] font-sans text-[#f4f7fb] selection:bg-[#0055ff] selection:text-white">
+        {/* Linked JSON-LD Knowledge Graph for Gemini, Claude, and ChatGPT */}
+        <JsonLdGraph />
+
         <SmoothScroll>
           <Grain />
           <Header />
