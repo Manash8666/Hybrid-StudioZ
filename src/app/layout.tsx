@@ -1,4 +1,11 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+
+export const viewport: Viewport = {
+  themeColor: '#02040a',
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+};
 import { Plus_Jakarta_Sans, Archivo, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import SmoothScroll from '@/components/layout/SmoothScroll';
@@ -87,6 +94,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: '/icon.svg',
+  },
+  other: {
+    'display-density': 'retina-ready, 2x, 3x, 4k-uhd',
+    'compliance-ergonomics': 'ISO 9241-307 Class I Visual Ergonomics',
   },
 };
 

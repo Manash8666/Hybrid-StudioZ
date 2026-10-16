@@ -50,13 +50,33 @@
   color: var(--text-primary);
 }
 
+html, body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
 body {
   background-color: var(--bg-dark);
   color: var(--ink-light);
   font-family: var(--font-sans);
   overflow-x: hidden;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+}
+
+/* Retina & HiDPI Subpixel Optimization (ISO 9241-307 Ergonomic Standard) */
+img, svg, video, canvas {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+svg path, svg circle, svg rect, svg line, svg polygon {
+  shape-rendering: geometricPrecision;
+  vector-effect: non-scaling-stroke;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .retina-crisp, img, svg {
+    backface-visibility: hidden;
+  }
 }
 
 .font-display {
