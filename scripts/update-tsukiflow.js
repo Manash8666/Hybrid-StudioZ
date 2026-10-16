@@ -1,0 +1,1808 @@
+const fs = require('fs');
+const path = require('path');
+
+const tsukiflowHtml = `<!DOCTYPE HTML>
+<html lang="en">
+
+  <!-- Preloader -->
+  <div id="preloader" class="preloader" data-delay="0" data-limit="3000">
+    <img src="assets/images/logo.svg" class="emblem" alt="TsukiFlow Emblem" hidden="hidden" />
+  </div>
+
+  <head>
+    <base href="/" />
+
+    <!-- Display -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+    <!-- Identity & Canonical SEO -->
+    <title>TsukiFlow — The Conserved Manufacturing Ledger (MES &amp; Shop-Floor ERP)</title>
+    <meta name="description" content="The first manufacturing platform where physical transformation executes as double-entry ledger events — mass, cost, and custody conserved by database law, settled by documents that write themselves." />
+    <meta name="keywords" content="Manufacturing Execution System, MES, Shop Floor ERP, Job-Work GST Section 143, Rule 55 Challan, IATF 16949 Clause 8.5.2, 21 CFR Part 11, Conserved Manufacturing Ledger, Progressive Costing, TallyPrime Bridge" />
+    <meta name="author" content="TsukiFlow &amp; Hybrid Studioz" />
+    <link rel="canonical" href="https://hybrid-studioz.vercel.app/tsukiflow" />
+    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
+
+    <!-- Open Graph & Social Cards -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="TsukiFlow — The Conserved Manufacturing Ledger" />
+    <meta property="og:description" content="The first manufacturing platform where the floor and the books cannot disagree. Mass balance enforced by the database engine." />
+    <meta property="og:url" content="https://hybrid-studioz.vercel.app/tsukiflow" />
+    <meta property="og:image" content="https://hybrid-studioz.vercel.app/assets/images/jpg/b-29.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="TsukiFlow — The Conserved Manufacturing Ledger" />
+    <meta name="twitter:description" content="The first manufacturing platform where physical transformation executes as double-entry ledger events." />
+    <meta name="twitter:image" content="https://hybrid-studioz.vercel.app/assets/images/jpg/b-29.jpg" />
+
+    <!-- Structured Data (JSON-LD) for SoftwareApplication, Product & FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://hybrid-studioz.vercel.app/tsukiflow#software",
+          "name": "TsukiFlow",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web, Touchscreen Terminals, Offline Kiosks (IndexedDB/SQLite)",
+          "description": "Enterprise-grade autonomous Manufacturing Execution System (MES) & Shop-Floor ERP with strict mass and cost conservation.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "INR",
+            "description": "30-Day Balance Test on a live order with full export rights."
+          }
+        },
+        {
+          "@type": "Product",
+          "@id": "https://hybrid-studioz.vercel.app/tsukiflow#product",
+          "name": "TsukiFlow - The Conserved Manufacturing Ledger",
+          "category": "Manufacturing Execution System",
+          "url": "https://hybrid-studioz.vercel.app/tsukiflow",
+          "brand": {
+            "@type": "Brand",
+            "name": "TsukiFlow"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://hybrid-studioz.vercel.app/tsukiflow#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Does TsukiFlow handle multi-stage job-work under Section 143?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes — processors are native DAG nodes; Rule 55 challans at dispatch, Section 143 aging monitors (9/6/3/1 months), gate receipt shrinkage matching, and quarterly ITC-04 JSON exports are built in."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does TsukiFlow replace TallyPrime or SAP?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No replacement required — TsukiFlow operates as the operational sub-ledger with GUID-deduped voucher posting to TallyPrime via port 9000 HTTP TDL, and signed webhooks to enterprise ERPs."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How does TsukiFlow survive shop-floor network outages?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Offline-first kiosks with encrypted local SQLite/IndexedDB queues and idempotent sync; conflicts become review items, never silent overwrites."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the deployment timeline for the 30-Day Balance Test?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Masters and BOMs import in 3–5 business days; Balance Test live on one line within a week, parallel to existing systems."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How are offcuts, turnings, and machining scrap handled?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Planned scrap is a routed, valued SKU banked with parent lineage; MRP nets it; salvage credits the live job's WIP directly."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can YUZU AI post financial vouchers or alter routings automatically?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No — architecturally barred from vouchers, disbursements, and routing edits; full platform function with AI off."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do we migrate from spreadsheets or an abandoned ERP?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Masters and opening balances import as opening GRNs with lots and rates; history arrives as archived reports, never fabricated rows; the pilot runs parallel so nothing cuts over blind."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does TsukiFlow support multi-plant and multi-company environments?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes — config packs per tenant; unlimited warehouses and entities on Flow and above; role-scoped navigation per plant."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What GST and statutory outputs does TsukiFlow generate?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "HSN and tax type per process and item; inclusive/exclusive handling; purchase/sales registers and e-invoice-ready payloads derived from posted documents."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why do we claim TsukiFlow is the first?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Because conservation is a database constraint, routing is a disposition graph with rejection paths and co-products, and operations carry their own financial triggers — together, by construction. We publish the laws and the prior-art file; audit us against both."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+  
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="assets/css/vendor/preloader.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/font-family.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/font-awesome.min.css" />  
+    <link rel="stylesheet" href="assets/css/vendor/menu-engine.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/menu-grid.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/swiper.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/dynamic-slider.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/bricklayer.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/lightbox.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/aos.min.css" />
+  
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/css/theme.css" />
+    <link rel="stylesheet" href="assets/css/core.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+  
+  </head>
+
+  <body class="shock-body">
+
+    <!-- Header -->
+    <header id="header" class="shock-header">    
+      <!-- Navbar -->
+      <nav id="navbar" class="navbar navbar-menu-grid scheme-1">
+        <div class="container-fluid">
+          <!-- Brand -->
+          <a class="navbar-brand" href="/tsukiflow">
+            <img src="assets/images/logo-white.svg" alt="TsukiFlow" class="logo main-logo" />
+            <img src="assets/images/logo.svg" alt="TsukiFlow" class="logo sticky-logo" />
+            <img src="assets/images/logo-white.svg" alt="TsukiFlow" class="logo mobile-logo" />
+            <span class="logo-after-text" style="font-weight: 800; letter-spacing: 2px;">TSUKIFLOW</span>
+          </a>
+
+          <!-- Menu toggle -->
+          <div id="menu-toggle" class="menu-toggle is-inactive magnetic-effect scheme-1 tertiary">
+            <div class="menu-toggle-icon">
+              <div class="menu-toggle-container">
+                <span class="menu-toggle-line-top"></span>
+                <span class="menu-toggle-line-middle"></span>
+                <span class="menu-toggle-line-bottom"></span>
+              </div>
+            </div>
+            <div class="menu-toggle-circle">
+              <svg class="menu-toggle-menu-toggle-svg-circle">
+                <path class="menu-toggle-path-circle" fill="none" stroke-miterlimit="10" stroke-width="4" d="M 34 2 C 16.3 2 2 16.3 2 34 s 14.3 32 32 32 s 32 -14.3 32 -32 S 51.7 2 34 2" />
+              </svg>
+            </div>
+            <svg width="0" height="0">
+              <mask id="menu-toggle-mask">
+                <path class="path-mask" fill="none" stroke-miterlimit="10" stroke-width="4" d="M 34 2 c 11.6 0 21.8 6.2 27.4 15.5 c 2.9 4.8 5 16.5 -9.4 16.5 h -4" />
+              </mask>
+            </svg>
+            <div class="menu-toggle-path">
+              <div class="path-animation">
+                <div class="path-rotation"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Menu grid -->
+          <nav id="menu-grid" class="menu-grid scheme-1 tertiary">
+            <div class="menu-grid-item item-1" data-direction="bt">
+              <div class="menu-grid-item-inner">
+                <!-- Label -->
+                <div class="menu-grid-label top">
+                  <span class="label-vertical">
+                    <span class="label-line gray"></span>
+                    <span class="label-text gray">PRÊTTURE LINEAGE</span>
+                  </span>
+                </div>
+                <!-- Label -->
+                <div class="menu-grid-label bottom">
+                  <span class="label-vertical">
+                    <span class="label-line gray"></span>
+                    <span class="label-text gray">CONSERVED MANUFACTURING</span>
+                  </span>
+                </div>
+                <!-- Main menu -->
+                <div class="menu-grid-main">
+                  <a href="#query-wall" class="menu-grid-main-item menu-item">Query Wall</a>
+                  <a href="#breakthroughs" class="menu-grid-main-item menu-item">Conservation Engine</a>
+                  <a href="#architecture" class="menu-grid-main-item menu-item">8-Stage Architecture</a>
+                  <a href="#pricing" class="menu-grid-main-item menu-item">Pricing by Lot</a>
+                  <a href="#solutions" class="menu-grid-main-item menu-item">Industry Solutions</a>
+                  <a href="#compare" class="menu-grid-main-item menu-item">Compare 4 Stacks</a>
+                  <a href="#faq" class="menu-grid-main-item menu-item">FAQ Master</a>
+                </div> 
+                <!-- Form -->
+                <div class="menu-grid-search focus-trigger">
+                  <div class="form-area scheme-2 white">
+                    <form class="form-fields needs-validation" novalidate="novalidate">
+                      <div class="form-row row has-icon">
+                        <div class="form-col form-floating">
+                          <button class="button overlay-button"><i class="fa-solid fa-magnifying-glass overlay-icon"></i></button>
+                          <input id="InputSearchMenu" class="form-control focus-trigger-field" placeholder="Search lot, challan, BoM..." required="required">
+                          <label for="InputSearchMenu" class="form-label">Search lot, challan, BoM...</label>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="menu-grid-item item-2" data-direction="lr">
+              <div class="menu-grid-item-inner">
+                <!-- Image -->
+                <a href="#balance-test" class="menu-grid-item-image">
+                  <img src="assets/images/jpg/c-22.jpg" alt="30-Day Balance Test" class="image" />
+                  <span class="title">Schedule Balance Test</span>
+                </a>
+              </div>
+            </div>
+            <div class="menu-grid-item item-3" data-direction="bt">
+              <div class="menu-grid-item-inner">
+                <!-- Label -->
+                <div class="menu-grid-label">
+                  <span class="label-horizontal">
+                    <span class="label-line gray"></span>
+                    <span class="label-text gray">PLATFORM MODULES</span>
+                  </span>
+                </div>
+                <!-- Links -->
+                <div class="menu-grid-minor">
+                  <a href="#features" class="menu-grid-minor-item menu-item"><span class="menu-grid-minor-item-inner">Routing Studio (DAG Topologies)</span></a>
+                  <a href="#features" class="menu-grid-minor-item menu-item"><span class="menu-grid-minor-item-inner">Floor Execution (Glove Kiosks)</span></a>
+                  <a href="#features" class="menu-grid-minor-item menu-item"><span class="menu-grid-minor-item-inner">Lot Ledger &amp; Trace (Genealogy)</span></a>
+                  <a href="#features" class="menu-grid-minor-item menu-item"><span class="menu-grid-minor-item-inner">Progressive Actual Costing</span></a>
+                  <a href="#features" class="menu-grid-minor-item menu-item"><span class="menu-grid-minor-item-inner">Settlement &amp; Subcontractor Job-Work</span></a>
+                  <a href="#features" class="menu-grid-minor-item menu-item"><span class="menu-grid-minor-item-inner">YUZU AI Diagnostic Engine</span></a>
+                </div>
+              </div>
+            </div>
+            <div class="menu-grid-item item-4" data-direction="rl">
+              <div class="menu-grid-item-inner">
+                <!-- Image -->
+                <a href="https://github.com/Manash8666/TsukiFlow" target="_blank" rel="noopener noreferrer" class="menu-grid-item-image">
+                  <img src="assets/images/jpg/c-16.jpg" alt="GitHub Repository" class="image" />
+                  <span class="title">Explore GitHub Code</span>                
+                </a>
+              </div>
+            </div>
+            <div class="menu-grid-item item-5" data-direction="tb">
+              <div class="menu-grid-item-inner">
+                <!-- Contacts -->
+                <div class="menu-grid-minor">
+                  <a href="#modal" data-bs-toggle="modal" data-bs-target="#modal" class="menu-grid-minor-item"><span class="menu-grid-minor-item-inner"><i class="fas fa-microchip icon"></i>Schedule Pilot Proof</span></a>
+                  <a href="mailto:contact@hybridstudioz.com" class="menu-grid-minor-item"><span class="menu-grid-minor-item-inner"><i class="fas fa-envelope icon"></i>contact@hybridstudioz.com</span></a>
+                  <a href="/llms.txt" class="menu-grid-minor-item"><span class="menu-grid-minor-item-inner"><i class="fas fa-file-code icon"></i>llms.txt Machine Discovery</span></a>
+                  <div class="menu-grid-icons">
+                    <a href="https://github.com/Manash8666/TsukiFlow" target="_blank" rel="noopener noreferrer" class="menu-grid-minor-item"><span class="menu-grid-minor-item-inner"><i class="fab fa-github icon"></i></span></a>
+                    <a href="https://hybrid-studioz.vercel.app" target="_blank" rel="noopener noreferrer" class="menu-grid-minor-item"><span class="menu-grid-minor-item-inner"><i class="fas fa-globe icon"></i></span></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </nav>   
+    </header>
+
+    <!-- Main -->
+    <main id="main" class="shock-main bg-color black">
+
+      <!-- Dynamic banner (Section 4.1 Hero) -->
+      <section id="home" class="shock-section dynamic-slider is-banner scheme-2">
+        <!-- Index -->
+        <div id="slide-index" class="slide-index">THE CONSERVED MANUFACTURING LEDGER</div>
+        
+        <!-- Navigation -->
+        <nav id="slide-navigation" class="slide-navigation hover-up-down">
+          <button id="scroll-down" class="scroll-down tertiary"></button>
+        </nav>
+
+        <!-- Info toggle -->
+        <div class="slide-info-menu parent">    
+          <div id="slide-info-toggle" class="slide-info-toggle">
+            <span class="arrow-button cross scheme-2 tertiary">
+              <span class="arrow">
+                <span class="item"></span>
+                <span class="item"></span>
+              </span>
+              <span class="line"></span>
+              <a href="#home" id="slide-info-toggle-text" class="text" data-toggle="VIEW LESS">VIEW MORE</a>
+            </span>
+          </div>
+          <span class="slide-info-menu-close"></span>
+        </div>
+
+        <!-- Banner -->
+        <section class="slide-item side-intro current-slide">
+          <!-- Intro -->
+          <div class="slide-content" id="hero-content">
+            <span class="slide-title text-1 text-style-1 text-outline white-75">Floor &amp; Books</span>
+            <div class="slide-description">
+              <span class="text-2 text-style-3 text-italic white">cannot <mark class="animated-underline tertiary">disagree</mark> !</span>
+              <div class="description gray">
+                <p>Every gram, every machine-hour, every rupee — one atomic ledger. Mass balance enforced by the database. Routings drawn by your floor. Challans, bills and journals written by the work itself.</p>
+              </div>
+              
+              <!-- Buttons & Assurance Strip -->
+              <div class="d-flex flex-wrap gap-3 align-items-center mb-3">
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#modal" class="button arrow-button next scheme-2 tertiary">
+                  <span class="arrow">
+                    <span class="item"></span>
+                    <span class="item"></span>
+                  </span>
+                  <span class="line"></span>
+                  <span class="text">SCHEDULE 30-DAY BALANCE TEST</span>
+                </a>
+                <a href="https://github.com/Manash8666/TsukiFlow" target="_blank" rel="noopener noreferrer" class="button outline white tertiary-hover">
+                  <span class="button-text white"><i class="fas fa-cube me-2"></i>DENIM PROOF SANDBOX</span>
+                </a>
+              </div>
+
+              <!-- Inline Assurance Badges from Ratified PDF -->
+              <div class="pt-2 text-muted" style="font-size: 0.8rem; letter-spacing: 0.5px; line-height: 1.6; color: #888899;">
+                <span class="text-white"><i class="fas fa-check-circle me-1" style="color: #ff1791 !important;"></i> Direct Rule 55 Challans</span> &nbsp;·&nbsp;
+                <span class="text-white"><i class="fas fa-check-circle me-1" style="color: #ff1791 !important;"></i> Section 143 Aging Monitor</span> &nbsp;·&nbsp;
+                <span class="text-white"><i class="fas fa-check-circle me-1" style="color: #ff1791 !important;"></i> IATF Cl. 8.5.2 Evidence</span> &nbsp;·&nbsp;
+                <span class="text-white"><i class="fas fa-check-circle me-1" style="color: #ff1791 !important;"></i> 21 CFR Part 11 Controls</span> &nbsp;·&nbsp;
+                <span class="text-white"><i class="fas fa-check-circle me-1" style="color: #ff1791 !important;"></i> Offline Terminals</span> &nbsp;·&nbsp;
+                <span class="text-white"><i class="fas fa-check-circle me-1" style="color: #ff1791 !important;"></i> Unlimited Floor Users</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Image -->
+          <div class="slide-image-wrapper">
+            <div class="slide-image-inner">
+              <img src="assets/images/jpg/b-29.jpg" alt="TsukiFlow 3D Ledger Core" class="slide-image" />
+            </div>
+          </div>
+
+          <!-- Action -->
+          <div class="slide-action">
+            <div class="slide-action-inner">
+              <span class="slide-action-title">One order. Zero migration risk.</span>
+              <a href="#modal" class="slide-action-link animated-text scheme-2 tertiary" data-bs-toggle="modal" data-bs-target="#modal">Run Balance Test</a>
+            </div>
+          </div>
+
+          <!-- Info menu (6 Platform Modules) -->
+          <div class="slide-info" id="features">
+            <a href="#routing-studio" class="slide-info-item">
+              <h3 class="slide-info-title">Routing Studio <i class="fas fa-chevron-right icon"></i></h3>
+              <span class="slide-info-detail">Map factory reality into versioned production topologies. Multi-output nodes, closed-loop rework with lineage intact.</span>
+            </a>
+            <a href="#floor-execution" class="slide-info-item">
+              <h3 class="slide-info-title">Floor Execution <i class="fas fa-chevron-right icon"></i></h3>
+              <span class="slide-info-detail">Three taps on the floor; the ledger does the rest. 64px glove-friendly targets, dual-clock labor, offline SQLite queue.</span>
+            </a>
+            <a href="#lot-ledger" class="slide-info-item">
+              <h3 class="slide-info-title">Lot Ledger &amp; Trace <i class="fas fa-chevron-right icon"></i></h3>
+              <span class="slide-info-detail">Lineage in seconds; audits by construction. Forward/backward genealogy preserving heats, coils, and dye-lots.</span>
+            </a>
+            <a href="#costing" class="slide-info-item">
+              <h3 class="slide-info-title">Progressive Costing <i class="fas fa-chevron-right icon"></i></h3>
+              <span class="slide-info-detail">Unit cost that survives audit and explains itself. Stage-wise rollups down to the paisa with scrap credits.</span>
+            </a>
+            <a href="#settlement" class="slide-info-item">
+              <h3 class="slide-info-title">Settlement &amp; Job-Work <i class="fas fa-chevron-right icon"></i></h3>
+              <span class="slide-info-detail">Work completes; the money already knows. JRN and processor service bills auto-draft on verified gate receipt.</span>
+            </a>
+            <a href="#yuzu-ai" class="slide-info-item">
+              <h3 class="slide-info-title">YUZU AI Diagnostic Engine <i class="fas fa-chevron-right icon"></i></h3>
+              <span class="slide-info-detail">Intelligence that audits, extracts, catalogs — and never posts a voucher without human sign-off.</span>
+            </a>
+          </div>
+
+          <!-- Expander -->
+          <div class="slide-expander"></div>
+        </section>
+      </section>
+
+      <!-- Section 4.2 & 4.3: The Operational Query Wall + Conservation Engine -->
+      <section class="shock-section pt-5 pb-6 bg-color black" id="query-wall">
+        <div class="container">
+          
+          <!-- The Operational Query Wall -->
+          <div class="row mb-5" data-aos="fade-up">
+            <div class="col-12">
+              <div class="p-4 p-md-5 rounded" style="background: #141418; border: 1px solid rgba(255, 23, 145, 0.3); box-shadow: 0 0 35px rgba(0,0,0,0.7);">
+                <div class="d-flex flex-wrap align-items-center justify-content-between mb-3 pb-3" style="border-bottom: 1px solid rgba(255,255,255,0.08);">
+                  <div class="d-flex align-items-center">
+                    <span class="badge px-3 py-2" style="background: rgba(255, 23, 145, 0.2); color: #ff1791; border: 1px solid #ff1791; font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 800;">Section 4.2 · The Operational Query Wall</span>
+                    <span class="ms-3 text-muted d-none d-md-inline" style="font-size: 0.85rem;">These aren't hypothetical problems. Your engineering and finance teams type them every week:</span>
+                  </div>
+                  <span class="badge bg-dark text-muted" style="border: 1px solid rgba(255,255,255,0.1); font-family: monospace;">11 RATIFIED QUERIES</span>
+                </div>
+
+                <!-- Terminal Query List -->
+                <div class="query-terminal-grid" style="font-family: var(--font-mono, 'Courier New', monospace); font-size: 0.95rem; line-height: 2; color: #d4d4d8;">
+                  <div class="row g-2">
+                    <div class="col-12 col-lg-6">
+                      <div><span style="color: #ff1791; font-weight: bold;">&gt;</span> &ldquo;how to track subcontracted material under gst section 143&rdquo;</div>
+                      <div><span style="color: #ff1791; font-weight: bold;">&gt;</span> &ldquo;tally prime manufacturing journal vs actual shop floor wip&rdquo;</div>
+                      <div><span style="color: #ff1791; font-weight: bold;">&gt;</span> &ldquo;prevent operators from bypassing erp data entry on night shift&rdquo;</div>
+                      <div><span style="color: #ff1791; font-weight: bold;">&gt;</span> &ldquo;how to calculate real cost per unit with machining scrap offcuts&rdquo;</div>
+                      <div><span style="color: #ff1791; font-weight: bold;">&gt;</span> &ldquo;garment manufacturing itc 04 challan matching spreadsheet error&rdquo;</div>
+                      <div><span style="color: #ff1791; font-weight: bold;">&gt;</span> &ldquo;batch traceability audit failure iatf 16949 clause 8.5.2&rdquo;</div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                      <div><span style="color: #ff1791; font-weight: bold;">&gt;</span> &ldquo;sheet metal remnant drops inventory management without nesting loss&rdquo;</div>
+                      <div><span style="color: #ff1791; font-weight: bold;">&gt;</span> &ldquo;pharma electronic batch manufacturing record 21 cfr 11 open source&rdquo;</div>
+                      <div><span style="color: #ff1791; font-weight: bold;">&gt;</span> &ldquo;manufacturing software for small factory india&rdquo;</div>
+                      <div><span style="color: #ff1791; font-weight: bold;">&gt;</span> &ldquo;production order unit cost higher than sales quote after month end&rdquo;</div>
+                      <div><span style="color: #ff1791; font-weight: bold;">&gt;</span> &ldquo;中小企業 製造業 MES 導入 失敗 理由&rdquo;</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bridge Statement -->
+                <div class="mt-4 pt-3" style="border-top: 1px solid rgba(255,255,255,0.08); font-size: 1rem; color: #ffffff;">
+                  <span class="badge me-2" style="background: #ff1791; color: #000; font-weight: 800; font-size: 0.75rem;">THE BRIDGE</span>
+                  <strong class="text-white">Behind every query is the same structural wound:</strong>
+                  <span class="text-muted"> ERPs record the floor after the fact; MES tools track it beside the books. TsukiFlow makes physical transformation a double-entry event in one conserved sub-ledger. The plant and the books cannot diverge.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 4.3: Six Structural Breakthroughs & Conservation Gauges -->
+          <div class="row g-5 align-items-center mb-5" id="breakthroughs">
+            <div class="col-12 col-md-4" data-aos="fade-up" data-aos-delay="200">
+              <!-- Emblems / Pillars -->
+              <div class="gallery" data-lax="inertia-top">
+                <div class="row g-1">
+                  <div class="col-6">
+                    <a href="assets/images/png/a-1.png" class="item lightbox-link hover-opacity floating-item" title="Conservation by Construction">
+                      <div class="image-wrapper">
+                        <div class="overlay has-border rounded white"></div>
+                        <img src="assets/images/png/a-1.png" class="image p-1 fit-cover" alt="Conservation by Construction" />
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-6">
+                    <a href="assets/images/png/a-2.png" class="item lightbox-link hover-opacity" title="Scrap as Currency">
+                      <div class="image-wrapper">
+                        <div class="overlay has-border rounded white"></div>
+                        <img src="assets/images/png/a-2.png" class="image p-1 fit-cover" alt="Scrap as Currency" />
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-6">
+                    <a href="assets/images/png/a-3.png" class="item lightbox-link hover-opacity" title="Living Routing DAG">
+                      <div class="image-wrapper">
+                        <div class="overlay has-border rounded white"></div>
+                        <img src="assets/images/png/a-3.png" class="image p-1 fit-cover" alt="Living Routing DAG" />
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-6">
+                    <a href="assets/images/png/a-4.png" class="item lightbox-link hover-opacity" title="Statute-Native Compliance">
+                      <div class="image-wrapper">
+                        <div class="overlay has-border rounded white"></div>
+                        <img src="assets/images/png/a-4.png" class="image p-1 fit-cover" alt="Statute-Native Compliance" />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-8 align-v-bottom" data-aos="fade-up" data-aos-delay="400">
+              <div class="holder">
+                <!-- Intro -->
+                <div class="basic-intro mb-35">
+                  <h2 class="title text-style-5">
+                    <span class="text-1 text-outline white-75">We conserve </span>
+                    <span class="text-2 text-italic white">mass &amp; <mark class="animated-underline tertiary">money</mark>.</span>
+                  </h2>
+                  <div class="description gray">
+                    <p>Physical transformation executes as double-entry ledger events. Issued = good + planned scrap + wastage + surplus, enforced at the database engine; impossible entries abort at the kiosk.</p>
+                  </div>
+                </div>
+
+                <!-- Progress bar Top-Arch Gauges -->
+                <div class="row g-5">
+                  <div class="col-12 col-md-4">
+                    <div class="radial-progress-bar">
+                      <div class="item">
+                        <h3 class="title text-style-11 white">Mass Balance</h3>
+                        <div class="counter outline" data-value="100" data-symbol="%" data-duration="2500" data-bar-stroke="4" data-bar-stroke-empty="1" data-bar-color="var(--tertiary-color)" data-empty-bar-color="var(--gray-color)" data-text-bg-color="transparent" data-text-color="var(--gray-color)"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <div class="radial-progress-bar">
+                      <div class="item">
+                        <h3 class="title text-style-11 white">Traceability</h3>
+                        <div class="counter outline" data-value="100" data-symbol="%" data-duration="2500" data-bar-stroke="4" data-bar-stroke-empty="1" data-bar-color="var(--tertiary-color)" data-empty-bar-color="var(--gray-color)" data-text-bg-color="transparent" data-text-color="var(--gray-color)"></div>
+                      </div>   
+                    </div>
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <div class="radial-progress-bar">       
+                      <div class="item">
+                        <h3 class="title text-style-11 white">Cost Accuracy</h3>
+                        <div class="counter outline" data-value="100" data-symbol="%" data-duration="2500" data-bar-stroke="4" data-bar-stroke-empty="1" data-bar-color="var(--tertiary-color)" data-empty-bar-color="var(--gray-color)" data-text-bg-color="transparent" data-text-color="var(--gray-color)"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- The Six Structural Breakthroughs Grid (Ratified PDF Section 4.3) -->
+          <div class="row g-4 pt-4">
+            <div class="col-12 text-center mb-2">
+              <span class="badge px-3 py-1 mb-2" style="background: rgba(255,23,145,0.15); color: #ff1791; border: 1px solid #ff1791; font-size: 0.75rem; letter-spacing: 1.5px;">SECTION 4.3 · ARCHITECTURAL FOUNDATIONS</span>
+              <h3 class="title text-style-6 text-white">Six Structural Breakthroughs</h3>
+            </div>
+
+            <!-- Breakthrough 1 -->
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="p-4 rounded h-100" style="background: #141418; border: 1px solid rgba(255,255,255,0.07); border-top: 2px solid #ff1791;">
+                <div class="text-muted mb-2" style="font-size: 0.75rem; font-family: monospace; color: #ff1791 !important;">BREAKTHROUGH 01 &rarr; FLOOR EXECUTION</div>
+                <h4 class="text-white text-style-11 mb-2" style="font-size: 1.1rem;">Conservation by construction.</h4>
+                <p class="text-muted mb-0" style="font-size: 0.9rem;">Issued = good + planned scrap + wastage + surplus, enforced at the database engine; impossible entries abort at the kiosk.</p>
+              </div>
+            </div>
+
+            <!-- Breakthrough 2 -->
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="p-4 rounded h-100" style="background: #141418; border: 1px solid rgba(255,255,255,0.07); border-top: 2px solid #ff1791;">
+                <div class="text-muted mb-2" style="font-size: 0.75rem; font-family: monospace; color: #ff1791 !important;">BREAKTHROUGH 02 &rarr; COSTING</div>
+                <h4 class="text-white text-style-11 mb-2" style="font-size: 1.1rem;">Scrap as currency.</h4>
+                <p class="text-muted mb-0" style="font-size: 0.9rem;">Planned scrap is a routed, valued SKU; MRP nets it; salvage credits the live job's WIP directly in real time.</p>
+              </div>
+            </div>
+
+            <!-- Breakthrough 3 -->
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="p-4 rounded h-100" style="background: #141418; border: 1px solid rgba(255,255,255,0.07); border-top: 2px solid #ff1791;">
+                <div class="text-muted mb-2" style="font-size: 0.75rem; font-family: monospace; color: #ff1791 !important;">BREAKTHROUGH 03 &rarr; ROUTING STUDIO</div>
+                <h4 class="text-white text-style-11 mb-2" style="font-size: 1.1rem;">Routing as a living DAG.</h4>
+                <p class="text-muted mb-0" style="font-size: 0.9rem;">Forks, joins, rework loops, co-products — versioned, simulatable; active lots keep the routing they were born under.</p>
+              </div>
+            </div>
+
+            <!-- Breakthrough 4 -->
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="p-4 rounded h-100" style="background: #141418; border: 1px solid rgba(255,255,255,0.07); border-top: 2px solid #ff1791;">
+                <div class="text-muted mb-2" style="font-size: 0.75rem; font-family: monospace; color: #ff1791 !important;">BREAKTHROUGH 04 &rarr; COMPLIANCE HUB</div>
+                <h4 class="text-white text-style-11 mb-2" style="font-size: 1.1rem;">Job-work native, statute native.</h4>
+                <p class="text-muted mb-0" style="font-size: 0.9rem;">Processors inside your graph; Rule 55 challans out; ITC-04 JSON out; Section 143 clocks watched automatically.</p>
+              </div>
+            </div>
+
+            <!-- Breakthrough 5 -->
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="p-4 rounded h-100" style="background: #141418; border: 1px solid rgba(255,255,255,0.07); border-top: 2px solid #ff1791;">
+                <div class="text-muted mb-2" style="font-size: 0.75rem; font-family: monospace; color: #ff1791 !important;">BREAKTHROUGH 05 &rarr; COSTING</div>
+                <h4 class="text-white text-style-11 mb-2" style="font-size: 1.1rem;">Costing that explains itself.</h4>
+                <p class="text-muted mb-0" style="font-size: 0.9rem;">Progressive rollup per stage; four-factor variance in plain sentences; downtime charged to overhead, never to your unit cost.</p>
+              </div>
+            </div>
+
+            <!-- Breakthrough 6 -->
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="p-4 rounded h-100" style="background: #141418; border: 1px solid rgba(255,255,255,0.07); border-top: 2px solid #ff1791;">
+                <div class="text-muted mb-2" style="font-size: 0.75rem; font-family: monospace; color: #ff1791 !important;">BREAKTHROUGH 06 &rarr; YUZU AI</div>
+                <h4 class="text-white text-style-11 mb-2" style="font-size: 1.1rem;">AI with a constitutional limit.</h4>
+                <p class="text-muted mb-0" style="font-size: 0.9rem;">YUZU drafts, audits, remembers — and cannot post a voucher. Switch it off; nothing else stops.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section 4.4: One Production Order Single-Thread Architecture (Video Banner & 8 Stages) -->
+      <section class="shock-section has-overlay" id="architecture">
+        <div class="banner">
+          <div class="content-wrapper text-center">
+            <!-- Intro -->
+            <div class="basic-intro mb-35">
+              <h2 class="title text-style-5">
+                <span class="text-1 text-outline white-75">One production order </span>
+                <span class="text-2 text-italic white">across <mark class="animated-underline tertiary">eight stages</mark>.</span>
+              </h2>
+              <div class="description white-75" style="max-width: 820px; margin: 0 auto;">
+                <p>Every gram, every machine-hour, every rupee — one atomic ledger. Mass balance enforced by the database. Consumption + wastage + process = total, to the paisa, cycle time attached.</p>
+              </div>
+            </div>
+            <!-- Button -->
+            <div class="gallery">
+              <a href="#modal" data-bs-toggle="modal" data-bs-target="#modal" class="button outline white tertiary-hover magnetic-effect">
+                <span class="button-text white white-hover">Schedule the 30-Day Balance Test</span>
+                <i class="fa-solid fa-arrow-right button-icon white white-hover"></i>
+              </a>
+            </div>
+          </div>
+          <!-- Video -->
+          <div class="image-wrapper">
+            <video class="video vh-75 fit-cover" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+              <source src="assets/videos/2.mp4" type="video/mp4">
+            </video>
+          </div>
+          <!-- Overlay -->
+          <div class="overlay black-50"></div>
+        </div>
+
+        <!-- 8-Stage Single Thread Timeline Grid (Ratified PDF Section 4.4) -->
+        <div class="py-5 bg-color black" style="border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <div class="container">
+            <div class="row g-3">
+              <div class="col-12 col-md-6 col-lg-3">
+                <div class="p-3 rounded h-100" style="background: #141418; border: 1px solid rgba(255,255,255,0.06);">
+                  <div class="badge mb-2" style="background: rgba(255,23,145,0.15); color: #ff1791; font-size: 0.7rem;">STAGE 1 &rarr; SO POSTED</div>
+                  <h5 class="text-white" style="font-size: 0.95rem;">1. Order Release</h5>
+                  <p class="text-muted mb-0" style="font-size: 0.85rem;">Customer PO commits specs, drawings, delivery dates.</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-3">
+                <div class="p-3 rounded h-100" style="background: #141418; border: 1px solid rgba(255,255,255,0.06);">
+                  <div class="badge mb-2" style="background: rgba(255,23,145,0.15); color: #ff1791; font-size: 0.7rem;">STAGE 2 &rarr; MRP SNAPSHOT</div>
+                  <h5 class="text-white" style="font-size: 0.95rem;">2. Net-Requirement MRP</h5>
+                  <p class="text-muted mb-0" style="font-size: 0.85rem;">Gross needs offset against on-hand lots, open POs, banked scrap.</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-3">
+                <div class="p-3 rounded h-100" style="background: #141418; border: 1px solid rgba(255,255,255,0.06);">
+                  <div class="badge mb-2" style="background: rgba(255,23,145,0.15); color: #ff1791; font-size: 0.7rem;">STAGE 3 &rarr; GRN + LOTS</div>
+                  <h5 class="text-white" style="font-size: 0.95rem;">3. Receipt &amp; Quarantine</h5>
+                  <p class="text-muted mb-0" style="font-size: 0.85rem;">Lot IDs born; MTR/CoA verified; 3-state QA gate enforced.</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-3">
+                <div class="p-3 rounded h-100" style="background: #141418; border: 1px solid rgba(255,255,255,0.06);">
+                  <div class="badge mb-2" style="background: rgba(255,23,145,0.15); color: #ff1791; font-size: 0.7rem;">STAGE 4 &rarr; JWO SEEDED</div>
+                  <h5 class="text-white" style="font-size: 0.95rem;">4. Work Order Auth</h5>
+                  <p class="text-muted mb-0" style="font-size: 0.85rem;">JWO releases only on passing material validation; routing version pinned.</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-3">
+                <div class="p-3 rounded h-100" style="background: #141418; border: 1px solid rgba(255,255,255,0.06);">
+                  <div class="badge mb-2" style="background: rgba(255,23,145,0.15); color: #ff1791; font-size: 0.7rem;">STAGE 5 &rarr; COMPLETIONS</div>
+                  <h5 class="text-white" style="font-size: 0.95rem;">5. Floor Execution</h5>
+                  <p class="text-muted mb-0" style="font-size: 0.85rem;">Glove-friendly kiosks; dual-clock labor; inline mass conservation; offline-safe.</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-3">
+                <div class="p-3 rounded h-100" style="background: #141418; border: 1px solid rgba(255,255,255,0.06);">
+                  <div class="badge mb-2" style="background: rgba(255,23,145,0.15); color: #ff1791; font-size: 0.7rem;">STAGE 6 &rarr; CHALLANS OUT/IN</div>
+                  <h5 class="text-white" style="font-size: 0.95rem;">6. Subcontractor Dispatch</h5>
+                  <p class="text-muted mb-0" style="font-size: 0.85rem;">Rule 55 challans printed; Section 143 aging tracked; gate receipt reconciles shrinkage.</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-3">
+                <div class="p-3 rounded h-100" style="background: #141418; border: 1px solid rgba(255,255,255,0.06);">
+                  <div class="badge mb-2" style="background: rgba(255,23,145,0.15); color: #ff1791; font-size: 0.7rem;">STAGE 7 &rarr; COST ROLLUPS</div>
+                  <h5 class="text-white" style="font-size: 0.95rem;">7. Progressive Lot Costing</h5>
+                  <p class="text-muted mb-0" style="font-size: 0.85rem;">Material, labor, machine absorption, absorbed wastage roll forward per stage.</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-3">
+                <div class="p-3 rounded h-100" style="background: #141418; border: 1px solid rgba(255,255,255,0.06);">
+                  <div class="badge mb-2" style="background: rgba(255,23,145,0.15); color: #ff1791; font-size: 0.7rem;">STAGE 8 &rarr; REGISTERS POSTED</div>
+                  <h5 class="text-white" style="font-size: 0.95rem;">8. Settlement &amp; Sync</h5>
+                  <p class="text-muted mb-0" style="font-size: 0.85rem;">FG transfer; processor service bills auto-draft; balanced vouchers post to Tally/ERP.</p>
+                </div>
+              </div>
+            </div>
+            <div class="text-center mt-3 text-muted" style="font-size: 0.85rem;">
+              <em class="text-white-75">End state: one periodic costing report — consumption + wastage + process = total, to the paisa, cycle time attached.</em>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4.6: One Ledger, Five Readings (Persona Perspectives) -->
+      <section class="shock-section pt-5 pb-5 bg-color black" id="personas">
+        <div class="container">
+          <div class="row g-4">
+            <div class="col-12 text-center mb-2">
+              <span class="badge px-3 py-1 mb-2" style="background: rgba(255,23,145,0.15); color: #ff1791; border: 1px solid #ff1791; font-size: 0.75rem; letter-spacing: 1.5px;">SECTION 4.6 · MESSAGE HOUSE</span>
+              <h2 class="title text-style-6 text-white">One Ledger, Five Readings.</h2>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="p-4 rounded h-100" style="background: #1e1e24; border-left: 3px solid #ff1791;">
+                <h4 class="text-white text-style-11 mb-2">Managing Director / Owner</h4>
+                <p class="text-white-75 mb-0" style="font-size: 0.95rem; font-style: italic;">&ldquo;Know what a unit truly cost before you quote the next one.&rdquo;</p>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="p-4 rounded h-100" style="background: #1e1e24; border-left: 3px solid #ff1791;">
+                <h4 class="text-white text-style-11 mb-2">Financial Controller</h4>
+                <p class="text-white-75 mb-0" style="font-size: 0.95rem; font-style: italic;">&ldquo;Costing that balances to the paisa, with variance attributed in plain sentences — price, usage, scrap, efficiency.&rdquo;</p>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="p-4 rounded h-100" style="background: #1e1e24; border-left: 3px solid #ff1791;">
+                <h4 class="text-white text-style-11 mb-2">Plant Manager / Supervisor</h4>
+                <p class="text-white-75 mb-0" style="font-size: 0.95rem; font-style: italic;">&ldquo;Live WIP, bottlenecked cells, and pending subcontractor receipts — before the shift standup, not after.&rdquo;</p>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="p-4 rounded h-100" style="background: #1e1e24; border-left: 3px solid #ff1791;">
+                <h4 class="text-white text-style-11 mb-2">QA Head</h4>
+                <p class="text-white-75 mb-0" style="font-size: 0.95rem; font-style: italic;">&ldquo;Genealogy in seconds. Quarantine by policy. Recall scoped in one click, not one week.&rdquo;</p>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="p-4 rounded h-100" style="background: #1e1e24; border-left: 3px solid #ff1791;">
+                <h4 class="text-white text-style-11 mb-2">Stores / Warehouse Head</h4>
+                <p class="text-white-75 mb-0" style="font-size: 0.95rem; font-style: italic;">&ldquo;Partial receipts, lot splits, remnant banking — perpetual inventory that agrees with the ledger.&rdquo;</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 9: Pricing — Priced by the lot, not by the seat -->
+      <section class="shock-section pt-6 pb-6 bg-color black js-switch-price" id="pricing">
+        <div class="container">
+          <!-- Intro -->
+          <div class="basic-intro mb-35 text-center">
+            <h2 class="title text-style-5">
+             <span class="text-1 text-outline white-75">Priced by the lot, </span>
+             <span class="text-2 text-italic white">not by <mark class="animated-underline tertiary">the seat</mark>.</span>
+            </h2>
+            <div class="description text-muted" style="max-width: 800px; margin: 0 auto;">
+              <p>Per-seat licensing taxes headcount, so plants license supervisors and leave operators on paper travelers. TsukiFlow prices throughput: discrete lots processed. Put a terminal at every machine, station, and gate: unlimited users, unlimited kiosks on every plan.</p>
+              
+              <!-- Plan switcher -->
+              <div class="form-area scheme-2 tertiary mt-3">
+                <div class="plan-switcher">
+                  <label class="form-label text-white">Annual Billed</label>
+                  <div class="form-check form-switch">
+                    <input type="checkbox" class="form-check-input form-switch js-switch-price-button" checked="checked">
+                  </div>
+                  <label class="form-label text-white">Monthly Billed</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-4">
+            <!-- Tier 1: Pilot Proof -->
+            <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+              <div class="card outline has-price parent">
+                <!-- Header -->
+                <div class="card-header pb-0 text-center">
+                  <h3 class="title m-0 text-style-11 text-italic white">
+                    <span class="bg-color black">PILOT PROOF</span>
+                    <span class="zzz mt-1 mb-1 scheme-2 gray"></span>
+                  </h3>
+                  <!-- Price -->
+                  <div class="price-wrapper">
+                    <span class="currency text-style-7 text-outline gray-75">₹</span>
+                    <span class="price text-style-3 tertiary hover-up-down" data-annual="0" data-monthly="0">0</span>
+                    <span class="billing text-style-7 text-outline gray-75">/30d</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="text-center text-muted mb-3" style="font-size: 0.85rem;">Profile: One line, one real live order</div>
+                  <!-- List -->
+                  <ul class="checklist">
+                    <li class="item">
+                      <span class="text">Masters imported &amp; 1 routing DAG drawn</span>
+                      <img class="image-icon white" src="assets/svg/checkmark-outline.svg" alt="Check" data-shock-icon="32" />
+                    </li>
+                    <li class="item">
+                      <span class="text">Parallel run with zero migration risk</span>
+                      <img class="image-icon white" src="assets/svg/checkmark-outline.svg" alt="Check" data-shock-icon="32" />
+                    </li>
+                    <li class="item">
+                      <span class="text">Glove-friendly kiosks live on one line</span>
+                      <img class="image-icon white" src="assets/svg/checkmark-outline.svg" alt="Check" data-shock-icon="32" />
+                    </li>
+                    <li class="item">
+                      <span class="text">Final audit vs month-end reconciliation</span>
+                      <img class="image-icon white" src="assets/svg/checkmark-outline.svg" alt="Check" data-shock-icon="32" />
+                    </li>
+                    <li class="item">
+                      <span class="text">Full data export &amp; zero commitment</span>
+                      <img class="image-icon white" src="assets/svg/checkmark-outline.svg" alt="Check" data-shock-icon="32" />
+                    </li>
+                  </ul>
+                  <!-- Button -->
+                  <div class="button-wrapper align-h-right">
+                    <span class="button arrow-button next scheme-2 tertiary">
+                      <span class="arrow">
+                        <span class="item"></span>
+                        <span class="item"></span>
+                      </span>
+                      <span class="line"></span>
+                      <span class="text">RUN BALANCE TEST</span>
+                    </span>
+                  </div>
+                </div>
+                <!-- Link -->
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#modal" class="full-link"></a>
+                <!-- Overlay -->
+                <div class="overlay tertiary-25"></div>
+              </div>
+            </div>
+
+            <!-- Tier 2: Floor Tier -->
+            <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+              <div class="card outline has-price parent">
+                <!-- Label -->
+                <span class="label-vertical to-bottom-left-out">
+                  <span class="label-line gray"></span>
+                  <span class="label-text gray">Most Popular</span>
+                </span>
+                <!-- Header -->
+                <div class="card-header pb-0 text-center">
+                  <h3 class="title m-0 text-style-11 text-italic white">
+                    <span class="bg-color black">FLOOR (SME)</span>
+                    <span class="zzz mt-1 mb-1 scheme-2 gray"></span>
+                  </h3>
+                  <!-- Price -->
+                  <div class="price-wrapper">
+                    <span class="currency text-style-7 text-outline gray-75">₹</span>
+                    <span class="price text-style-3 tertiary hover-up-down" data-annual="4" data-monthly="4">4</span>
+                    <span class="billing text-style-7 text-outline gray-75">/lot</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="text-center text-muted mb-3" style="font-size: 0.85rem;">Profile: Single-plant SME (min ₹15,000/mo)</div>
+                  <!-- List -->
+                  <ul class="checklist">
+                    <li class="item">
+                      <span class="text">Core Conserved Ledger engine</span>
+                      <img class="image-icon white" src="assets/svg/checkmark-outline.svg" alt="Check" data-shock-icon="32" />
+                    </li>
+                    <li class="item">
+                      <span class="text">Glove-safe 64px touchscreen kiosks</span>
+                      <img class="image-icon white" src="assets/svg/checkmark-outline.svg" alt="Check" data-shock-icon="32" />
+                    </li>
+                    <li class="item">
+                      <span class="text">Offline SQLite queue with idempotent sync</span>
+                      <img class="image-icon white" src="assets/svg/checkmark-outline.svg" alt="Check" data-shock-icon="32" />
+                    </li>
+                    <li class="item">
+                      <span class="text">Progressive unit costing to the paisa</span>
+                      <img class="image-icon white" src="assets/svg/checkmark-outline.svg" alt="Check" data-shock-icon="32" />
+                    </li>
+                    <li class="item">
+                      <span class="text">Statutory Rule 55 challan issuance</span>
+                      <img class="image-icon white" src="assets/svg/checkmark-outline.svg" alt="Check" data-shock-icon="32" />
+                    </li>
+                  </ul>
+                  <!-- Button -->
+                  <div class="button-wrapper align-h-right">
+                    <span class="button arrow-button next scheme-2 tertiary">
+                      <span class="arrow">
+                        <span class="item"></span>
+                        <span class="item"></span>
+                      </span>
+                      <span class="line"></span>
+                      <span class="text">DEPLOY FLOOR TIER</span>
+                    </span>
+                  </div>
+                </div>
+                <!-- Link -->
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#modal" class="full-link"></a>
+                <!-- Overlay -->
+                <div class="overlay tertiary-25"></div>
+              </div>
+            </div>
+
+            <!-- Tier 3: Flow Tier -->
+            <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
+              <div class="card outline has-price parent">
+                <!-- Header -->
+                <div class="card-header pb-0 text-center">
+                  <h3 class="title m-0 text-style-11 text-italic white">
+                    <span class="bg-color black">FLOW (MULTI-STAGE)</span>
+                    <span class="zzz mt-1 mb-1 scheme-2 gray"></span>
+                  </h3>
+                  <!-- Price -->
+                  <div class="price-wrapper">
+                    <span class="currency text-style-7 text-outline gray-75">₹</span>
+                    <span class="price text-style-3 tertiary hover-up-down" data-annual="6" data-monthly="6">6</span>
+                    <span class="billing text-style-7 text-outline gray-75">/lot</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="text-center text-muted mb-3" style="font-size: 0.85rem;">Profile: Multi-stage plants (min ₹40,000/mo)</div>
+                  <!-- List -->
+                  <ul class="checklist">
+                    <li class="item">
+                      <span class="text">All Floor Tier features included</span>
+                      <img class="image-icon white" src="assets/svg/checkmark-outline.svg" alt="Check" data-shock-icon="32" />
+                    </li>
+                    <li class="item">
+                      <span class="text">Subcontractor Job-Work &amp; Settlement</span>
+                      <img class="image-icon white" src="assets/svg/checkmark-outline.svg" alt="Check" data-shock-icon="32" />
+                    </li>
+                    <li class="item">
+                      <span class="text">Multi-warehouse lot splitting &amp; remnants</span>
+                      <img class="image-icon white" src="assets/svg/checkmark-outline.svg" alt="Check" data-shock-icon="32" />
+                    </li>
+                    <li class="item">
+                      <span class="text">Section 143 aging monitor (9/6/3/1 mo)</span>
+                      <img class="image-icon white" src="assets/svg/checkmark-outline.svg" alt="Check" data-shock-icon="32" />
+                    </li>
+                    <li class="item">
+                      <span class="text">TallyPrime HTTP bridge (TDL 9000) &amp; Webhooks</span>
+                      <img class="image-icon white" src="assets/svg/checkmark-outline.svg" alt="Check" data-shock-icon="32" />
+                    </li>
+                  </ul>
+                  <!-- Button -->
+                  <div class="button-wrapper align-h-right">
+                    <span class="button arrow-button next scheme-2 tertiary">
+                      <span class="arrow">
+                        <span class="item"></span>
+                        <span class="item"></span>
+                      </span>
+                      <span class="line"></span>
+                      <span class="text">DEPLOY FLOW TIER</span>
+                    </span>
+                  </div>
+                </div>
+                <!-- Link -->
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#modal" class="full-link"></a>
+                <!-- Overlay -->
+                <div class="overlay tertiary-25"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pricing Footer Note -->
+          <div class="text-center mt-4 pt-2 text-muted" style="font-size: 0.85rem;">
+            *APAC &amp; Japan billed through certified regional partners with local tax invoices. Custom multi-entity Forge tier available on request. 
+            <span class="text-white">The metric is the promise: you pay for flow through the factory, never for heads counting it.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5 & 4.5: Validation via 30-Day Balance Test (Parallax Form) -->
+      <section class="shock-section has-overlay pt-5 pb-5 bg-image bg-fixed" data-bg-image="assets/images/jpg/b-17.jpg" id="balance-test">
+        <div class="container max-w-85">
+          <div class="row">
+            <div class="col-12 col-md-6 align-h-center align-v-center">       
+              <!-- Intro -->
+              <div class="side-intro">
+                <span class="badge px-3 py-1 mb-2" style="background: rgba(255,23,145,0.2); color: #ff1791; border: 1px solid #ff1791; font-size: 0.75rem;">SECTION 4.5 VALIDATION</span>
+                <h2 class="title text-style-5">
+                  <span class="text-1 text-outline white-75">The 30-Day </span>
+                  <span class="text-2 text-italic white">Balance <mark class="animated-underline tertiary">Test Protocol</mark> !</span>
+                </h2>
+                <div class="description gray">
+                  <p>Pick your messiest live order: multi-hop job-work, offcuts, historical variance. Run parallel; nothing you use today is interrupted. If we don't describe your factory better than your current truth does, you walk away with zero commitment and a full data export.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 align-h-center align-v-center"> 
+              <!-- Form -->
+              <div class="form-area scheme-2 tertiary">
+                <form action="#modal" method="post" class="form-fields needs-validation" novalidate="novalidate">
+                  <div class="form-row row">
+                    <div class="form-col form-floating col-12 col-md-6">
+                      <input type="text" name="name" id="InputFloatingName" class="form-control" placeholder="Plant Manager / Owner" required="required">
+                      <label for="InputFloatingName" class="form-label">Full Name</label>
+                      <div class="invalid-feedback">Please enter your name.</div>
+                    </div>
+                    <div class="form-col form-floating col-12 col-md-6">
+                      <input type="email" name="email" id="InputFloatingEmail" class="form-control" placeholder="name@factory.com" required="required">
+                      <label for="InputFloatingEmail" class="form-label">Work Email</label>
+                      <div class="invalid-feedback">Please enter a valid work email.</div>
+                    </div>
+                  </div>
+                  <div class="form-row row">
+                    <div class="form-col form-floating col-12">
+                      <input type="text" name="plant" id="InputFloatingPlant" class="form-control" placeholder="Pune CNC / Surat Garments" required="required">
+                      <label for="InputFloatingPlant" class="form-label">Plant Location &amp; Primary Industry</label>
+                    </div>
+                  </div>
+                  <div class="form-row row">
+                    <div class="form-col col-12">
+                      <div class="form-check">
+                        <input type="checkbox" name="terms" id="InputCheckbox" class="form-check-input" required="required" checked="checked">
+                        <label class="form-label form-check-label text-muted" for="InputCheckbox" style="font-size: 0.85rem;">
+                          I agree to run one order parallel with full walk-away export rights.
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row row">
+                    <div class="form-col col-12">
+                      <!-- Button -->
+                      <button class="button arrow-button next scheme-2 tertiary w-100 justify-content-center">
+                        <span class="arrow">
+                          <span class="item"></span>
+                          <span class="item"></span>
+                        </span>
+                        <span class="line"></span>
+                        <span class="text">START 30-DAY BALANCE TEST</span>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Overlay -->
+        <div class="overlay black-75"></div>
+      </section>
+
+      <!-- Section 7: Target Industries & Structural Solutions (Deep Cards Grid) -->
+      <section class="shock-section pt-6 pb-6 bg-color black" id="solutions">
+        <div class="container">
+          <div class="row mb-5 text-center">
+            <div class="col-12">
+              <span class="badge px-3 py-1 mb-2" style="background: rgba(255,23,145,0.15); color: #ff1791; border: 1px solid #ff1791; font-size: 0.75rem; letter-spacing: 1.5px;">SECTION 7 · RATIFIED VERTICALS</span>
+              <h2 class="title text-style-5 text-white">Target Industries &amp; Floor Solutions</h2>
+              <p class="text-muted" style="max-width: 720px; margin: 0 auto;">Every vertical carries its own conservation rules, regulatory evidence packs, and golden fixture sandbox proofs.</p>
+            </div>
+          </div>
+
+          <div id="load-more" class="row g-4" data-display="6" data-columns="3">
+            
+            <!-- Card 1 (Pinned): Textiles & Garments -->
+            <div class="col-12 col-md-6 col-lg-4 load-more-item" data-aos="fade-up" data-aos-delay="100">
+              <div class="card parent" data-bg-color="#1e1e24">
+                <!-- Icon -->
+                <div class="sticky-post-icon white-10">
+                  <i class="fas fa-thumbtack icon tertiary"></i>
+                </div>
+                <!-- Label -->
+                <span class="label-vertical to-bottom-right-out hover-show">
+                  <span class="label-line gray"></span>
+                  <span class="label-text gray"><i class="icon fas fa-tag"></i> Surat &amp; Tirupur</span>
+                </span>
+                <div class="card-body">
+                  <h3 class="title text-style-11 white">Textiles &amp; Garments<br>(The Denim Proof)</h3>
+                  <p class="description">Roll meters/kg vs cut-piece counts with GSM and shrinkage bands. End-bits and remnants banked parent-linked; dye-lot linkage prevents shade-mixed assembly. 500m + 400 zippers &rarr; 300 pairs, five processors, every gram reconciled.</p>
+                  <hr class="gray-10">
+                  <div class="tag-cloud">
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">Denim Proof Sandbox</span></span>
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">Dye-Lot Integrity</span></span>
+                  </div>
+                </div>
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#modal" class="full-link">
+                  <div class="overlay shadow magnetic-effect hover-show bg-image" data-bg-image="assets/images/jpg/a-9.jpg"></div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 2: Automotive & Precision CNC -->
+            <div class="col-12 col-md-6 col-lg-4 load-more-item" data-aos="fade-up" data-aos-delay="200">
+              <div class="card parent">
+                <span class="label-vertical to-bottom-right-out hover-show">
+                  <span class="label-line gray"></span>
+                  <span class="label-text gray"><i class="icon fas fa-tag"></i> Pune &amp; Chennai</span>
+                </span>
+                <div class="card-body">
+                  <h3 class="title text-style-11 white">Automotive &amp; CNC<br>(IATF Cl. 8.5.2)</h3>
+                  <p class="description">FPI gating locks serial reporting until CTQ sign-off (Cpk &ge; 1.67). Downtime codes charge overhead variance, not unit cost. PPAP Level 3 packs aggregate heats, dimensional records, telemetry, and subcontractor charts.</p>
+                  <hr class="gray-10">
+                  <div class="tag-cloud">
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">IATF 16949 Cl. 8.5.2</span></span>
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">Cpk &ge; 1.67 Gating</span></span>
+                  </div>
+                </div>
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#modal" class="full-link">
+                  <div class="overlay shadow magnetic-effect hover-show bg-image" data-bg-image="assets/images/jpg/a-7.jpg"></div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 3: Pharma & Fine Chemicals -->
+            <div class="col-12 col-md-6 col-lg-4 load-more-item" data-aos="fade-up" data-aos-delay="300">
+              <div class="card parent">
+                <span class="label-vertical to-bottom-right-out hover-show">
+                  <span class="label-line gray"></span>
+                  <span class="label-text gray"><i class="icon fas fa-tag"></i> Hyderabad &amp; Gujarat</span>
+                </span>
+                <div class="card-body">
+                  <h3 class="title text-style-11 white">Pharma &amp; Chemicals<br>(21 CFR Part 11)</h3>
+                  <p class="description">Potency-adjusted dispensing: Q_dispense = Q_theoretical &times; 100 / Assay_as-is, with compensating excipient recalculation preserving batch mass. 3-state quarantine blocks staging; mock recall in under 15 seconds.</p>
+                  <hr class="gray-10">
+                  <div class="tag-cloud">
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">21 CFR Part 11</span></span>
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">15s Mock Recall</span></span>
+                  </div>
+                </div>
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#modal" class="full-link">
+                  <div class="overlay shadow magnetic-effect hover-show bg-image" data-bg-image="assets/images/jpg/a-15.jpg"></div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 4: Sheet Metal & Fabrication -->
+            <div class="col-12 col-md-6 col-lg-4 load-more-item" data-aos="fade-up" data-aos-delay="400">
+              <div class="card parent">
+                <span class="label-vertical to-bottom-right-out hover-show">
+                  <span class="label-line gray"></span>
+                  <span class="label-text gray"><i class="icon fas fa-tag"></i> Heavy Fabrication</span>
+                </span>
+                <div class="card-body">
+                  <h3 class="title text-style-11 white">Sheet Metal &amp; Remnants<br>(SigmaNEST Integration)</h3>
+                  <p class="description">CAM nesting integration; remnant drops auto-barcoded, dimensioned, alloy-graded, weight-valued. MRP consumes remnants before prime; MTR heat numbers follow plate into every bracket. Kerf expensed as planned scrap.</p>
+                  <hr class="gray-10">
+                  <div class="tag-cloud">
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">Remnant Banking</span></span>
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">MTR Heat Tracking</span></span>
+                  </div>
+                </div>
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#modal" class="full-link">
+                  <div class="overlay shadow magnetic-effect hover-show bg-image" data-bg-image="assets/images/jpg/a-14.jpg"></div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 5: Electronics & Discrete Assembly -->
+            <div class="col-12 col-md-6 col-lg-4 load-more-item" data-aos="fade-up" data-aos-delay="500">
+              <div class="card parent">
+                <span class="label-vertical to-bottom-right-out hover-show">
+                  <span class="label-line gray"></span>
+                  <span class="label-text gray"><i class="icon fas fa-tag"></i> Japan &amp; Global</span>
+                </span>
+                <div class="card-body">
+                  <h3 class="title text-style-11 white">Electronics &amp; PCB<br>(Rework DAG Lineage)</h3>
+                  <p class="description">ICT failures route to diagnostic/rework edges, not to scrap. Reel-lot to PCB-serial genealogy scopes recalls to the defective batch. ECOs update downstream versions while live lots keep configuration.</p>
+                  <hr class="gray-10">
+                  <div class="tag-cloud">
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">Component Serial Trace</span></span>
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">Rework Loops</span></span>
+                  </div>
+                </div>
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#modal" class="full-link">
+                  <div class="overlay shadow magnetic-effect hover-show bg-image" data-bg-image="assets/images/jpg/a-11.jpg"></div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 6: Compliance Hub: Section 143 & GST -->
+            <div class="col-12 col-md-6 col-lg-4 load-more-item" data-aos="fade-up" data-aos-delay="600">
+              <div class="card parent">
+                <span class="label-vertical to-bottom-right-out hover-show">
+                  <span class="label-line gray"></span>
+                  <span class="label-text gray"><i class="icon fas fa-tag"></i> Statutory Compliance</span>
+                </span>
+                <div class="card-body">
+                  <h3 class="title text-style-11 white">Job-Work &amp; GST Hub<br>(Rule 55 &amp; ITC-04)</h3>
+                  <p class="description">Zero deemed-supply surprises under Section 143 CGST. Rule 55 challans at dispatch with line-level HSN; 9/6/3/1 month countdown aging monitor; quarterly ITC-04 export aligned to GSTN offline-tool schema.</p>
+                  <hr class="gray-10">
+                  <div class="tag-cloud">
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">Rule 55 Challans</span></span>
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">ITC-04 Schema Pin</span></span>
+                  </div>
+                </div>
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#modal" class="full-link">
+                  <div class="overlay shadow magnetic-effect hover-show bg-image" data-bg-image="assets/images/jpg/a-21.jpg"></div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 7: Conservation by Construction -->
+            <div class="col-12 col-md-6 col-lg-4 load-more-item">
+              <div class="card parent">
+                <span class="label-vertical to-bottom-right-out hover-show">
+                  <span class="label-line gray"></span>
+                  <span class="label-text gray"><i class="icon fas fa-tag"></i> Core Invariant</span>
+                </span>
+                <div class="card-body">
+                  <h3 class="title text-style-11 white">Conservation by Construction</h3>
+                  <p class="description">Issued = good + planned scrap + wastage + surplus, enforced at the database engine level. Impossible transactions abort at the kiosk before bad data enters the company's ledger.</p>
+                  <hr class="gray-10">
+                  <div class="tag-cloud">
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">Database Constraints</span></span>
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">Atomic Unit of Work</span></span>
+                  </div>
+                </div>
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#modal" class="full-link">
+                  <div class="overlay shadow magnetic-effect hover-show bg-image" data-bg-image="assets/images/jpg/a-9.jpg"></div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 8: Scrap as Currency -->
+            <div class="col-12 col-md-6 col-lg-4 load-more-item">
+              <div class="card parent">
+                <span class="label-vertical to-bottom-right-out hover-show">
+                  <span class="label-line gray"></span>
+                  <span class="label-text gray"><i class="icon fas fa-tag"></i> Progressive Costing</span>
+                </span>
+                <div class="card-body">
+                  <h3 class="title text-style-11 white">Scrap as Currency</h3>
+                  <p class="description">Planned scrap is a routed, valued SKU with full parent lineage. MRP nets it against gross demands, and salvage realization credits the live job's WIP directly in real time.</p>
+                  <hr class="gray-10">
+                  <div class="tag-cloud">
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">WIP Salvage</span></span>
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">True Unit Margin</span></span>
+                  </div>
+                </div>
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#modal" class="full-link">
+                  <div class="overlay shadow magnetic-effect hover-show bg-image" data-bg-image="assets/images/jpg/a-7.jpg"></div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 9: YUZU AI Diagnostic Engine -->
+            <div class="col-12 col-md-6 col-lg-4 load-more-item">
+              <div class="card parent">
+                <span class="label-vertical to-bottom-right-out hover-show">
+                  <span class="label-line gray"></span>
+                  <span class="label-text gray"><i class="icon fas fa-tag"></i> Constitutional AI</span>
+                </span>
+                <div class="card-body">
+                  <h3 class="title text-style-11 white">YUZU AI Diagnostic Engine</h3>
+                  <p class="description">Clerk drafts BOMs and routings from engineering prints; Auditor watches invariants and challan aging; Memory catalogs change rationales. Constitutional boundary: zero vouchers posted without human sign-off.</p>
+                  <hr class="gray-10">
+                  <div class="tag-cloud">
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">Constitutional Boundary</span></span>
+                    <span class="badge outline gray-50 tertiary-hover"><span class="badge-text gray white-hover">Zero Auto-Vouchers</span></span>
+                  </div>
+                </div>
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#modal" class="full-link">
+                  <div class="overlay shadow magnetic-effect hover-show bg-image" data-bg-image="assets/images/jpg/a-15.jpg"></div>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="mt-4 text-center">
+            <!-- Button -->
+            <button id="load-more-button" class="button outline white tertiary-hover magnetic-effect">
+              <span class="button-text white white-hover">Load more solutions</span>
+              <i class="fa-solid fa-arrow-rotate-right button-icon white white-hover"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 10 & 4.8: The Four-Stack Comparison (Compare Hub) -->
+      <section class="shock-section pt-5 pb-6 bg-color black" id="compare">
+        <div class="container">
+          <div class="row mb-5 text-center">
+            <div class="col-12">
+              <span class="badge px-3 py-1 mb-2" style="background: rgba(255,23,145,0.15); color: #ff1791; border: 1px solid #ff1791; font-size: 0.75rem; letter-spacing: 1.5px;">SECTION 4.8 &amp; 10 · THE TRAIL ARGUES</span>
+              <h2 class="title text-style-5 text-white">One Order. Four Stacks.</h2>
+              <p class="text-muted" style="max-width: 780px; margin: 0 auto;">Walk the same job-work lot through Tally-only, a generic MES, a legacy ERP, and TsukiFlow — and see which stack leaves its reconciliations for month-end.</p>
+            </div>
+          </div>
+
+          <!-- High-Contrast Comparison Table -->
+          <div class="table-responsive p-3 rounded" style="background: #141418; border: 1px solid rgba(255,255,255,0.08);">
+            <table class="table text-white mb-0" style="font-size: 0.88rem; vertical-align: middle;">
+              <thead style="border-bottom: 2px solid #ff1791;">
+                <tr>
+                  <th scope="col" style="color: #a1a1aa; width: 28%; font-weight: 700;">Operational Capability &amp; Artifact</th>
+                  <th scope="col" style="color: #a1a1aa; width: 18%;">Tally-Only Stack</th>
+                  <th scope="col" style="color: #a1a1aa; width: 18%;">Generic MES</th>
+                  <th scope="col" style="color: #a1a1aa; width: 18%;">Legacy ERP (SAP/Oracle)</th>
+                  <th scope="col" style="color: #ff1791; width: 18%; font-weight: 800;">TsukiFlow Ledger</th>
+                </tr>
+              </thead>
+              <tbody style="border-top: none;">
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                  <td class="text-white"><strong>Rule 55 challan at dispatch</strong></td>
+                  <td class="text-muted">Manual delivery note</td>
+                  <td class="text-muted">Generic dispatch note</td>
+                  <td class="text-muted">Custom ABAP dev</td>
+                  <td style="color: #ff1791; font-weight: 600;"><i class="fas fa-check-circle me-1"></i> Auto-issued at gate</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                  <td class="text-white"><strong>Section 143 clock watched</strong></td>
+                  <td class="text-muted">Unmonitored in books</td>
+                  <td class="text-muted">Separate spreadsheet</td>
+                  <td class="text-muted">Batch job alert</td>
+                  <td style="color: #ff1791; font-weight: 600;"><i class="fas fa-check-circle me-1"></i> 9/6/3/1 mo countdown</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                  <td class="text-white"><strong>Scrap valued and netted in MRP</strong></td>
+                  <td class="text-muted">Unrecorded offcuts</td>
+                  <td class="text-muted">Bin scrap without MRP</td>
+                  <td class="text-muted">Co-product BOM rebuild</td>
+                  <td style="color: #ff1791; font-weight: 600;"><i class="fas fa-check-circle me-1"></i> Valued SKU nets gross</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                  <td class="text-white"><strong>Offline floor entry</strong></td>
+                  <td class="text-muted">Paper traveler</td>
+                  <td class="text-muted">Bypassed during drops</td>
+                  <td class="text-muted">Blocks terminal session</td>
+                  <td style="color: #ff1791; font-weight: 600;"><i class="fas fa-check-circle me-1"></i> SQLite local queue</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                  <td class="text-white"><strong>Unit cost at completion</strong></td>
+                  <td class="text-muted">Month-end journal average</td>
+                  <td class="text-muted">Standard cost only</td>
+                  <td class="text-muted">Post-settlement CO-PC</td>
+                  <td style="color: #ff1791; font-weight: 600;"><i class="fas fa-check-circle me-1"></i> Instant progressive rollup</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                  <td class="text-white"><strong>Variance explained in sentences</strong></td>
+                  <td class="text-muted">Manual Excel delta</td>
+                  <td class="text-muted">Red dashboard cells</td>
+                  <td class="text-muted">Complex variance codes</td>
+                  <td style="color: #ff1791; font-weight: 600;"><i class="fas fa-check-circle me-1"></i> 4-factor plain English</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                  <td class="text-white"><strong>Recall scoped in one click</strong></td>
+                  <td class="text-muted">Days of paper audit</td>
+                  <td class="text-muted">Isolated cell trace</td>
+                  <td class="text-muted">Multi-table report dump</td>
+                  <td style="color: #ff1791; font-weight: 600;"><i class="fas fa-check-circle me-1"></i> Bidirectional &lt;15s trace</td>
+                </tr>
+                <tr>
+                  <td class="text-white"><strong>Month-end reconciliation hours</strong></td>
+                  <td class="text-muted">40–60 hours/month</td>
+                  <td class="text-muted">20–30 hours/month</td>
+                  <td class="text-muted">15–25 hours/month</td>
+                  <td style="color: #ff1791; font-weight: 800;"><i class="fas fa-check-circle me-1"></i> Zero (Balanced Live)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 12: Resources Hub -->
+      <section class="shock-section pt-4 pb-5 bg-color black" id="resources">
+        <div class="container">
+          <div class="p-4 rounded" style="background: #141418; border: 1px solid rgba(255,255,255,0.08);">
+            <div class="row align-items-center">
+              <div class="col-12 col-lg-8">
+                <span class="badge px-3 py-1 mb-2" style="background: rgba(255,23,145,0.15); color: #ff1791; font-size: 0.75rem;">SECTION 12 · RESOURCES HUB</span>
+                <h4 class="text-white mb-2">Protocol Specs, Sandboxes &amp; Runbooks</h4>
+                <div class="text-muted" style="font-size: 0.88rem; line-height: 1.8;">
+                  <strong class="text-white">Balance Test Protocol:</strong> prerequisites, week-1 setup, parallel-run rules, walk-away export spec &nbsp;·&nbsp;
+                  <strong class="text-white">Denim Proof Script:</strong> PO &rarr; GRN lots 201/202 &rarr; 5 processor JWOs &rarr; ₹590/unit &nbsp;·&nbsp;
+                  <strong class="text-white">Glossary Seeds:</strong> mass balance, deemed supply, PPV/MUV, disposition DAG, lot, JWO, GRN, JRN, remnant banking, dual-clock labor.
+                </div>
+              </div>
+              <div class="col-12 col-lg-4 text-lg-end mt-3 mt-lg-0">
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#modal" class="button outline white tertiary-hover">
+                  <span class="button-text white">DOWNLOAD SPEC PACK</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 11: FAQ Master (Answer-First, AEO) — All 10 Ratified Items Immediately Visible -->
+      <section class="shock-section pt-5 pb-6 bg-color black" id="faq">
+        <div class="container">
+          <div class="row mb-5 text-center">
+            <div class="col-12">
+              <span class="badge px-3 py-1 mb-2" style="background: rgba(255,23,145,0.15); color: #ff1791; border: 1px solid #ff1791; font-size: 0.75rem; letter-spacing: 1.5px;">SECTION 11 · ANSWER-FIRST FAQ</span>
+              <h2 class="title text-style-5 text-white">Frequently Answered Questions</h2>
+              <p class="text-muted" style="max-width: 720px; margin: 0 auto;">No marketing hand-waving. Precise technical answers to how the Conserved Ledger behaves on the shop floor.</p>
+            </div>
+          </div>
+
+          <div class="row g-4">
+            <!-- FAQ 1 -->
+            <div class="col-12 col-lg-6">
+              <div class="p-4 rounded h-100" style="background: #19191e; border: 1px solid rgba(255,255,255,0.06); border-left: 2px solid #ff1791;">
+                <h4 class="text-white text-style-11 mb-2" style="font-size: 1.05rem;">1. Does TsukiFlow handle multi-stage job-work under Section 143?</h4>
+                <p class="text-muted mb-0" style="font-size: 0.95rem;"><strong class="text-white">Yes.</strong> Subcontractor processors are native DAG nodes; Rule 55 challans at dispatch, 9/6/3/1 month aging countdown monitors, gate receipt shrinkage matching, and quarterly ITC-04 JSON exports are built in.</p>
+              </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="col-12 col-lg-6">
+              <div class="p-4 rounded h-100" style="background: #19191e; border: 1px solid rgba(255,255,255,0.06); border-left: 2px solid #ff1791;">
+                <h4 class="text-white text-style-11 mb-2" style="font-size: 1.05rem;">2. Does TsukiFlow replace TallyPrime or SAP?</h4>
+                <p class="text-muted mb-0" style="font-size: 0.95rem;"><strong class="text-white">No replacement required.</strong> TsukiFlow acts as the operational sub-ledger. Validated vouchers post into TallyPrime via port 9000 HTTP TDL with UUID deduplication, and to enterprise ERPs via signed webhooks.</p>
+              </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="col-12 col-lg-6">
+              <div class="p-4 rounded h-100" style="background: #19191e; border: 1px solid rgba(255,255,255,0.06); border-left: 2px solid #ff1791;">
+                <h4 class="text-white text-style-11 mb-2" style="font-size: 1.05rem;">3. What happens during shop-floor network outages?</h4>
+                <p class="text-muted mb-0" style="font-size: 0.95rem;"><strong class="text-white">Zero disruption.</strong> Touchscreen kiosks run an offline-first state machine with encrypted local SQLite/IndexedDB queues. Offline completions sync idempotently on reconnect; conflicts become human review items, never silent overwrites.</p>
+              </div>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="col-12 col-lg-6">
+              <div class="p-4 rounded h-100" style="background: #19191e; border: 1px solid rgba(255,255,255,0.06); border-left: 2px solid #ff1791;">
+                <h4 class="text-white text-style-11 mb-2" style="font-size: 1.05rem;">4. What is the deployment timeline for the 30-Day Balance Test?</h4>
+                <p class="text-muted mb-0" style="font-size: 0.95rem;"><strong class="text-white">Live within one week.</strong> Masters and BOMs import in 3–5 business days. One routing DAG is drawn with our manufacturing engineer, and kiosks deploy on one line parallel to your existing systems.</p>
+              </div>
+            </div>
+
+            <!-- FAQ 5 -->
+            <div class="col-12 col-lg-6">
+              <div class="p-4 rounded h-100" style="background: #19191e; border: 1px solid rgba(255,255,255,0.06); border-left: 2px solid #ff1791;">
+                <h4 class="text-white text-style-11 mb-2" style="font-size: 1.05rem;">5. How are offcuts, turnings, and machining scrap accounted for?</h4>
+                <p class="text-muted mb-0" style="font-size: 0.95rem;"><strong class="text-white">Planned scrap is a routed, valued SKU.</strong> It is banked with parent lot lineage. MRP nets it against gross demands, and salvage realization credits the live job's WIP directly in real time.</p>
+              </div>
+            </div>
+
+            <!-- FAQ 6 -->
+            <div class="col-12 col-lg-6">
+              <div class="p-4 rounded h-100" style="background: #19191e; border: 1px solid rgba(255,255,255,0.06); border-left: 2px solid #ff1791;">
+                <h4 class="text-white text-style-11 mb-2" style="font-size: 1.05rem;">6. Can YUZU AI post financial vouchers or modify routings automatically?</h4>
+                <p class="text-muted mb-0" style="font-size: 0.95rem;"><strong class="text-white">No.</strong> YUZU AI has a strict constitutional limit: it drafts, audits, and surfaces anomalies citing ledger rows, but cannot post vouchers, release disbursements, or alter routings without human engineer sign-off.</p>
+              </div>
+            </div>
+
+            <!-- FAQ 7 -->
+            <div class="col-12 col-lg-6">
+              <div class="p-4 rounded h-100" style="background: #19191e; border: 1px solid rgba(255,255,255,0.06); border-left: 2px solid #ff1791;">
+                <h4 class="text-white text-style-11 mb-2" style="font-size: 1.05rem;">7. How do we migrate from spreadsheets or an abandoned ERP?</h4>
+                <p class="text-muted mb-0" style="font-size: 0.95rem;"><strong class="text-white">Through opening GRNs with lots and rates.</strong> Masters import cleanly; historical figures arrive as archived reports, never fabricated ledger rows. The pilot runs parallel so nothing cuts over blind.</p>
+              </div>
+            </div>
+
+            <!-- FAQ 8 -->
+            <div class="col-12 col-lg-6">
+              <div class="p-4 rounded h-100" style="background: #19191e; border: 1px solid rgba(255,255,255,0.06); border-left: 2px solid #ff1791;">
+                <h4 class="text-white text-style-11 mb-2" style="font-size: 1.05rem;">8. Does TsukiFlow support multi-plant and multi-company operations?</h4>
+                <p class="text-muted mb-0" style="font-size: 0.95rem;"><strong class="text-white">Yes.</strong> Config packs per tenant; unlimited warehouses and entities on Flow and above; role-scoped navigation per plant.</p>
+              </div>
+            </div>
+
+            <!-- FAQ 9 -->
+            <div class="col-12 col-lg-6">
+              <div class="p-4 rounded h-100" style="background: #19191e; border: 1px solid rgba(255,255,255,0.06); border-left: 2px solid #ff1791;">
+                <h4 class="text-white text-style-11 mb-2" style="font-size: 1.05rem;">9. What GST and statutory outputs does TsukiFlow produce?</h4>
+                <p class="text-muted mb-0" style="font-size: 0.95rem;"><strong class="text-white">HSN and tax type per process and item.</strong> Inclusive/exclusive handling; purchase/sales registers and e-invoice-ready payloads derived from posted documents.</p>
+              </div>
+            </div>
+
+            <!-- FAQ 10 -->
+            <div class="col-12 col-lg-6">
+              <div class="p-4 rounded h-100" style="background: #19191e; border: 1px solid rgba(255,255,255,0.06); border-left: 2px solid #ff1791;">
+                <h4 class="text-white text-style-11 mb-2" style="font-size: 1.05rem;">10. Why do we claim TsukiFlow is the &ldquo;first&rdquo;?</h4>
+                <p class="text-muted mb-0" style="font-size: 0.95rem;"><strong class="text-white">Because conservation is a database constraint.</strong> Routing is a disposition graph with rejection paths and co-products, and operations carry their own financial triggers — together by construction.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4.9: Final CTA Banner -->
+      <section class="shock-section pt-5 pb-6 bg-color black text-center" style="border-top: 1px solid rgba(255,255,255,0.08);">
+        <div class="container">
+          <span class="badge px-3 py-1 mb-3" style="background: rgba(255,23,145,0.2); color: #ff1791; border: 1px solid #ff1791; font-size: 0.8rem; letter-spacing: 2px;">THE FINAL MANDATE</span>
+          <h2 class="title text-style-3 text-white mb-3">Stop reconciling. Start flowing.</h2>
+          <p class="text-muted mb-4" style="max-width: 600px; margin: 0 auto; font-size: 1.05rem;">One real order. Parallel to your current systems. Zero migration risk. Let the ledger prove itself.</p>
+          <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
+            <a href="#modal" data-bs-toggle="modal" data-bs-target="#modal" class="button arrow-button next scheme-2 tertiary">
+              <span class="arrow">
+                <span class="item"></span>
+                <span class="item"></span>
+              </span>
+              <span class="line"></span>
+              <span class="text">RUN 30-DAY BALANCE TEST</span>
+            </a>
+            <a href="https://github.com/Manash8666/TsukiFlow" target="_blank" rel="noopener noreferrer" class="button outline white tertiary-hover">
+              <span class="button-text white"><i class="fab fa-github me-2"></i>EXPLORE CODE REPO</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Schedule Balance Test Modal -->
+    <div id="modal" class="modal fade" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog max-w-50">
+        <div class="modal-content shadow rounded" data-bg-color="#1e1e24">
+          <div class="modal-header">
+            <i class="fa-solid fa-xmark close-button white tertiary-hover" data-bs-dismiss="modal" aria-label="Close"></i>
+            <!-- Intro -->
+            <div class="basic-intro">
+              <span class="badge px-3 py-1 mb-2" style="background: rgba(255,23,145,0.2); color: #ff1791; border: 1px solid #ff1791; font-size: 0.75rem;">THE 30-DAY BALANCE TEST</span>
+              <h2 class="title text-style-5">
+                <span class="text-1 text-outline white-75">Talk to an </span>
+                <span class="text-2 text-italic white">engineer who has <mark class="animated-underline tertiary">stood on a floor</mark>.</span>
+              </h2>
+              <div class="description gray">
+                <p>Not a salesperson who hasn't. One live order, parallel to your current systems, zero migration risk.</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-body">
+            <!-- Form -->
+            <div class="form-area scheme-2 tertiary">
+              <form action="#modal" class="form-fields needs-validation ajax-form" novalidate="novalidate">
+                <div class="form-row row">
+                  <div class="form-col form-floating col-12 col-md-6">
+                    <input type="text" name="name" id="InputModalName" class="form-control" placeholder="Full Name" required="required">
+                    <label for="InputModalName" class="form-label">Full Name</label>
+                    <div class="invalid-feedback">Please enter your name.</div>
+                  </div>
+                  <div class="form-col form-floating col-12 col-md-6">
+                    <input type="email" name="email" id="InputModalEmail" class="form-control" placeholder="work@factory.com" required="required">
+                    <label for="InputModalEmail" class="form-label">Work Email</label>
+                    <div class="invalid-feedback">Please enter a valid work email.</div>
+                  </div>
+                </div>
+                <div class="form-row row">
+                  <div class="form-col form-floating col-12 col-md-6">
+                    <input type="text" name="company" id="InputModalCompany" class="form-control" placeholder="Plant / Company Name" required="required">
+                    <label for="InputModalCompany" class="form-label">Plant / Company Name</label>
+                  </div>
+                  <div class="form-col form-floating col-12 col-md-6">
+                    <select name="industry" id="InputModalIndustry" class="form-control form-select text-white" style="background: #141418; border-color: rgba(255,255,255,0.15);">
+                      <option value="textiles">Textiles &amp; Garments (Surat/Tirupur)</option>
+                      <option value="automotive">Automotive &amp; Precision CNC (Pune/Chennai)</option>
+                      <option value="pharma">Pharma &amp; Fine Chemicals (Hyderabad)</option>
+                      <option value="sheetmetal">Sheet Metal &amp; Fabrication</option>
+                      <option value="electronics">Electronics &amp; Discrete Assembly</option>
+                      <option value="other">Other High-Mix Job-Work</option>
+                    </select>
+                    <label for="InputModalIndustry" class="form-label">Target Industry</label>
+                  </div>
+                </div>
+                <div class="form-row row">
+                  <div class="form-col form-floating col-12">
+                    <textarea name="challenges" id="InputModalChallenges" class="form-control form-textarea" rows="3" placeholder="What is your messiest live order (e.g. multi-hop job-work, scrap variance)?"></textarea>
+                    <label for="InputModalChallenges" class="form-label">Messiest Live Order Details (Optional)</label>
+                  </div>
+                </div>
+                <div class="form-row row">
+                  <div class="form-col col-12">
+                    <div class="form-check form-switch mb-2">
+                      <input type="checkbox" name="sandbox" class="form-check-input form-switch" id="InputSwitchSandbox" checked="checked">
+                      <label class="form-label form-check-label text-muted" for="InputSwitchSandbox" style="font-size: 0.85rem;">
+                        Include access credentials for the Denim Proof Sandbox (500m denim fixture).
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-col col-12 align-h-right mt-2">
+                    <button class="button outline white tertiary-hover magnetic-effect w-100 justify-content-center">
+                      <span class="button-text white white-hover">SUBMIT BALANCE TEST REQUEST</span>
+                      <i class="fa-solid fa-arrow-right button-icon white white-hover ms-2"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Side Widget -->
+    <div class="side-widget to-left invert-color mix-blend-difference d-only-desktop">
+      <div class="item">
+        <span class="widget label-icons">
+          <a href="https://github.com/Manash8666/TsukiFlow" target="_blank" rel="noopener noreferrer" class="link black black-hover" title="GitHub"><i class="icon fab fa-github"></i></a>
+          <a href="/llms.txt" class="link black black-hover" title="llms.txt"><i class="icon fas fa-file-code"></i></a>
+          <a href="/tsukiflow" class="link black black-hover" title="TsukiFlow"><i class="icon fas fa-cube"></i></a>
+          <span class="label-line black"></span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Side Widget -->
+    <div class="side-widget to-right invert-color mix-blend-difference d-only-desktop">
+      <div class="item">
+        <a href="#home" class="link black black-hover hover-up">
+          <span class="widget label-vertical">
+            <span class="label-text black"><i class="fa-solid fa-arrow-right-long icon"></i>Scroll to top</span>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer" class="shock-footer scheme-1 tertiary" data-bg-color="#1e1e24">
+      <div class="top-bar" data-bg-color="#1e1e24">
+        <div class="footer-content focus-trigger">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-12 col-lg-4 text-center text-lg-start mb-3 mb-lg-0">
+                <span class="text-white-75" style="font-size: 0.85rem; letter-spacing: 0.5px;">
+                  <strong class="text-white">Tagline:</strong> <em>TsukiFlow — The Conserved Manufacturing Ledger. Mass Conserved. Cost Conserved. Production Proven.</em>
+                </span>
+              </div>
+              <div class="col-12 col-lg-4 text-center mb-3 mb-lg-0">
+                <a href="/tsukiflow" class="footer-brand magnetic-effect">
+                  <img src="assets/images/logo-white.svg" alt="TsukiFlow" class="logo" />
+                  <span class="logo-after-text" style="font-weight: 800; letter-spacing: 2px;">TSUKIFLOW</span>
+                </a>
+              </div>
+              <div class="col-12 col-lg-4 text-center text-lg-end">
+                <div class="list-wrapper">
+                  <ul class="icon-h-list justify-content-center justify-content-lg-end">
+                    <li class="item">
+                      <a href="https://github.com/Manash8666/TsukiFlow" target="_blank" rel="noopener noreferrer" class="link gray tertiary-hover hover-rotate" title="GitHub Repository"><i class="icon fab fa-github"></i></a>
+                    </li>
+                    <li class="item">
+                      <a href="/llms.txt" class="link gray tertiary-hover hover-rotate" title="Machine Discovery llms.txt"><i class="icon fas fa-file-code"></i></a>
+                    </li>
+                    <li class="item">
+                      <a href="https://hybrid-studioz.vercel.app" class="link gray tertiary-hover hover-rotate" title="Hybrid Studioz Portal"><i class="icon fas fa-globe"></i></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 Structure Columns from Ratified PDF Page 2 -->
+      <div class="footer-content focus-trigger py-5">
+        <div class="container">
+          <div class="row g-4">
+            
+            <!-- Column 1: Product Core -->
+            <div class="col-12 col-md-6 col-lg-2">
+              <div class="footer-item text-start">
+                <h6 class="title text-white mb-3" style="font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;">Product Core</h6>
+                <ul class="nav-list list-unstyled" style="font-size: 0.85rem; line-height: 2;">
+                  <li><a href="#features" class="nav-link text-muted hover-white">Routing Studio</a></li>
+                  <li><a href="#features" class="nav-link text-muted hover-white">Floor Execution</a></li>
+                  <li><a href="#features" class="nav-link text-muted hover-white">Lot Ledger &amp; Trace</a></li>
+                  <li><a href="#features" class="nav-link text-muted hover-white">Progressive Costing</a></li>
+                  <li><a href="#features" class="nav-link text-muted hover-white">Settlement &amp; Job-Work</a></li>
+                  <li><a href="#features" class="nav-link text-muted hover-white">YUZU AI Diagnostic</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Column 2: Vertical Solutions -->
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="footer-item text-start">
+                <h6 class="title text-white mb-3" style="font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;">Vertical Solutions</h6>
+                <ul class="nav-list list-unstyled" style="font-size: 0.85rem; line-height: 2;">
+                  <li><a href="#solutions" class="nav-link text-muted hover-white">Textiles &amp; Garments (Surat/Tirupur)</a></li>
+                  <li><a href="#solutions" class="nav-link text-muted hover-white">Automotive &amp; CNC (Pune/Chennai)</a></li>
+                  <li><a href="#solutions" class="nav-link text-muted hover-white">Pharma &amp; Chemicals (Hyderabad)</a></li>
+                  <li><a href="#solutions" class="nav-link text-muted hover-white">Sheet Metal &amp; Remnants (SigmaNEST)</a></li>
+                  <li><a href="#solutions" class="nav-link text-muted hover-white">Electronics &amp; Discrete (Japan/Global)</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Column 3: Engineering & Platform -->
+            <div class="col-12 col-md-6 col-lg-2">
+              <div class="footer-item text-start">
+                <h6 class="title text-white mb-3" style="font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;">Engineering</h6>
+                <ul class="nav-list list-unstyled" style="font-size: 0.85rem; line-height: 2;">
+                  <li><a href="https://github.com/Manash8666/TsukiFlow" target="_blank" rel="noopener noreferrer" class="nav-link text-muted hover-white">TallyPrime Bridge (TDL 9000)</a></li>
+                  <li><a href="https://github.com/Manash8666/TsukiFlow" target="_blank" rel="noopener noreferrer" class="nav-link text-muted hover-white">Transactional Outbox</a></li>
+                  <li><a href="https://github.com/Manash8666/TsukiFlow" target="_blank" rel="noopener noreferrer" class="nav-link text-muted hover-white">Offline SQLite Kiosk State</a></li>
+                  <li><a href="https://github.com/Manash8666/TsukiFlow" target="_blank" rel="noopener noreferrer" class="nav-link text-muted hover-white">FastAPI &amp; SQLAlchemy</a></li>
+                  <li><a href="https://github.com/Manash8666/TsukiFlow" target="_blank" rel="noopener noreferrer" class="nav-link text-muted hover-white">Docker Compose Ready</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Column 4: Regulatory Blueprints -->
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="footer-item text-start">
+                <h6 class="title text-white mb-3" style="font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;">Regulatory Blueprints</h6>
+                <ul class="nav-list list-unstyled" style="font-size: 0.85rem; line-height: 2;">
+                  <li><a href="#solutions" class="nav-link text-muted hover-white">Section 143 Job-Work Countdown</a></li>
+                  <li><a href="#solutions" class="nav-link text-muted hover-white">Statutory Rule 55 Challans</a></li>
+                  <li><a href="#solutions" class="nav-link text-muted hover-white">ITC-04 Offline GSTN JSON Export</a></li>
+                  <li><a href="#solutions" class="nav-link text-muted hover-white">IATF 16949 Cl. 8.5.2 Evidence</a></li>
+                  <li><a href="#solutions" class="nav-link text-muted hover-white">21 CFR Part 11 Audit Trails</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Column 5: Machine Discovery -->
+            <div class="col-12 col-md-6 col-lg-2">
+              <div class="footer-item text-start">
+                <h6 class="title text-white mb-3" style="font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;">Discovery</h6>
+                <ul class="nav-list list-unstyled" style="font-size: 0.85rem; line-height: 2;">
+                  <li><a href="/llms.txt" class="nav-link text-muted hover-white">Root llms.txt</a></li>
+                  <li><a href="/llms-full.txt" class="nav-link text-muted hover-white">Root llms-full.txt</a></li>
+                  <li><a href="https://github.com/Manash8666/TsukiFlow" target="_blank" rel="noopener noreferrer" class="nav-link text-muted hover-white">GitHub Repo</a></li>
+                  <li><a href="/sitemap.xml" class="nav-link text-muted hover-white">XML Sitemap</a></li>
+                  <li><a href="#compare" class="nav-link text-muted hover-white">4-Stack Comparison</a></li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Compliance Strip from Ratified PDF Page 2 -->
+          <div class="mt-4 pt-4 text-center" style="border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.8rem; color: #a1a1aa; line-height: 1.8;">
+            <strong class="text-white">Compliance &amp; Standards:</strong> Statutory Rule 55 Challan Issuance &nbsp;·&nbsp; Supports IATF 16949 Cl. 8.5.2 Evidence &nbsp;·&nbsp; 21 CFR Part 11-Ready Controls &nbsp;·&nbsp; ISO 9001:2015 Audit-Ready Packs &nbsp;·&nbsp; SOC 2 Type II Window Opened
+          </div>
+
+          <!-- Localization Strip from Ratified PDF Page 2 -->
+          <div class="mt-2 text-center text-muted" style="font-size: 0.75rem;">
+            Localization: <span class="text-white">English (global)</span> &nbsp;·&nbsp; <span class="text-white">日本語 (Tokyo engineering center)</span> &nbsp;·&nbsp; <span class="text-white">हिन्दी (domestic industrial centers)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-bar" data-bg-color="#141418">
+        <div class="text" data-custom="true">
+          &copy; 2026 TsukiFlow &amp; <a href="https://hybrid-studioz.vercel.app" class="link gray primary-hover"><u>Hybrid Studioz</u></a>. All rights reserved. The Conserved Manufacturing Ledger. Mass Conserved. Cost Conserved. Production Proven.
+        </div>
+      </div>
+    </footer>
+    
+    <!-- Cursor -->
+    <svg class="cursor-effect tertiary" width="220" height="220" viewBox="0 0 220 220">
+      <defs>
+        <filter id="cursor-effect-filter" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox">
+          <feTurbulence type="fractalNoise" baseFrequency="0" numOctaves="1" result="warp"></feTurbulence>
+          <feOffset dx="-30" result="warpOffset"></feOffset>
+          <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="20" in="SourceGraphic" in2="warpOffset"></feDisplacementMap>
+        </filter>
+      </defs>
+      <circle class="cursor-effect-inner" cx="110" cy="110" r="20"></circle>
+    </svg>
+    
+    <!-- Vendor JavaScript -->
+    <script src="assets/js/vendor/jquery.min.js"></script>
+    <script src="assets/js/vendor/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/js/vendor/preloader.min.js"></script>
+    <script src="assets/js/vendor/inview.min.js"></script>
+    <script src="assets/js/vendor/menu-engine.min.js"></script>
+    <script src="assets/js/vendor/menu-grid.min.js"></script>
+    <script src="assets/js/vendor/bootstrap.min.js"></script>
+    <script src="assets/js/vendor/swiper.min.js"></script>
+    <script src="assets/js/vendor/anime.min.js"></script>
+    <script src="assets/js/vendor/dynamic-slider.min.js"></script>
+    <script src="assets/js/vendor/shuffle.min.js"></script>
+    <script src="assets/js/vendor/stickybits.min.js"></script>
+    <script src="assets/js/vendor/bricklayer.min.js"></script>
+    <script src="assets/js/vendor/lightbox.min.js"></script>
+    <script src="assets/js/vendor/typed.min.js"></script>
+    <script src="assets/js/vendor/progressbar.min.js"></script>
+    <script src="assets/js/vendor/map-styles.min.js"></script>
+    <script src="assets/js/vendor/magnetic-effect.min.js"></script>
+    <script src="assets/js/vendor/gsap.min.js"></script>
+    <script src="assets/js/vendor/aos.min.js"></script>
+    <script src="assets/js/vendor/lax.min.js"></script>
+    <script src="assets/js/vendor/cursor-effect.min.js"></script>
+
+    <!-- Main JavaScript -->
+    <script src="assets/js/main.js"></script>
+  
+  </body>
+</html>
+`;
+
+fs.writeFileSync('public/tsukiflow.html', tsukiflowHtml, 'utf8');
+console.log('Successfully wrote public/tsukiflow.html! Length:', tsukiflowHtml.length);

@@ -1252,7 +1252,7 @@ jQuery(function ($) {
 // -----------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', function () {
   const bottomBarText = document.querySelector('#footer .bottom-bar .text');
-  if (!bottomBarText) return;
+  if (!bottomBarText || bottomBarText.dataset.custom === 'true' || bottomBarText.innerHTML.includes('TsukiFlow')) return;
 
   const currentYear = new Date().getFullYear();
 
