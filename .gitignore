@@ -44,3 +44,5 @@ next-env.d.ts
 /image-sources/
 /video-sources/
 /*.mp4
+
+.vercel
